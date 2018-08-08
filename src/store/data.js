@@ -1,41 +1,50 @@
-const CONFERENCES = [{
-    name: "auth0 conf",
-    location: "Orlando, FL",
-    date: "06/30/2019",
-    favorite: true,
-    CFP: true,
-    CFPDate: "04/20/2019",
-    CFPCompleted: false
+const SLIDES = [{
+    position:'',
+    uuid:'1234abcd',
+    title: "auth0 conf",
+    isSelected: true,
+    isEditing: true,
+    text: `<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
+    nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla
+     quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris.
+      Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia
+      arcu eget nulla. </p>`
   },
-  {
-    name: "Mithril conf",
-    location: "Boston, MA",
-    date: "05/10/2019",
-    favorite: true,
-    CFP: false,
-    CFPDate: "",
-    CFPCompleted: false
+  { position:'',
+    uuid:'564jhg',
+    title: "Mithril conf",
+    isSelected: true,
+    isEditing: false,
+    text: `<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
+    nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla
+     quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris.
+      Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia
+      arcu eget nulla. </p>`,
   },
-  {
-    name: "ngSurf",
-    location: "San Diego, CA",
-    date: "04/26/2019",
-    favorite: true,
-    CFP: true,
-    CFPDate: "03/15/2019",
-    CFPCompleted: true
+  { position:'',
+    uuid:'897tr',
+    title: "ngSurf",
+    isSelected: true,
+    isEditing: true,
+    text: `<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
+    nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla
+     quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris.
+      Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia
+      arcu eget nulla. </p>`,
   },
-  {
-    name: "MySQL Conf",
-    location: "Miami, FL",
-    date: "03/17/2019",
-    favorite: false,
-    CFP: false,
-    CFPDate: "",
-    CFPCompleted: false
+  { position:'',
+    uuid:'hjk876f',
+    title: "MySQL Conf",
+    isSelected: false,
+    isEditing: false,
+    text: `<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
+    nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla
+     quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris.
+      Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia
+      arcu eget nulla. </p>`,
   }
 ];
 
-exports.getMockData = () => CONFERENCES;
+exports.getMockData = () => SLIDES;
 
-exports.setMockData = c => CONFERENCES.push(c)
+exports.setMockData = c => SLIDES.push(c)

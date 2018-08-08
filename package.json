@@ -1,5 +1,5 @@
 {
-  "name": "conference-tracker",
+  "name": "prezenter-nmithril",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "auth0-js": "^9.7.3",
+    "bulma": "^0.7.1",
     "mithril": "^1.1.6",
     "ramda": "^0.25.0"
   },

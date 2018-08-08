@@ -1,7 +1,7 @@
 const m = require('mithril')
 const root = document.getElementById('app')
 
-import "./index.css"
+import 'bulma/css/bulma.css'
 
 import App from './components/layout/App.jsx'
 

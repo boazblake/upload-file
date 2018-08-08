@@ -5,9 +5,9 @@ import NavButton from './../ui/NavButton.jsx';
 const NavBar = {
   view: () =>
             <div class="nav-bar">
-            <NavButton path={`/cfp`} icon={<i class="fa fa-microphone" />}></NavButton>
-            <NavButton path={`/conference`} icon={<i class="fa fa-users" />}></NavButton>
-            <NavButton path={`/entry`} icon={<i class="fa fa-edit" />}></NavButton>
+            <NavButton path={`/editor`} icon={<i class="fa fa-edit" />}></NavButton>
+            <NavButton path={`/organizer`} icon={<i class="fa fa-sitemap" />}></NavButton>
+            <NavButton path={`/slideshow`} icon={<i class="fab fa-slideshare" />}></NavButton>
             </div>
 };
 
