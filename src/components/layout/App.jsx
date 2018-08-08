@@ -6,6 +6,7 @@ import StageBanner from './../ui/StageBanner.jsx'
 import CardContainer from './../layout/CardContainer.jsx'
 import ConferenceCards from './../cards/ConferenceCards.jsx'
 import CFPCard from './../cards/CFPCard.jsx'
+import EntryForm from './../EntryForm.jsx'
 
 const ConferenceApp = cs => [
     <StageBanner action={_ => console.log(`logging out!`)} title="Conferences" />,
@@ -29,13 +30,15 @@ const CFPView = cs => [
 
 const FormView = _ => [
     <StageBanner action={_ => console.log(`logging out!`)} title="Add A Conference" />,
-    <CardContainer></CardContainer>
+    <CardContainer>
+      <EntryForm />
+    </CardContainer>
   ]
 
 
 
 //MOCK DATA
-import getMockData from './../../store/data.js'
+import {getMockData} from './../../store/data.js'
 const CONFERENCES = getMockData()
 
 
