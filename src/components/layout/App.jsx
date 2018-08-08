@@ -1,4 +1,7 @@
 const m = require('mithril');
+
+import Auth from './../../services/auth.js'
+
 import MainStage from './MainStage.jsx'
 import NavBar from './NavBar.jsx';
 
@@ -7,9 +10,21 @@ import CardContainer from './../layout/CardContainer.jsx'
 import ConferenceCards from './../cards/ConferenceCards.jsx'
 import CFPCard from './../cards/CFPCard.jsx'
 import EntryForm from './../EntryForm.jsx'
+import UIButton from './../ui/UIButton.jsx'
+
+const auth = new Auth()
+
+const WelcomeView = () => [
+  <h1 class="app-title">Conference Tracker</h1>,
+  <h2 class="app-greeting">Welcome</h2>,
+  <span class="app-description">Track Conferences and CFP Dates</span>,
+  <div class="login-button">
+    <UIButton action={()=>auth.login()} buttonName="Login"/>
+  </div>
+]
 
 const ConferenceApp = cs => [
-    <StageBanner action={_ => console.log(`logging out!`)} title="Conferences" />,
+    <StageBanner action={_ => auth.logout()} title="Conferences" />,
     <CardContainer>
     {
       cs.map( c => <ConferenceCards conference={c} />)
@@ -18,7 +33,7 @@ const ConferenceApp = cs => [
   ]
 
 const CFPView = cs => [
-    <StageBanner action={_ => console.log(`logging out!`)} title="Call For Papers" />,
+  <StageBanner action={_ => auth.logout()} title="Call For Papers" />,
     <CardContainer>
       {
         cs
@@ -29,7 +44,7 @@ const CFPView = cs => [
   ]
 
 const FormView = _ => [
-    <StageBanner action={_ => console.log(`logging out!`)} title="Add A Conference" />,
+    <StageBanner action={_ => auth.logout()} title="Add A Conference" />,
     <CardContainer>
       <EntryForm />
     </CardContainer>
@@ -43,21 +58,32 @@ const CONFERENCES = getMockData()
 
 
 const routes = {
+    '/auth':{
+      view: () => WelcomeView()
+    },
     '/conferences':{
       view: () => ConferenceApp(CONFERENCES)
     },
     '/cfp' : {
-      view: () => CFPView(CONFERENCES)
+      onmatch: () => auth.isAuthenticated() ?
+      ({view: () => CFPView(CONFERENCES)})
+        : m.route.set('/auth')
     },
     '/entry' : {
-      view: () => FormView(CONFERENCES)
+      onmatch: () => auth.isAuthenticated() ?
+      ({view: () => FormView(CONFERENCES)})
+        : m.route.set('/auth')
     }
   }
 
 const App = {
   oncreate: vnode =>{
     const MainStage = vnode.dom.querySelector('.main-stage')
-    return m.route(MainStage,'/conferences', routes)
+    // *** ADDING THIS HERE  ***
+   auth.handleAuthentication();
+   // *** IS VERY IMPORTANT ***
+
+    return m.route(MainStage,'/auth', routes)
   },
 
   view: ({children}) =>
