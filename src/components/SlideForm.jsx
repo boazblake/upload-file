@@ -6,7 +6,7 @@ const { v1  } = require('uuid')
 import {setMockData} from './../store/data.js'
 import UIButton from './ui/UIButton.jsx'
 
-const EntryForm = {
+const SlideForm = {
   oninit: previewText,
   data:{
     isSelected:false,
@@ -15,7 +15,7 @@ const EntryForm = {
   reset: () => console.log(this),
   view: vnode =>
     <section class="columns">
-      <form name="slide-form" id="slide-form" class="form column">
+      <form name="slide-form" id="slide-form" class="form column is-half">
         <label for="title" class="label">
           {`Slide Title`}
         </label>
@@ -25,11 +25,16 @@ const EntryForm = {
           {`Slide Contents`}
         </label>
         <textarea id="text" class="textarea" onkeyup={e => previewText(e, vnode.state)} name="text"  autocomplete="false" />
-        <UIButton action={dom => entryFormHandler(vnode.dom, vnode.attrs.position)} buttonName="Save" />
+        <UIButton action={dom => entryFormHandler(vnode.dom, vnode.attrs.list.length)} buttonName="Save" />
       </form>
-      <section class="coulmn">
-        <h1>PREVIEW ##</h1>
-      { m.trust(marked(vnode.state.contents || ''))}
+
+
+
+      <section id="preview" class="column is-half">
+        <h1 id="preview-title">PREVIEW ##</h1>
+      <div id="preview-text">
+        { m.trust(marked(vnode.state.contents || ''))}
+      </div>
       </section>
     </section>
 
@@ -53,4 +58,4 @@ const previewText = (e, state) => {
   return m.trust(marked(state.contents))
 }
 
-export default EntryForm
+export default SlideForm

@@ -15,7 +15,6 @@ import UIButton from './../ui/UIButton.jsx'
 const Organizer = slides => [
     <StageBanner action={_ => console.log(`logging out! ...`)} title="Organizer" />,
     <CardContainer>
-    {console.log('slides', slides)}
     {
       slides.map( slide => <ThumbCards slide={slide} />)
     }
@@ -36,7 +35,7 @@ const SlideShow = slides => [
 const SlideEditor = list => [
     <StageBanner action={_ => console.log(`logging out! ...`)} title="Add A Slide" />,
     <CardContainer>
-      <SlideForm position={list.length}/>
+      <SlideForm list={list}/>
     </CardContainer>
   ]
 

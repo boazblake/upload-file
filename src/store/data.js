@@ -2,8 +2,8 @@ const SLIDES = [{
     position:0,
     uuid:'1234abcd',
     title: "auth0 conf",
-    isSelected: true,
-    isEditing: true,
+    isSelected: false,
+    isEditing: false,
     text: `<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
     nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla
      quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris.
@@ -13,7 +13,7 @@ const SLIDES = [{
   { position:1,
     uuid:'564jhg',
     title: "Mithril conf",
-    isSelected: true,
+    isSelected: false,
     isEditing: false,
     text: `<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
     nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla
@@ -24,8 +24,8 @@ const SLIDES = [{
   { position:2,
     uuid:'897tr',
     title: "ngSurf",
-    isSelected: true,
-    isEditing: true,
+    isSelected: false,
+    isEditing: false,
     text: `<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
     nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla
      quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris.

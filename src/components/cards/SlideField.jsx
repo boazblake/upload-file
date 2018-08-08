@@ -3,7 +3,7 @@ const m = require('mithril')
 
 const SlideField = {
   view: ({attrs}) =>
-    <div class="box">
+    <div class="hero">
       {attrs.fieldValue}
     </div>
 }

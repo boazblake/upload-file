@@ -72,13 +72,19 @@ html {
     letter-spacing: 2px;
 }
 
-.card-container {
+#cards-container {
     flex: display;
     flex-direction: column;
-    overflow-y: scroll;
+    width: 100%;
 }
 
-.conference-card {
+.thumb-card {
+  width: 35%;
+  margin: 6px;
+}
+
+
+.slide-card {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -88,13 +94,23 @@ html {
     background: white;
 }
 
-.conference-fields {
+.label {
+  padding: 1em 0;
+  margin: 0.5em;
+  color: #EE5F28;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 110%;
+  letter-spacing: 1.5px;
+}
+
+.slide-fields {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
 
-.conference-field {
+.slide-field {
     display: flex;
     margin: 0.5em;
     font-size: 100%;
@@ -107,34 +123,41 @@ html {
     margin: 1em 0;
     padding: 1em;
     width: 50%;
+    font-weight: bold;
     background: #EE5F28;
     left: 0;
+    letter-spacing: 2px;
     right: 0;
+    text-transform: uppercase;
 }
 
-#entry-form {
+#preview {
     display: flex;
+    flex-direction: column;
+    background-color: white;
+    padding: 12px;
+}
+
+#preview-title {
+
+}
+#preview-text {
+  word-break: break-all;
+}
+
+#slide-form {
+    display: flex;
+    max-width: 100%;
     flex-direction: column;
     color: white;
 }
 
-#entry-form label {
+#slide-form label {
     padding: 1em 0;
 }
 
-#entry-form input[type="text"] {
+#slide-form input[type="text"] {
     margin: 0 0 0.5em 0;
     padding: 0.75em;
     font-size: 16px;
-}
-
-.form-question {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0;
-}
-
-.form-question label {
-    padding: 0;
 }
