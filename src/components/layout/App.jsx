@@ -12,8 +12,8 @@ import SlideForm from './../SlideForm.jsx'
 import UIButton from './../ui/UIButton.jsx'
 
 
-const Editor = slides => [
-    <StageBanner action={_ => console.log(`logging out! ...`)} title="Editor" />,
+const Organizer = slides => [
+    <StageBanner action={_ => console.log(`logging out! ...`)} title="Organizer" />,
     <CardContainer>
     {
       slides.map( slide => <ThumbCards slide={slide} />)
@@ -32,7 +32,7 @@ const SlideShow = slides => [
     </CardContainer>
   ]
 
-const FormView = _ => [
+const SlideEditor = _ => [
     <StageBanner action={_ => console.log(`logging out! ...`)} title="Add A Slide" />,
     <CardContainer>
       <SlideForm />
@@ -48,13 +48,13 @@ const SLIDES = getMockData()
 
 const routes = {
     '/organizer':{
-      view: () => Editor(SLIDES)
+      view: () => Organizer(SLIDES)
     },
     '/slideshow' : {
       view: () => SlideShow(SLIDES)
     },
     '/editor' : {
-      view: () => FormView(SLIDES)
+      view: () => SlideEditor(SLIDES)
     }
   }
 
@@ -66,10 +66,10 @@ const App = {
 
   view: ({children}) =>
   <div class="App">
+  <NavBar />
     <MainStage>
       {children}
     </MainStage>
-    <NavBar />
   </div>
 }
 

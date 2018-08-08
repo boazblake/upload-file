@@ -1,7 +1,7 @@
 const m = require('mithril');
 
 const MainStage = {
-  view: ({children}) => <div class="main-stage">{children}</div>
+  view: ({children}) => <section class="main-stage section">{children}</section>
 };
 
 export default MainStage;

@@ -1,10 +1,10 @@
 const m = require('mithril');
 
-const LogOutButton = {
+const AltButton = {
   view: ({attrs}) =>
         <div onclick={attrs.action}>
-          <i class="fa fa-sign-out-alt"></i>
+          <i class="fas fa-hand-peace"></i>
         </div>
 };
 
-export default LogOutButton;
+export default AltButton;

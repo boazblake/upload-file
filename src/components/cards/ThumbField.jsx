@@ -1,11 +1,11 @@
 const m = require('mithril')
 
 
-const ShowField = {
+const ThumbField = {
   view: ({attrs}) =>
-    <div class="box">
+    <div class="slide-field">
       {attrs.fieldValue}
     </div>
 }
 
-export default ShowField
+export default ThumbField
