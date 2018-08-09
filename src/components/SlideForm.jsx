@@ -1,6 +1,6 @@
 const m = require('mithril')
 const marked = require('marked')
-const {assoc,clone, fromPairs} = require('ramda');
+const { assoc, clone, filter, propEq, fromPairs } = require('ramda');
 const { v1  } = require('uuid')
 
 const log = m => v => {console.log(m,v); return v}
@@ -13,38 +13,33 @@ const saveSlide = (formDOM, position) => {
   let form = formDOM.querySelector('.form')
   const formData = new FormData(form)
   const newEntry = assoc('position',position,assoc('uuid',v1(),assoc('isEditing',false,assoc('isSelected',false,fromPairs(Array.from(formData.entries()))))))
-  // console.log('entry', newEntry)
   setMockData(newEntry)
+  console.log((Array.from(formData.entries())))
   form.reset()
 }
 
-const assignSlide = () => {
+const assignSlide = vnode => {
+  console.log( 'vnode', vnode)
+}
+
+const load = (vnode) => {
   let currentId = m.route.param('slideId')
-  console.log('cur', currentId)
+  let slide = filter(propEq('uuid', currentId),vnode.attrs.list)
+  slide.map(s => {
+    vnode.state.title = s.title
+    vnode.state.text = s.text
+  })
 }
 
-
-const previewText = (e, state) => {
-   let currentId = m.route.param('slideId')
-console.log('currentId', currentId)
-
-  state.contents = 'ADD TEXT'
-  if (e == undefined) return state
-  state.contents = e.target.value
-  return m.trust(marked(state.contents))
-}
-
-const load = (e, state) => {
-  console.log(e, state)
-  previewText(e, state)
-}
+const previewText = (ev, state) =>
+  ev.target ? state.text = ev.target.value  : ''
 
 const SlideForm = {
   oninit: load,
-  oncreate: assignSlide,
+  oncreate:previewText,
+  state:{},
   data:{
-    isSelected:false,
-    contents:'ADD TEXT'
+    text:'ADD TEXT'
   },
   reset: () => console.log(this),
   view: vnode =>
@@ -53,12 +48,12 @@ const SlideForm = {
         <label for="title" class="label">
           {`Slide Title`}
         </label>
-        <input id="title" class="input" name="title" type="text" autocomplete="false" />
+        <input id="title" class="input" name="title" type="text" autocomplete="false" value={vnode.state.title}/>
 
-        <label for="contents" class="label">
+        <label for="text" class="label">
           {`Slide Contents`}
         </label>
-        <textarea id="text" class="textarea" onkeyup={e => previewText(e, vnode.state)} name="text"  autocomplete="false" />
+        <textarea id="text" class="textarea" onkeyup={e => previewText(e, vnode.state)} name="text"  autocomplete="false" value={vnode.state.text} />
         <UIButton action={dom => saveSlide(vnode.dom, vnode.attrs.list.length)} buttonName="Save" />
       </form>
 
@@ -67,7 +62,7 @@ const SlideForm = {
       <section id="preview" class="column is-half">
         <h1 id="preview-title">PREVIEW ##</h1>
       <div id="preview-text">
-        { m.trust(marked(vnode.state.contents || ''))}
+        { m.trust(marked(vnode.state.text || ''))}
       </div>
       </section>
     </section>
