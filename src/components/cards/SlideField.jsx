@@ -1,11 +1,14 @@
-const m = require('mithril')
-
+const m = require('mithril');
+import marked from 'marked';
 
 const SlideField = {
-  view: ({attrs}) =>
+  view: ({ attrs }) => (
     <div class="hero">
+      m.trust(marked(
       {attrs.fieldValue}
+      ))
     </div>
-}
+  )
+};
 
-export default SlideField
+export default SlideField;
