@@ -4,6 +4,8 @@ import { compose, toLower, filter, prop, path } from 'ramda';
 
 import Task from 'mithril';
 
+const baseUrl = 'https://api.github.com';
+
 const log = m => v => {
   console.log(m, v);
   return v;
@@ -15,14 +17,14 @@ const byDescription = g =>
 const _getGists = username =>
   m.request({
     method: 'GET',
-    url: `https://api.github.com/users/${username}/gists`,
+    url: `${baseUrl}/users/${username}/gists`,
     withCredentials: false
   });
 
 const _getPresentations = gist_id =>
   m.request({
     method: 'GET',
-    url: `https://api.github.com/gists/${gist_id}`,
+    url: `${baseUrl}/gists/${gist_id}`,
     withCredentials: false
   });
 
@@ -34,47 +36,8 @@ const toPresentation = dto =>
   );
 
 const Requests = {
-  githubdata: {},
-  list: [],
   getGists: username => _getGists(username).then(filterForPresentations),
-  getPresentations: id => _getPresentations(id).then(toPresentation),
-  loadList: () =>
-    m
-      .request({
-        method: 'GET',
-        url: baseUrl + '/prezentations',
-        withCredentials: true
-      })
-      .then(data => {
-        console.log('data', data);
-        return (Requests.list = data || []);
-      }),
-
-  add: (slide, id) =>
-    m
-      .request({
-        method: 'POST',
-        url: baseUrl + `/prezentations`,
-        data: toViewModel(slide, id),
-        withCredentials: true
-      })
-      .then(data => {
-        console.log('data', data);
-        return Requests.list.push(data) || [];
-      }),
-
-  update: slide =>
-    m
-      .request({
-        method: 'PUT',
-        url: baseUrl + `/prezentations/${slide.id}`,
-        data: slide,
-        withCredentials: true
-      })
-      .then(data => {
-        console.log('data', data);
-        return Requests.list.push(data) || [];
-      })
+  getPresentations: id => _getPresentations(id).then(toPresentation)
 };
 
 module.exports = Requests;

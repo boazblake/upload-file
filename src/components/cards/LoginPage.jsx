@@ -1,9 +1,17 @@
 const m = require('mithril');
 
 import Task from 'data.task';
+import { compose, pluck, toLower, filter, prop, traverse } from 'ramda';
 
 import Requests from '../../services/Requests.js';
 import UIButton from './../ui/UIButton.jsx';
+
+const getPresentationsTask = gists => {
+  let presentations = [];
+  let ids = pluck('id', gists);
+  ids.map(id => Requests.getPresentations(id).then(p => presentations.push(p)));
+  return Task.of(presentations);
+};
 
 const loginTask = user =>
   new Task((rej, res) => Requests.getGists(user.getName()).then(res, rej));
@@ -13,11 +21,14 @@ const updateName = user => e => user.setName(e.target.value);
 const onError = error => console.error(error);
 
 const onSuccess = user => data => {
-  user.setGists(data);
+  user.setPrezentations(data);
   m.route.set('/prezentations');
 };
 
-const login = user => loginTask(user).fork(onError, onSuccess(user));
+const login = user =>
+  loginTask(user)
+    .chain(getPresentationsTask)
+    .fork(onError, onSuccess(user));
 
 const LoginPage = {
   view: vnode => (
