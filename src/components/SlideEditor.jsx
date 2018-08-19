@@ -21,15 +21,7 @@ const updateSlide = (formDOM, position, id) => {
   const newEntry = assoc(
     'position',
     position,
-    assoc(
-      'uuid',
-      v1(),
-      assoc(
-        'isEditing',
-        false,
-        assoc('isSelected', false, fromPairs(Array.from(formData.entries())))
-      )
-    )
+    assoc('id', id, fromPairs(Array.from(formData.entries())))
   );
   console.log(newEntry);
   form.reset();
@@ -37,7 +29,6 @@ const updateSlide = (formDOM, position, id) => {
 
 const cancelUpdateSlide = state => {
   let slide = filter(bySlideId(state.slide.id), state.slides);
-  slide.map(s => (s.isEditing = false));
   history.go(-1);
 };
 
@@ -56,11 +47,7 @@ const newSlide = (formDOM, position) => {
     assoc(
       'uuid',
       v1(),
-      assoc(
-        'isEditing',
-        false,
-        assoc('isSelected', false, fromPairs(Array.from(formData.entries())))
-      )
+      assoc('isSelected', false, fromPairs(Array.from(formData.entries())))
     )
   );
   console.log(newEntry);
@@ -85,10 +72,7 @@ const isEditingSlide = (currentId, { state }) => {
   let slide = filter(bySlideId(currentId), state.slides);
   console.log('slide', slide);
   state.actions = editingSlide;
-  slide.map(s => {
-    s.isEditing = true;
-    state.slide = s;
-  });
+  slide.map(s => (state.slide = s));
   console.log('isEditing: id, state', currentId, state);
 };
 

@@ -1,5 +1,7 @@
 const m = require('mithril');
 
+import { contains, without, not, lensProp, over, compose } from 'ramda';
+
 import SlideSelectField from './SlideSelectField.jsx';
 import User from './../../services/user.js';
 
@@ -9,38 +11,33 @@ const SlideSelectCard = {
   },
   view: vnode => {
     const slides = vnode.attrs.slide.slides;
-    console.log(slides);
-    return slides.map(slide => (
-      <div class="thumb-card card" draggable="true">
-        <div class="slide-fields">
-          <SlideSelectField fieldValue={`${slide.title}`} />
-          <SlideSelectField
-            action={() => toggleSelection(slide)}
-            fieldColor={{ color: setColor(slide.isSelected) }}
-            fieldValue={<i class="fa fa-star" />}
-          />
-          <SlideSelectField
-            action={() => editCard(slide)}
-            fieldValue={<i class="fas fa-pen-alt" />}
-          />
+    console.log(vnode);
+    return slides.map(slide => {
+      return (
+        <div class="thumb-card card" draggable="true">
+          <div class="slide-fields">
+            <SlideSelectField fieldValue={`${slide.title}`} />
+            <SlideSelectField
+              action={() => User.toggleSelection(slide)}
+              fieldColor={{ color: setColor(User.slideShow)(slide) }}
+              fieldValue={<i class="fa fa-star" />}
+            />
+            <SlideSelectField
+              action={() => editCard(slide)}
+              fieldValue={<i class="fas fa-pen-alt" />}
+            />
+          </div>
         </div>
-      </div>
-    ));
+      );
+    });
   }
 };
 
-const toggleSelection = slide => {
-  slide.isSelected = !slide.isSelected;
-  return slide;
-};
+const selectedLens = lensProp('isSelected');
 
-const setColor = isSelected => {
-  return isSelected ? 'yellow' : 'green';
-};
+const setColor = slideshow => slide =>
+  contains(slide, slideshow) ? 'yellow' : 'green';
 
-export const editCard = slide => {
-  slide.isEditing = true;
-  return m.route.set(`/editor/${slide.id}`);
-};
+export const editCard = slide => m.route.set(`/editor/${slide.id}`);
 
 export default SlideSelectCard;
