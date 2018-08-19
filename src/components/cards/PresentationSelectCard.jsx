@@ -3,22 +3,19 @@ const m = require('mithril');
 import PresentationSelectField from './PresentationSelectField.jsx';
 
 const PresentationSelectCard = {
-  view: vnode => {
-    console.log('PresentationSelectCard', vnode);
-    return (
-      <div class="thumb-card card" draggable="true">
-        <div class="slide-fields">
-          <PresentationSelectField
-            fieldValue={`${vnode.attrs.presentations.Title}`}
-          />
-          <PresentationSelectField
-            action={() => selectPresentation(vnode.attrs.presentationId)}
-            fieldValue={<i class="fas fa-select" />}
-          />
-        </div>
+  view: vnode => (
+    <div class="thumb-card card" draggable="true">
+      <div class="slide-fields">
+        <PresentationSelectField
+          fieldValue={`${vnode.attrs.presentations.Title}`}
+        />
+        <PresentationSelectField
+          action={() => selectPresentation(vnode.attrs.presentationId)}
+          fieldValue={<i class="fas fa-select" />}
+        />
       </div>
-    );
-  }
+    </div>
+  )
 };
 
 const toggleSelection = slide => {

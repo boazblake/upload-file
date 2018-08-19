@@ -5,7 +5,6 @@ const User = {
   setName: name => (User.name = name),
   getName: () => User.name,
   setPrezentations: g => (User.prezentations = g),
-  setSlides: p => (User.slides = p),
-  setPs: d => (User.Ps = d)
+  setSlides: p => (User.slides = p)
 };
 export default User;

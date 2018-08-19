@@ -1749,6 +1749,10 @@ create-hmac@^1.1.0, create-hmac@^1.1.2, create-hmac@^1.1.4:
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
 
+crocks@^0.10.1:
+  version "0.10.1"
+  resolved "https://registry.yarnpkg.com/crocks/-/crocks-0.10.1.tgz#be545fe089aeba301cc75868aac82efc9c2b3245"
+
 cross-spawn@^5.0.1:
   version "5.1.0"
   resolved "https://registry.yarnpkg.com/cross-spawn/-/cross-spawn-5.1.0.tgz#e8bd0efee58fcff6f8f94510a0a554bbfa235449"
@@ -1894,6 +1898,13 @@ d@1:
   resolved "https://registry.yarnpkg.com/d/-/d-1.0.0.tgz#754bb5bfe55451da69a58b94d45f4c5b0462d58f"
   dependencies:
     es5-ext "^0.10.9"
+
+daggy@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/daggy/-/daggy-1.2.0.tgz#f0151fcffd58f1742d63d8c53a7556e84b258cb4"
+  dependencies:
+    sanctuary-type-classes "3.0.0"
+    sanctuary-type-identifiers "1.0.0"
 
 dargs@^5.1.0:
   version "5.1.0"
@@ -5413,6 +5424,16 @@ safe-regex@^1.1.0:
 "safer-buffer@>= 2.1.2 < 3":
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/safer-buffer/-/safer-buffer-2.1.2.tgz#44fa161b0187b9549dd84bb91802f9bd8385cd6a"
+
+sanctuary-type-classes@3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/sanctuary-type-classes/-/sanctuary-type-classes-3.0.0.tgz#e4cf422abceb8c78b6f625d84d61fdb5c6d44116"
+  dependencies:
+    sanctuary-type-identifiers "1.0.x"
+
+sanctuary-type-identifiers@1.0.0, sanctuary-type-identifiers@1.0.x:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/sanctuary-type-identifiers/-/sanctuary-type-identifiers-1.0.0.tgz#e8f359f006cb5e624cfb8464603fc114608bde9f"
 
 sax@^1.2.4, sax@~1.2.1:
   version "1.2.4"

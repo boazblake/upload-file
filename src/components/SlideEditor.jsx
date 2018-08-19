@@ -1,14 +1,20 @@
 const m = require('mithril');
 const marked = require('marked');
-const { assoc, clone, filter, propEq, fromPairs } = require('ramda');
+const { assoc, clone, filter, propEq, fromPair, map } = require('ramda');
 const { v1 } = require('uuid');
 import SlideForm from './SlideForm.jsx';
+import SlideModel from './../models/index.js';
+
+const STATE = { slide: {}, slides: [], actions: {} };
+
+const bySlideId = id => propEq('id', parseInt(id));
+
 const log = m => v => {
   console.log(m, v);
   return v;
 };
 
-const saveSlide = (formDOM, position) => {
+const updateSlide = (formDOM, position, id) => {
   let form = formDOM.querySelector('.form');
   const formData = new FormData(form);
   console.log(fromPairs(Array.from(formData.entries())));
@@ -29,28 +35,69 @@ const saveSlide = (formDOM, position) => {
   form.reset();
 };
 
-const isAddingSlide = vnode => {
-  console.log('addiong ne slide ', vnode);
-  return vnode;
+const cancelUpdateSlide = state => {
+  let slide = filter(bySlideId(state.slide.id), state.slides);
+  slide.map(s => (s.isEditing = false));
+  history.go(-1);
 };
 
-const isEditingSlide = (currentId, slides, vnode) => {
-  console.log('is editing a slide ', currentId, slides, vnode);
-  const bySlideId = propEq('id', parseInt(currentId));
-  let slide = filter(bySlideId, slides);
-  console.log('si this the slide ?', slide);
+const editingSlide = {
+  saveSlide: updateSlide,
+  cancelEditing: cancelUpdateSlide
+};
+
+const newSlide = (formDOM, position) => {
+  let form = formDOM.querySelector('.form');
+  const formData = new FormData(form);
+  console.log(fromPairs(Array.from(formData.entries())));
+  const newEntry = assoc(
+    'position',
+    position,
+    assoc(
+      'uuid',
+      v1(),
+      assoc(
+        'isEditing',
+        false,
+        assoc('isSelected', false, fromPairs(Array.from(formData.entries())))
+      )
+    )
+  );
+  console.log(newEntry);
+  form.reset();
+};
+
+const cancelNewSlide = state => {
+  history.go(-1);
+};
+
+const addingSlide = {
+  saveSlide: newSlide,
+  cancelEditing: cancelNewSlide
+};
+
+const isAddingSlide = ({ state }) => {
+  state.slide = SlideModel(0, v1(), '', false, true, '');
+  return (state.actions = addingSlide);
+};
+
+const isEditingSlide = (currentId, { state }) => {
+  let slide = filter(bySlideId(currentId), state.slides);
+  console.log('slide', slide);
+  state.actions = editingSlide;
   slide.map(s => {
-    vnode.state.title = s.title;
-    vnode.state.contents = s.contents;
-    vnode.state.id = currentId;
+    s.isEditing = true;
+    state.slide = s;
   });
+  console.log('isEditing: id, state', currentId, state);
 };
 
 const load = vnode => {
-  let slides = vnode.attrs.list.slides;
-  console.log('slideform slides', slides);
+  vnode.state = clone(STATE);
+  vnode.state.slides = vnode.attrs.list.slides;
+
   let currentId = m.route.param('slideId');
-  return currentId ? isEditingSlide(currentId, slides, vnode) : isAddingSlide();
+  currentId ? isEditingSlide(currentId, vnode) : isAddingSlide(vnode);
 };
 
 const previewText = (ev, state) =>
@@ -59,12 +106,11 @@ const previewText = (ev, state) =>
 const SlideEditor = {
   oninit: load,
   oncreate: previewText,
-  state: {},
-  data: {
-    text: 'ADD TEXT'
-  },
   reset: () => console.log(this),
-  view: vnode => <SlideForm slide={vnode.state} saveSlide={saveSlide} />
+  view: vnode => {
+    console.log('state??!?!?!', vnode.state);
+    return <SlideForm state={vnode.state} />;
+  }
 };
 
 export default SlideEditor;

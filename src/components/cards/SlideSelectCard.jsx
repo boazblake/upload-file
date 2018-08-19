@@ -9,7 +9,7 @@ const SlideSelectCard = {
   },
   view: vnode => {
     const slides = vnode.attrs.slide.slides;
-    console.log('SlideSelectCard', vnode);
+    console.log(slides);
     return slides.map(slide => (
       <div class="thumb-card card" draggable="true">
         <div class="slide-fields">

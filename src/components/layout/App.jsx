@@ -48,6 +48,13 @@ const SlideShow = slides => [
 ];
 
 const SLIDE_EDITOR = list => [
+  <StageBanner action={_ => m.route.set('/login')} title="Edit A Slide" />,
+  <CardContainer>
+    <SlideEditor list={list} />
+  </CardContainer>
+];
+
+const SLIDE_ADDER = list => [
   <StageBanner action={_ => m.route.set('/login')} title="Add A Slide" />,
   <CardContainer>
     <SlideEditor list={list} />
@@ -60,6 +67,9 @@ const routes = {
   },
   '/prezentations': {
     view: () => Presentations(User.prezentations)
+  },
+  '/newSlide': {
+    view: () => SLIDE_ADDER(User.slides)
   },
   '/slides/:PresentationId"': {
     view: () => Slides(User.prezentations)
