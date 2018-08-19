@@ -3,7 +3,7 @@ const marked = require('marked');
 const { assoc, clone, filter, propEq, fromPair, map } = require('ramda');
 const { v1 } = require('uuid');
 import SlideForm from './SlideForm.jsx';
-import SlideModel from './../models/index.js';
+import { SlideModel } from './../models/index.js';
 
 const STATE = { slide: {}, slides: [], actions: {} };
 

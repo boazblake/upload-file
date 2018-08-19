@@ -1,7 +1,6 @@
 const m = require('mithril');
-
+var Stream = require('mithril/stream');
 import { compose, toLower, filter, prop, path } from 'ramda';
-
 import Task from 'mithril';
 
 const baseUrl = 'https://api.github.com';

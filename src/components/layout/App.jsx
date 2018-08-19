@@ -8,7 +8,7 @@ import StageBanner from './../ui/StageBanner.jsx';
 import CardContainer from './CardContainer.jsx';
 import PresentationSelectContainer from './PresentationSelectContainer.jsx';
 import LoginPage from './../cards/LoginPage.jsx';
-import SlideSelectCard from './../cards/SlideSelectCard.jsx';
+import SelectSlideContainer from './../layout/SelectSlideContainer.jsx';
 import SlideCard from './../cards/SlideCard.jsx';
 import SlideEditor from './../SlideEditor.jsx';
 
@@ -30,7 +30,7 @@ const Slides = items => [
   <StageBanner action={_ => m.route.set('/login')} title="Slides" />,
   <CardContainer>
     {items.map(slide => (
-      <SlideSelectCard slide={slide} />
+      <SelectSlideContainer slide={slide} />
     ))}
   </CardContainer>
 ];
