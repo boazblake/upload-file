@@ -19,22 +19,24 @@ const SlideSelectCard = {
     console.log("vnode oncreate?", this);
   },
   view: function(vnode) {
-    return m(
-      "div",
-      { class: "thumb-card card", key: this.slideVM },
-      <div class="slide-fields">
-        <SlideSelectField fieldValue={`${this.slide.title}`} />
-        <SlideSelectField
-          action={() => this.actions.toggleSelection(this.slide)(this.slideVM)}
-          fieldColor={{
-            color: this.slideVM.isSelected() ? "yellow" : "green"
-          }}
-          fieldValue={<i class="fa fa-star" />}
-        />
-        <SlideSelectField
-          action={() => this.actions.editCard(slide)}
-          fieldValue={<i class="fas fa-pen-alt" />}
-        />
+    return (
+      <div class="thumb-card card" key={this.slideVM.position(this.slide.id)}>
+        <div class="slide-fields">
+          <SlideSelectField fieldValue={`${this.slide.title}`} />
+          <SlideSelectField
+            action={() =>
+              this.actions.toggleSelection(this.slide)(this.slideVM)
+            }
+            fieldColor={{
+              color: this.slideVM.isSelected() ? "yellow" : "green"
+            }}
+            fieldValue={<i class="fa fa-star" />}
+          />
+          <SlideSelectField
+            action={() => this.actions.editCard(slide)}
+            fieldValue={<i class="fas fa-pen-alt" />}
+          />
+        </div>
       </div>
     );
   }
