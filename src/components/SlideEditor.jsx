@@ -7,7 +7,7 @@ import { SlideModel } from './../models/index.js';
 
 const STATE = { slide: {}, slides: [], actions: {} };
 
-const bySlideId = id => propEq('id', parseInt(id));
+const bySlideId = id => propEq('id', id);
 
 const log = m => v => {
   console.log(m, v);

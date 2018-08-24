@@ -29,18 +29,10 @@ const _getPresentations = gist_id =>
 
 const filterForPresentations = gists => filter(byDescription, gists);
 
-const toPresentation = dto => {
-  console.log(
-    'dto',
-    JSON.parse(
-      path(['files', 'object-oriented-prezentation.json', 'content'], dto)
-    )
-  );
-
-  return JSON.parse(
+const toPresentation = dto =>
+  JSON.parse(
     path(['files', 'object-oriented-prezentation.json', 'content'], dto)
   );
-};
 
 const Requests = {
   getGists: username => _getGists(username).then(filterForPresentations),

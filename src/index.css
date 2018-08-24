@@ -4,78 +4,78 @@
 
 body,
 html {
-    height: 100%;
-    width: 100%;
-    padding: 0;
-    margin: 0;
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
 }
 
 #app {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    width: 100%;
-    background: #003863;
-    font-family: 'Rubik', sans-serif;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  background: #003863;
+  font-family: 'Rubik', sans-serif;
 }
 
 .App {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
 }
 
 .nav-bar {
-    flex: 1;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    background: #EE5F28;
+  flex: 1;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background: #ee5f28;
 }
 
 .main-stage {
-    flex: 10;
-    display: flex;
-    flex-direction: column;
-    padding: 1em;
+  flex: 10;
+  display: flex;
+  flex-direction: column;
+  padding: 1em;
 }
 
 .nav-button {
-    color: white;
-    font-size: 150%;
-    cursor: pointer;
+  color: white;
+  font-size: 150%;
+  cursor: pointer;
 }
 
 .stage-banner {
-    position: relative;
-    margin: 0.5em;
+  position: relative;
+  margin: 0.5em;
 }
 
 .stage-banner svg {
-    position: absolute;
-    color: #EE5F28;
-    right: 0;
-    top: 47%;
-    transform: translateY(-50%);
-    font-size: 120%;
+  position: absolute;
+  color: #ee5f28;
+  right: 0;
+  top: 47%;
+  transform: translateY(-50%);
+  font-size: 120%;
 }
 
 .stage-title {
-    text-align: center;
-    padding: 1em 0;
-    margin: 0.5em;
-    color: #EE5F28;
-    text-transform: uppercase;
-    font-weight: bold;
-    font-size: 110%;
-    letter-spacing: 2px;
+  text-align: center;
+  padding: 1em 0;
+  margin: 0.5em;
+  color: #ee5f28;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 110%;
+  letter-spacing: 2px;
 }
 
 #cards-container {
-    flex: display;
-    flex-direction: column;
-    width: 100%;
+  flex: display;
+  flex-direction: column;
+  width: 100%;
 }
 
 .thumb-card {
@@ -83,21 +83,20 @@ html {
   margin: 6px;
 }
 
-
 .slide-card {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 0.5em;
-    margin: 0.5em;
-    font-size: 100%;
-    background: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0.5em;
+  margin: 0.5em;
+  font-size: 100%;
+  background: white;
 }
 
 .label {
   padding: 1em 0;
   margin: 0.5em;
-  color: #EE5F28;
+  color: #ee5f28;
   text-transform: uppercase;
   font-weight: bold;
   font-size: 110%;
@@ -105,59 +104,60 @@ html {
 }
 
 .slide-fields {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .slide-field {
-    display: flex;
-    margin: 0.5em;
-    font-size: 100%;
+  display: flex;
+  margin: 0.5em;
+  font-size: 100%;
 }
 
 .ui-button {
-    display: flex;
-    justify-content: center;
-    align-self: center;
-    margin: 1em 0;
-    padding: 1em;
-    width: 50%;
-    font-weight: bold;
-    background: #EE5F28;
-    left: 0;
-    letter-spacing: 2px;
-    right: 0;
-    text-transform: uppercase;
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  margin: 1em 0;
+  padding: 1em;
+  width: 50%;
+  font-weight: bold;
+  background: #ee5f28;
+  left: 0;
+  letter-spacing: 2px;
+  right: 0;
+  text-transform: uppercase;
 }
 
-#preview {
-    display: flex;
-    flex-direction: column;
-    background-color: white;
-    padding: 12px;
+#editor-preview {
+  overflow-y: scroll;
+  overflow-x: visible;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  padding-left: 30px;
 }
 
 #preview-title {
-
 }
 #preview-text {
   word-break: break-all;
 }
 
 #slide-form {
-    display: flex;
-    max-width: 100%;
-    flex-direction: column;
-    color: white;
+  display: flex;
+  max-width: 100%;
+  flex-direction: column;
+  color: white;
 }
 
 #slide-form label {
-    padding: 1em 0;
+  padding: 1em 0;
 }
 
-#slide-form input[type="text"] {
-    margin: 0 0 0.5em 0;
-    padding: 0.75em;
-    font-size: 16px;
+#slide-form input[type='text'] {
+  margin: 0 0 0.5em;
+  padding: 0.75em;
+  font-size: 16px;
 }

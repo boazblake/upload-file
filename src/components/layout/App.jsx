@@ -41,8 +41,8 @@ const SlideShow = slides => [
     title="TODO:: GET DB NAME HERE"
   />,
   <CardContainer>
-    {slides.filter(slide => slide.isSelected).map(selected => (
-      <SlideCard isSelected={true} slide={selected} />
+    {slides.map(slide => (
+      <SlideCard isSelected={true} slide={slide} />
     ))}
   </CardContainer>
 ];
@@ -75,7 +75,7 @@ const routes = {
     view: () => Slides(User.prezentations)
   },
   '/slideshow': {
-    view: () => SlideShow(User.prezentations)
+    view: () => SlideShow(User.slideShow)
   },
   '/editor/:slideId': {
     view: () => SLIDE_EDITOR(User.slides)

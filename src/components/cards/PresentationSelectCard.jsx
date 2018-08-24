@@ -4,7 +4,7 @@ import PresentationSelectField from './PresentationSelectField.jsx';
 
 const PresentationSelectCard = {
   view: vnode => (
-    <div class="thumb-card card" draggable="true">
+    <div class="thumb-card card">
       <div class="slide-fields">
         <PresentationSelectField
           fieldValue={`${vnode.attrs.presentations.Title}`}
