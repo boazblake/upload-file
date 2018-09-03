@@ -7,7 +7,7 @@ const PresentationSelectCard = {
     <div class="thumb-card card">
       <div class="slide-fields">
         <PresentationSelectField
-          fieldValue={`${vnode.attrs.presentations.Title}`}
+          fieldValue={`${vnode.attrs.presentation.title}`}
         />
         <PresentationSelectField
           action={() => selectPresentation(vnode.attrs.presentationId)}
@@ -16,7 +16,7 @@ const PresentationSelectCard = {
       </div>
     </div>
   )
-};
+}
 
 const toggleSelection = slide => {
   slide.isSelected = !slide.isSelected;
