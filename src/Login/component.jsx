@@ -5,12 +5,23 @@ import UIButton from '../components/ui/UIButton.jsx';
 import { setText, loginTask } from './model.js'
 
 
-const createLoginPage = update => {
-    const updateText = setText(update)
-    const onError = log('error')
-    const onSuccess = log('sucess')
-    const login = name =>
-        loginTask(name).fork(onError, onSuccess)
+const createLoginPage = (navigator, update) => {
+    let state = {
+        status: { error: false, msg: '' }
+    }
+    const updateText = field => setText(update)(field)
+    const onError = state => e => {
+        state.status.error = true
+        state.status.msg = 'Error with logging in'
+    }
+
+    const onSuccess = state => name => _ => {
+        console.log('name', name)
+        state.status.error = false
+        navigator.navigateTo('presentations', { name })
+    }
+
+    const login = name => loginTask(name).fork(onError(state), onSuccess(state)(name))
 
     return {
         view: ({ attrs: { model } }) => {
@@ -20,6 +31,7 @@ const createLoginPage = update => {
                     Save Your presentations as gists.
                 </h2>
                 <input class="input" value={model.user.name} oninput={updateText("name")} />
+                {state.status.msg}
                 <UIButton action={() => login(model.user.name)} buttonName="LOGIN" />
             </div>
         }

@@ -1,6 +1,6 @@
 import O from "patchinko/constant"
-import Requests from '../services/Requests'
-import Task from 'data.task'
+import { getGistsTask } from '../services/Requests'
+
 export const setText = update => field => e => update({ user: O({ [field]: e.target.value }) })
 
-export const loginTask = name => Task.of(Requests.getGists(name))
+export const loginTask = name => getGistsTask(name)

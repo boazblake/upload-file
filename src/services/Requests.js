@@ -1,9 +1,10 @@
 const m = require('mithril');
+import Task from 'data.task'
+
 import { tagged } from 'daggy'
 import { log } from './../utils/index.js'
 var Stream = require('mithril/stream');
 import { map, compose, toLower, filter, prop, path, test, toPairs, addIndex } from 'ramda';
-import { resolve } from 'upath';
 
 const mapIndexed = addIndex(map)
 
@@ -31,12 +32,13 @@ const byDescription =
 
 const filterForPresentations = compose(filter(byDescription))
 
-const _getGists = username =>
+const _getGistsTask = username => new Task((rej, res) =>
   m.request({
     method: 'GET',
     url: `${baseUrl}/users/${username}/gists`,
     withCredentials: false
-  });
+  }).then(res, rej)
+)
 
 const _getPresentations = gist_id =>
   m.request({
@@ -46,7 +48,7 @@ const _getPresentations = gist_id =>
   });
 
 const Requests = {
-  getGists: username => _getGists(username).then(filterForPresentations).then(log('gists??')),
+  getGistsTask: username => _getGistsTask(username).map(filterForPresentations),
   getPresentations: id => _getPresentations(id).then(toPresentation)
 };
 
