@@ -8,6 +8,7 @@ import { createNavigator } from './services/navigator.js'
 
 import createLoginPage from './Login/component.jsx'
 import createPresentationsPage from './Presentations/component.jsx'
+import createSlidesSelectionPage from './SlidesSelection/component.jsx'
 
 // import MainStage from './components/layout/MainStage.js';
 import StageBanner from './components/ui/StageBanner.jsx';
@@ -45,19 +46,18 @@ const createPresentationsView = (navigator, update) => {
   }
 }
 
-const Presentations = model => [
-  <StageBanner action={_ => m.route.set('/login')} title="Presentations" />,
-  <CardContainer>
-    <PresentationSelectContainer model={model} />
-  </CardContainer>
-];
-
-const Slides = model => [
-  <StageBanner action={_ => m.route.set('/login')} title="Slides" />,
-  <CardContainer>
-    <SelectSlideContainer model={model} />
-  </CardContainer>
-];
+const createSlidesView = (navigator, update) => {
+  const SlidesPage = createSlidesSelectionPage(navigator, update)
+  return {
+    view: ({ attrs: { model } }) =>
+      [
+        <StageBanner action={_ => m.route.set('/login')} title="Slides" />,
+        <CardContainer>
+          <SlidesPage model={model} />
+        </CardContainer>
+      ]
+  }
+}
 
 const SlideShow = model => [
   <StageBanner
@@ -105,6 +105,7 @@ const OLDroutes = {
 const routes = update => navigator => [
   { pageId: "LoginView", component: createLoginView(navigator, update), route: "/login" },
   { pageId: "presentations", component: createPresentationsView(navigator, update), route: "/presentations/:name" },
+  { pageId: "slidesSelection", component: createSlidesView(navigator, update), route: "/presentations/:name/:presentationId" },
 ]
 
 const createApp = update => {

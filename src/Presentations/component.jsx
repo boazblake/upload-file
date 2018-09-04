@@ -1,5 +1,5 @@
 import m from 'mithril'
-import { loadTask } from './model.js'
+import { loadTask, updatePresentations, updateCurrentPresentationId } from './model.js'
 import { log } from '../utils/index'
 import PresentationSelectField from '../components/cards/PresentationSelectField.jsx'
 
@@ -7,12 +7,14 @@ const createPresentationsPage = (navigator, update) => {
     let state = {
         status: 'loading', error: ''
     }
-    const selectPresentation = id =>
-        m.route.set(`/slides/${id}`);
+    const selectPresentation = (id, name) => {
+        updateCurrentPresentationId(update)(id)
+        navigator.navigateTo('slidesSelection', { name: name, presentationId: id })
+    }
 
     const onSuccess = state => model => result => {
         state.error = ""
-        model.presentations = result
+        updatePresentations(update)(result)
         state.status = 'loaded'
     }
 
@@ -24,16 +26,16 @@ const createPresentationsPage = (navigator, update) => {
 
     return {
         oninit: ({ attrs: { model } }) => loadTask(model.gists).fork(onError(state), onSuccess(state)(model)),
-        view: ({ attrs: { model: { presentations } } }) => {
+        view: ({ attrs: { model } }) => {
             if (state.status == 'loaded') {
-                return presentations.map(p =>
+                return model.presentations.map(p =>
                     <div class="thumb-card card">
                         <div class="slide-fields">
                             <PresentationSelectField
                                 fieldValue={p.title}
                             />
                             <PresentationSelectField
-                                action={() => selectPresentation(p.id)}
+                                action={() => selectPresentation(p.id, model.user.name)}
                                 fieldValue={<i class="fas fa-select" />}
                             />
                         </div>

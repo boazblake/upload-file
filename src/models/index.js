@@ -1,4 +1,5 @@
 const Model = {
+  currentPresentationId: null,
   gists: [],
   presentations: [],
   slides: [],
