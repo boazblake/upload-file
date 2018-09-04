@@ -2,7 +2,7 @@ import { log } from '../utils/index'
 import m from 'mithril'
 import { map } from 'ramda'
 import UIButton from '../components/ui/UIButton.jsx';
-import { setText, loginTask } from './model.js'
+import { setText, loginTask, updateGists } from './model.js'
 
 
 const createLoginPage = (navigator, update) => {
@@ -15,9 +15,9 @@ const createLoginPage = (navigator, update) => {
         state.status.msg = 'Error with logging in'
     }
 
-    const onSuccess = state => name => _ => {
-        console.log('name', name)
+    const onSuccess = state => name => data => {
         state.status.error = false
+        updateGists(update)(data)
         navigator.navigateTo('presentations', { name })
     }
 

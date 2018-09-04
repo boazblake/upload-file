@@ -7,7 +7,7 @@ import Model from './models/index.js';
 import { createNavigator } from './services/navigator.js'
 
 import createLoginPage from './Login/component.jsx'
-import createPresentationsPage from './Login/component.jsx'
+import createPresentationsPage from './Presentations/component.jsx'
 
 // import MainStage from './components/layout/MainStage.js';
 import StageBanner from './components/ui/StageBanner.jsx';
@@ -33,13 +33,13 @@ const createLoginView = (navigator, update) => {
 }
 
 const createPresentationsView = (navigator, update) => {
-  const presentationsPage = createPresentationsPage(navigator, update)
+  const PresentationsPage = createPresentationsPage(navigator, update)
   return {
     view: ({ attrs: { model } }) =>
       [
         <StageBanner action={_ => m.route.set('/login')} title="Presentations" />,
         <CardContainer>
-          <presentationsPage model={model} />
+          <PresentationsPage model={model} />
         </CardContainer>
       ]
   }

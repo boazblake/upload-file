@@ -1,4 +1,5 @@
 const Model = {
+  gists: [],
   presentations: [],
   slides: [],
   slideShow: [],

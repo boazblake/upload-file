@@ -32,24 +32,26 @@ const byDescription =
 
 const filterForPresentations = compose(filter(byDescription))
 
-const _getGistsTask = username => new Task((rej, res) =>
-  m.request({
-    method: 'GET',
-    url: `${baseUrl}/users/${username}/gists`,
-    withCredentials: false
-  }).then(res, rej)
-)
+const _getGistsTask = username =>
+  new Task((rej, res) =>
+    m.request({
+      method: 'GET',
+      url: `${baseUrl}/users/${username}/gists`,
+      withCredentials: false
+    }).then(res, rej))
 
-const _getPresentations = gist_id =>
-  m.request({
-    method: 'GET',
-    url: `${baseUrl}/gists/${gist_id}`,
-    withCredentials: false
-  });
+const _getPresentationsTask = gist_id =>
+  new Task((rej, res) =>
+    m.request({
+      method: 'GET',
+      url: `${baseUrl}/gists/${gist_id}`,
+      withCredentials: false
+    }).then(res, rej))
+
 
 const Requests = {
   getGistsTask: username => _getGistsTask(username).map(filterForPresentations),
-  getPresentations: id => _getPresentations(id).then(toPresentation)
+  getPresentationsTask: id => _getPresentationsTask(id).map(toPresentation)
 };
 
 module.exports = Requests;
