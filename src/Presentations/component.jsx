@@ -24,6 +24,11 @@ const createPresentationsPage = (navigator, update) => {
         state.error = 'error with fetching presentations'
     }
 
+    const reset = state =>
+        state = {
+            status: 'loading', error: ''
+        }
+
     return {
         oninit: ({ attrs: { model } }) => loadTask(model.gists).fork(onError(state), onSuccess(state)(model)),
         view: ({ attrs: { model } }) => {
@@ -42,7 +47,7 @@ const createPresentationsPage = (navigator, update) => {
                     </div>
                 )
             }
-        }
+        }, onremove: () => reset()
     }
 }
 

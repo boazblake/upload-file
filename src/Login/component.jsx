@@ -23,6 +23,9 @@ const createLoginPage = (navigator, update) => {
 
     const login = name => loginTask(name).fork(onError(state), onSuccess(state)(name))
 
+    const reset = state =>
+        state = { error: false, msg: '' }
+
     return {
         view: ({ attrs: { model } }) => {
             return <div class="login container">
@@ -34,7 +37,8 @@ const createLoginPage = (navigator, update) => {
                 {state.status.msg}
                 <UIButton action={() => login(model.user.name)} buttonName="LOGIN" />
             </div>
-        }
+        },
+        onremove: () => reset()
     }
 }
 

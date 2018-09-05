@@ -5,6 +5,7 @@ import { contains, without, not, lensProp, over, compose } from "ramda";
 import SlideSelectField from "./SlideSelectField.jsx";
 
 const SlideSelectCard = vnode => {
+  console.log(vnode)
   const state = vnode.attrs.state
   const actions = {
     editCard: vnode.attrs.edit,

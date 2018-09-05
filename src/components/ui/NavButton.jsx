@@ -1,8 +1,8 @@
 const m = require('mithril');
 
 const NavButton = {
-  view: ({attrs}) =>
-    <a class="nav-button" href={`#!${attrs.path}`}>{attrs.icon}</a>
+  view: ({ attrs }) =>
+    <button class="nav-button" onclick={attrs.action}>{attrs.icon}</button>
 };
 
 export default NavButton;

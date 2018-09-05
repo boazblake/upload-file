@@ -13,7 +13,7 @@ const update = stream()
 const App = createApp(update)
 const models = stream.scan(O, App.model(), update)
 
-const AppStart = Object.keys(App.navigator.routes).reduce((result, route) => {
+const Routes = Object.keys(App.navigator.routes).reduce((result, route) => {
     result[route] = {
         onmatch: (params, url) =>
             App.navigator.onnavigate(App.navigator.routes[route], params, url),
@@ -23,7 +23,7 @@ const AppStart = Object.keys(App.navigator.routes).reduce((result, route) => {
 }, {})
 
 const root = document.getElementById("app");
-m.route(root, '/login', AppStart);
+m.route(root, '/login', Routes);
 
 import meiosisTracer from 'meiosis-tracer'
 meiosisTracer({ streams: [models] })

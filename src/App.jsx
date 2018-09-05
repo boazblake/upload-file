@@ -6,9 +6,11 @@ import Model from './models/index.js';
 
 import { createNavigator } from './services/navigator.js'
 
+import createNavBarComponent from './components/NavBar.jsx'
 import createLoginPage from './Login/component.jsx'
 import createPresentationsPage from './Presentations/component.jsx'
 import createSlidesSelectionPage from './SlidesSelection/component.jsx'
+import createSlideShowPage from './SlideShow/component.jsx'
 
 // import MainStage from './components/layout/MainStage.js';
 import StageBanner from './components/ui/StageBanner.jsx';
@@ -59,13 +61,20 @@ const createSlidesView = (navigator, update) => {
   }
 }
 
-const SlideShow = model => [
-  <StageBanner
-    action={_ => m.route.set('/login')} />,
-  <CardContainer>
-    <SlideShowContainer model={model} />
-  </CardContainer>
-];
+const createSlideShow = (navigator, update) => {
+  const SlideShow = createSlideShowPage(navigator, update)
+  return {
+    view: ({ attrs: { model } }) =>
+      [
+        <StageBanner
+          action={_ => m.route.set('/login')} />,
+        <CardContainer>
+          <SlideShowContainer model={model} />
+        </CardContainer>
+      ]
+  }
+}
+
 
 const SLIDE_EDITOR = model => [
   <StageBanner action={_ => m.route.set('/login')} title="Edit A Slide" />,
@@ -81,31 +90,21 @@ const SLIDE_ADDER = model => [
   </CardContainer>
 ];
 
-const OLDroutes = {
-  '/login': {
-    view: () => LoginView(Model)
-  },
-  '/presentations': {
-    view: () => Presentations(Model)
-  },
-  '/newSlide': {
-    view: () => SLIDE_ADDER(Model)
-  },
-  '/slides/:PresentationId"': {
-    view: () => Slides(Model)
-  },
-  '/slideshow': {
-    view: () => SlideShow(Model)
-  },
-  '/editor/:slideId': {
-    view: () => SLIDE_EDITOR(Model)
+
+const createNavBar = (navigator, update) => {
+  const NavBar = createNavBarComponent(navigator, update)
+  return {
+    view: ({ attrs: { model } }) => [
+      <NavBar model={model} />
+    ]
   }
-};
+}
 
 const routes = update => navigator => [
   { pageId: "LoginView", component: createLoginView(navigator, update), route: "/login" },
   { pageId: "presentations", component: createPresentationsView(navigator, update), route: "/presentations/:name" },
   { pageId: "slidesSelection", component: createSlidesView(navigator, update), route: "/presentations/:name/:presentationId" },
+  { pageId: "SlideShow", component: createSlideShow(navigator, update), route: "/slideshow/:name/:presentationId" },
 ]
 
 const createApp = update => {
@@ -116,11 +115,13 @@ const createApp = update => {
     navigator,
     view: ({ attrs: { model } }) => {
       const Component = navigator.getComponent(model.pageId)
+      const NavBar = createNavBar(navigator, update)
       return (
         <div class="App">
           <div class="main-stage section">
             <Component model={model} />
           </div>
+          <NavBar model={model} />
         </div>
       )
     }
