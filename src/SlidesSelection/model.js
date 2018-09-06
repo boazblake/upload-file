@@ -15,4 +15,4 @@ export const toggleSelection = s => {
   return s
 }
 
-export const toEditCard = nav => id => nav.navigateTo('editor', { id })
+export const toEditCard = nav => slideId => nav.navigateTo('Editor', { slideId })

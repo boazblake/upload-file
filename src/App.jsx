@@ -11,7 +11,7 @@ import createLoginPage from './Login/component.jsx'
 import createPresentationsPage from './Presentations/component.jsx'
 import createSlidesSelectionPage from './SlidesSelection/component.jsx'
 import createSlideShowPage from './SlideShow/component.jsx'
-
+import createEditorPage from './Editor/component.jsx'
 // import MainStage from './components/layout/MainStage.js';
 import StageBanner from './components/ui/StageBanner.jsx';
 import CardContainer from './components/layout/CardContainer.jsx';
@@ -61,7 +61,7 @@ const createSlidesView = (navigator, update) => {
   }
 }
 
-const createSlideShow = (navigator, update) => {
+const createSlideShowView = (navigator, update) => {
   const SlideShow = createSlideShowPage(navigator, update)
   return {
     view: ({ attrs: { model } }) =>
@@ -69,9 +69,22 @@ const createSlideShow = (navigator, update) => {
         <StageBanner
           action={_ => m.route.set('/login')} />,
         <CardContainer>
-          <SlideShowContainer model={model} />
+          <SlideShow model={model} />
         </CardContainer>
       ]
+  }
+}
+
+const createEditorView = (navigator, update) => {
+  const Editor = createEditorPage(navigator, update)
+  return {
+    view: ({ attrs: { model } }) => [
+      <StageBanner
+        action={_ => m.route.set('/login')} />,
+      <CardContainer>
+        <Editor model={model} />
+      </CardContainer>
+    ]
   }
 }
 
@@ -104,7 +117,8 @@ const routes = update => navigator => [
   { pageId: "LoginView", component: createLoginView(navigator, update), route: "/login" },
   { pageId: "presentations", component: createPresentationsView(navigator, update), route: "/presentations/:name" },
   { pageId: "slidesSelection", component: createSlidesView(navigator, update), route: "/presentations/:name/:presentationId" },
-  { pageId: "SlideShow", component: createSlideShow(navigator, update), route: "/slideshow/:name/:presentationId" },
+  { pageId: "SlideShow", component: createSlideShowView(navigator, update), route: "/slideshow/:name/:presentationId" },
+  { pageId: 'Editor', component: createEditorView(navigator, update), route: "/editor/:slideId" }
 ]
 
 const createApp = update => {
