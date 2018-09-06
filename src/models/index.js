@@ -4,6 +4,7 @@ const Model = {
   presentations: [],
   slides: [],
   slideShow: [],
+  contents: '',
   user: { name: '' },
   slideForm: {
   }

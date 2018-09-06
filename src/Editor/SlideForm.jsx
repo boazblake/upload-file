@@ -26,7 +26,7 @@ const SlideForm = vnode => {
           <textarea
             id="contents"
             class="textarea"
-            onkeyup={vnode.attrs.actions.previewText}
+            onkeyup={m.withAttr('value', vnode.attrs.actions.previewText)}
             name="contents"
             autocomplete="false"
             value={vnode.attrs.contents}

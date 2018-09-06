@@ -3872,9 +3872,9 @@ media-typer@0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/media-typer/-/media-typer-0.3.0.tgz#8710d7af0aa626f8fffa1ce00168545263255748"
 
-meiosis-tracer@^2.0.2:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/meiosis-tracer/-/meiosis-tracer-2.0.2.tgz#575506d97098df9ae0066ab1ee9c13c543aaf1a5"
+meiosis-tracer@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/meiosis-tracer/-/meiosis-tracer-2.0.3.tgz#6891731bafa1022b028356486aa58e72af80a1cc"
 
 mem-fs-editor@^4.0.0:
   version "4.0.3"

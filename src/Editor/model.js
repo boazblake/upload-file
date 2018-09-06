@@ -1,18 +1,17 @@
-const m = require('mithril');
-import Stream from 'mithril-stream'
+import m from 'mithril'
+import O from 'patchinko/constant'
 const { assoc, clone, filter, propEq, fromPairs } = require('ramda');
 const { v1 } = require('uuid');
 
 export const getCurrentSlide = id => slides => filter(propEq('id', id), slides)[0]
 
-export const formatPreviewText = (ev, state) => {
-    console.log('update', state)
-    return ev.target ? (state.contents = ev.target.value) : '';
+export const formatPreviewText = update => contents => {
+    update({ contents: Object(contents) })
 }
 
 const bySlideId = id => propEq('id', id);
 
-export const updateSlide = state => {
+export const updateSlide = update => state => {
     console.log('save state', state);
     history.go(-1);
 };
