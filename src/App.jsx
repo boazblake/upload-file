@@ -115,13 +115,11 @@ const createApp = update => {
     navigator,
     view: ({ attrs: { model } }) => {
       const Component = navigator.getComponent(model.pageId)
-      const NavBar = createNavBar(navigator, update)
       return (
         <div class="App">
           <div class="main-stage section">
             <Component model={model} />
           </div>
-          <NavBar model={model} />
         </div>
       )
     }
