@@ -1,19 +1,31 @@
 import m from 'mithril'
 import O from 'patchinko/constant'
-const { assoc, clone, filter, propEq, fromPairs } = require('ramda');
+const { assoc, compose, clone, filter, propEq, fromPairs, last, split, prop, merge, map } = require('ramda');
 const { v1 } = require('uuid');
+import { log } from '../utils/index'
 
 export const getCurrentSlide = id => slides => filter(propEq('id', id), slides)[0]
 
-export const formatPreviewText = update => contents => {
-    update({ contents: Object(contents) })
-}
+export const updateText = state => text => state.contents(text)
+
+export const formatPreviewText = update => compose(updateText(update))
 
 const bySlideId = id => propEq('id', id);
 
-export const updateSlide = update => state => {
-    console.log('save state', state);
-    history.go(-1);
+const getId = compose(last, split('/'), prop('url'))
+
+const updateContents = updates => slide =>
+    merge(slide, updates)
+
+const modifySlide = id => updates =>
+    compose(log('?'), map(updateContents(updates)), filter(bySlideId(id)))
+
+export const updateSlide = update => attrs => {
+    let id = getId(update())
+    let title = attrs.title
+    let contents = attrs.contents()
+    //filter(bySlideId(id))
+    return update({ slides: O(modifySlide(id)({ title, contents })) })
 };
 
 export const cancelUpdateSlide = state => {
@@ -60,24 +72,5 @@ const isEditingSlide = (currentId, state) => {
     let newSlide = clone(slides[0])
     state.actions = editingSlideActions;
     state.slide = newSlide
-};
-
-const SlideEditor = vnode => {
-    let state = _state({ slide: {}, slides: [], actions: {} })
-
-    state.slides = vnode.attrs.list.slides
-
-    let currentId = m.route.param('slideId');
-
-
-    return {
-        oninit: currentId ? isEditingSlide(currentId, state) : isAddingSlide(state),
-        oncreate: formatPreviewText,
-        view: () =>
-            <div>
-                <SlideForm state={state} />
-                <Preview state={state} />
-            </div>
-    }
 };
 

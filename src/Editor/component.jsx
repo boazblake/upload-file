@@ -1,7 +1,7 @@
 import m from 'mithril'
 import stream from 'mithril-stream'
-import SlideForm from './SlideForm.jsx';
-import Preview from './Preview.jsx'
+import Form from './Form/component.jsx';
+import Preview from './Preview/component.jsx'
 import { getCurrentSlide, updateSlide, cancelUpdateSlide, formatPreviewText } from './model.js'
 import { clone } from 'ramda'
 
@@ -9,7 +9,7 @@ const createEditorPage = (navigator, update) => {
     const actions = {
         saveSlide: updateSlide(update),
         cancelEditing: cancelUpdateSlide,
-        previewText: formatPreviewText(update)
+        previewText: formatPreviewText
     };
     return {
         view: ({ attrs: { model } }) => {
@@ -19,7 +19,7 @@ const createEditorPage = (navigator, update) => {
             _slide.contents = stream(_slide.contents)
             return (
                 <div>
-                    <SlideForm title={_slide.title} contents={_slide.contents} actions={actions} />
+                    <Form title={_slide.title} contents={_slide.contents} actions={actions} />
                     <Preview text={_slide.contents} />
                 </div>
             )

@@ -1,9 +1,8 @@
 const m = require('mithril');
 
-import UIButton from '../components/ui/UIButton.jsx';
+import UIButton from '../../components/ui/UIButton.jsx';
 
-const SlideForm = vnode => {
-  console.log(vnode)
+const Form = vnode => {
   return {
     view: () =>
       <section class="columns">
@@ -26,14 +25,14 @@ const SlideForm = vnode => {
           <textarea
             id="contents"
             class="textarea"
-            onkeyup={m.withAttr('value', vnode.attrs.actions.previewText)}
+            onkeyup={m.withAttr('value', vnode.attrs.actions.previewText(vnode.attrs))}
             name="contents"
             autocomplete="false"
             value={vnode.attrs.contents}
           />
           <UIButton
             action={dom =>
-              vnode.attrs.actions.saveSlide
+              vnode.attrs.actions.saveSlide(vnode.attrs)
             }
             buttonName="Save"
           />
@@ -48,4 +47,4 @@ const SlideForm = vnode => {
   }
 }
 
-export default SlideForm;
+export default Form;
