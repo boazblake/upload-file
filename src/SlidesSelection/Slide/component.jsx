@@ -2,8 +2,10 @@ import m from 'mithril'
 import SlideSelectField from './SlideSelectField.jsx'
 
 const Slide = {
+    oncreate: ({ dom }) =>
+        dom.classList.add('fancy'),
     view: ({ attrs }) =>
-        <div class="thumb-card card" key={attrs.key}>
+        <div class="thumb-card card" key={attrs.key} >
             <div class="level">
                 <div class="level-left">
                     <SlideSelectField fieldValue={attrs.title} class="slide-field title" />
@@ -24,7 +26,7 @@ const Slide = {
                     />
                 </div>
             </div>
-        </div>
+        </div >
 }
 
 

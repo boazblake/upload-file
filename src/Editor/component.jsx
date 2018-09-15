@@ -1,7 +1,7 @@
 import m from 'mithril'
 import stream from 'mithril-stream'
 import Form from './Form/component.jsx';
-import Preview from './Preview/component.jsx'
+import Preview from '../components/Preview/component.jsx'
 import { currentSlide, updateSlide, formatPreviewText } from './model.js'
 import { clone } from 'ramda'
 
