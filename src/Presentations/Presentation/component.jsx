@@ -1,8 +1,6 @@
 import m from 'mithril'
-import PresentationSelectField from './PresentationSelectField.jsx'
 
 const Presentation = ({ attrs }) => {
-    console.log(attrs)
     return {
         view: () =>
             <div class="thumb-card card">

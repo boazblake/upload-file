@@ -30,16 +30,16 @@ const Form = vnode => {
           value={vnode.attrs.contents}
         />
         <UIButton
-          action={dom =>
+          action={() =>
             vnode.attrs.actions.saveSlide(vnode.attrs)
           }
-          buttonName="Save"
+          name="Save"
         />
         <UIButton
           action={() =>
-            vnode.attrs.actions.cancelEditing
+            vnode.attrs.actions.cancelEditing(vnode.attrs.id, vnode.attrs.name)
           }
-          buttonName="Cancel"
+          name="Cancel"
         />
       </form>
   }

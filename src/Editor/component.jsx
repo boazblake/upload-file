@@ -2,13 +2,13 @@ import m from 'mithril'
 import stream from 'mithril-stream'
 import Form from './Form/component.jsx';
 import Preview from './Preview/component.jsx'
-import { currentSlide, updateSlide, cancelUpdateSlide, formatPreviewText } from './model.js'
+import { currentSlide, updateSlide, formatPreviewText } from './model.js'
 import { clone } from 'ramda'
 
 const createEditorPage = (navigator, update) => {
     const actions = {
-        saveSlide: updateSlide(update),
-        cancelEditing: cancelUpdateSlide,
+        saveSlide: updateSlide,
+        cancelEditing: (id, name) => navigator.navigateTo('slidesSelection', { name: name, presentationId: id }),
         previewText: formatPreviewText
     };
     return {
@@ -19,7 +19,7 @@ const createEditorPage = (navigator, update) => {
             _slide.contents = stream(_slide.contents)
             return (
                 <div class="columns">
-                    <Form title={_slide.title} contents={_slide.contents} actions={actions} />
+                    <Form title={_slide.title} contents={_slide.contents} actions={actions} id={model.currentPresentationId} name={model.user.name} />
                     <Preview text={_slide.contents} />
                 </div>
             )

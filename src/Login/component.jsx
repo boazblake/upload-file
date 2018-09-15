@@ -36,7 +36,7 @@ const createLoginPage = (navigator, update) => {
                     <div class="hero">
                         <input class="input" value={model.user.name} oninput={updateText("name")} />
                         {state.status.msg}
-                        <UIButton action={() => login(model.user.name)} buttonName="LOGIN" />
+                        <UIButton action={() => login(model.user.name)} name="LOGIN" />
                     </div>
                 </div>
             </div>

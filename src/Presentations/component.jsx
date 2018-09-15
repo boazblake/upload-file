@@ -9,11 +9,11 @@ const createPresentationsPage = (navigator, update) => {
     }
 
     const updateId = id => update({ currentPresentationId: id })
-    const navigateTo = (id, name) => navigator.navigateTo('slidesSelection', { name: name, presentationId: id })
+    const toSlideSelection = (id, name) => navigator.navigateTo('slidesSelection', { name: name, presentationId: id })
 
     const onSelect = (id, name) => {
         updateId(id)
-        navigateTo(id, name)
+        toSlideSelection(id, name)
     }
 
     const onSuccess = state => model => result => {

@@ -27,6 +27,7 @@ const getSlide = id => updates =>
     compose(log('?'), map(updateContents(updates)), filter(bySlideId(id)))
 
 export const updateSlide = update => attrs => {
+    console.log(update, attrs)
     let id = getId(update())
     let title = attrs.title
     let contents = attrs.contents()
@@ -34,32 +35,5 @@ export const updateSlide = update => attrs => {
     return update({ slides: O(getSlide(id)({ title, contents })) })
 };
 
-export const cancelUpdateSlide = state => {
-    console.log('canceled', state)
-    let slide = filter(bySlideId(state.slide.id), state.slides);
-    history.go(-1);
-};
 
-
-const cancelNewSlide = state => {
-    history.go(-1);
-};
-
-const addingSlideActions = {
-    saveSlide: () => { },
-    cancelEditing: cancelNewSlide,
-    previewText: formatPreviewText
-};
-
-const isAddingSlide = (state) => {
-    state.slide = SlideModel(0, v1(), '', false, true, '');
-    return (state.actions = addingSlideActions);
-};
-
-const isEditingSlide = (currentId, state) => {
-    let slides = filter(bySlideId(currentId), state.slides);
-    let newSlide = clone(slides[0])
-    state.actions = editingSlideActions;
-    state.slide = newSlide
-};
 
