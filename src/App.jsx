@@ -21,7 +21,7 @@ import CardContainer from './components/layout/CardContainer.jsx';
 // import PresentationSelectContainer from './components/layout/PresentationSelectContainer.js';
 // import SlideEditor from './components/SlideEditor.js';
 
-
+//LOGIN 
 const createLoginView = (navigator, update) => {
   const LoginPage = createLoginPage(navigator, update)
   return {
@@ -87,21 +87,6 @@ const createEditorView = (navigator, update) => {
     ]
   }
 }
-
-
-const SLIDE_EDITOR = model => [
-  <StageBanner action={_ => m.route.set('/login')} title="Edit A Slide" />,
-  <CardContainer>
-    <SlideEditor model={model} />
-  </CardContainer>
-];
-
-const SLIDE_ADDER = model => [
-  <StageBanner action={_ => m.route.set('/login')} title="Add A Slide" />,
-  <CardContainer>
-    <SlideEditor model={model} />
-  </CardContainer>
-];
 
 
 const createNavBar = (navigator, update) => {

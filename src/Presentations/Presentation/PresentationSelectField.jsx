@@ -2,7 +2,7 @@ const m = require('mithril');
 
 const PresentationSelectField = {
   view: ({ attrs }) => (
-    <div class="slide-field" onclick={attrs.action} style={attrs.fieldColor}>
+    <div class={attrs.class} onclick={attrs.action} style={attrs.fieldColor}>
       {attrs.fieldValue}
     </div>
   )

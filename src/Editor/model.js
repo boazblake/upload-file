@@ -4,7 +4,13 @@ const { assoc, compose, clone, filter, propEq, fromPairs, last, split, prop, mer
 const { v1 } = require('uuid');
 import { log } from '../utils/index'
 
-export const getCurrentSlide = id => slides => filter(propEq('id', id), slides)[0]
+export const fromSlides = model => filter(propEq('id', model.currentPresentationId), model.presentations)[0]
+
+const fromSlide = id => slides => filter(propEq('id', id), slides)[0]
+
+export const currentSlide = id =>
+    compose(fromSlide(id), prop('slides'), fromSlides)
+
 
 export const updateText = state => text => state.contents(text)
 
@@ -17,7 +23,7 @@ const getId = compose(last, split('/'), prop('url'))
 const updateContents = updates => slide =>
     merge(slide, updates)
 
-const modifySlide = id => updates =>
+const getSlide = id => updates =>
     compose(log('?'), map(updateContents(updates)), filter(bySlideId(id)))
 
 export const updateSlide = update => attrs => {
@@ -25,7 +31,7 @@ export const updateSlide = update => attrs => {
     let title = attrs.title
     let contents = attrs.contents()
     //filter(bySlideId(id))
-    return update({ slides: O(modifySlide(id)({ title, contents })) })
+    return update({ slides: O(getSlide(id)({ title, contents })) })
 };
 
 export const cancelUpdateSlide = state => {
@@ -35,29 +41,12 @@ export const cancelUpdateSlide = state => {
 };
 
 
-const newSlide = (formDOM, position) => {
-    let form = formDOM.querySelector('.form');
-    const formData = new FormData(form);
-    console.log(fromPairs(Array.from(formData.entries())));
-    const newEntry = assoc(
-        'position',
-        position,
-        assoc(
-            'uuid',
-            v1(),
-            assoc('isSelected', false, fromPairs(Array.from(formData.entries())))
-        )
-    );
-    console.log(newEntry);
-    form.reset();
-};
-
 const cancelNewSlide = state => {
     history.go(-1);
 };
 
 const addingSlideActions = {
-    saveSlide: newSlide,
+    saveSlide: () => { },
     cancelEditing: cancelNewSlide,
     previewText: formatPreviewText
 };

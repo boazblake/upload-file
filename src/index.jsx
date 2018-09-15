@@ -6,6 +6,8 @@ import createApp from './App.jsx'
 //styles
 import "bulma/css/bulma.css";
 import "./index.css";
+import "polythene-css/dist/polythene-typography.css"
+
 
 //MEIOSIS PATTERN SETUP
 
@@ -34,4 +36,5 @@ models.map(model => {
         window.history.pushState({}, "", url)
     }
 })
+
 models.map(() => m.redraw())

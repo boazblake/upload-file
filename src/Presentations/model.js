@@ -5,6 +5,7 @@ import { traverse, compose, map, head } from 'ramda';
 import Task from 'data.task'
 import { log } from '../utils/index'
 
+
 const fetchPresentationsTask = traverse(Task.of, getPresentationsTask)
 
 const toViewModel = data =>
@@ -15,7 +16,3 @@ export const loadTask = compose(
 )
 
 export const updatePresentations = update => data => update({ presentations: O(data) })
-
-export const updateCurrentPresentationId = update => data => {
-    update({ currentPresentationId: data })
-}

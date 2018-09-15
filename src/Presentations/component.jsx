@@ -1,15 +1,19 @@
 import m from 'mithril'
-import { loadTask, updatePresentations, updateCurrentPresentationId } from './model.js'
+import { loadTask, updatePresentations } from './model.js'
 import { log } from '../utils/index'
-import PresentationSelectField from '../components/cards/PresentationSelectField.jsx'
+import Presentation from './Presentation/component.jsx'
 
 const createPresentationsPage = (navigator, update) => {
     let state = {
         status: 'loading', error: ''
     }
-    const selectPresentation = (id, name) => {
-        updateCurrentPresentationId(update)(id)
-        navigator.navigateTo('slidesSelection', { name: name, presentationId: id })
+
+    const updateId = id => update({ currentPresentationId: id })
+    const navigateTo = (id, name) => navigator.navigateTo('slidesSelection', { name: name, presentationId: id })
+
+    const onSelect = (id, name) => {
+        updateId(id)
+        navigateTo(id, name)
     }
 
     const onSuccess = state => model => result => {
@@ -24,30 +28,19 @@ const createPresentationsPage = (navigator, update) => {
         state.error = 'error with fetching presentations'
     }
 
-    const reset = state =>
-        state = {
-            status: 'loading', error: ''
-        }
+
 
     return {
         oninit: ({ attrs: { model } }) => loadTask(model.gists).fork(onError(state), onSuccess(state)(model)),
         view: ({ attrs: { model } }) => {
             if (state.status == 'loaded') {
-                return model.presentations.map(p =>
-                    <div class="thumb-card card">
-                        <div class="slide-fields">
-                            <PresentationSelectField
-                                fieldValue={p.title}
-                            />
-                            <PresentationSelectField
-                                action={() => selectPresentation(p.id, model.user.name)}
-                                fieldValue={<i class="fas fa-select" />}
-                            />
-                        </div>
-                    </div>
+                return model.presentations.map((p, idx) =>
+                    <Presentation title={p.title} select={onSelect} id={idx} name={model.user.name} icon={< i class="fas fa-check-circle" />} />
                 )
+            } else {
+                "loading ..."
             }
-        }, onremove: () => reset()
+        }
     }
 }
 

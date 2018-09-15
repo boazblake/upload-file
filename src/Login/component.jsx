@@ -28,14 +28,17 @@ const createLoginPage = (navigator, update) => {
 
     return {
         view: ({ attrs: { model } }) => {
-            return <div class="login container">
-                <h1 class="app-title title">Mithril presenter</h1>
-                <h2 class="app-description sub-title">
-                    Save Your presentations as gists.
-                </h2>
-                <input class="input" value={model.user.name} oninput={updateText("name")} />
-                {state.status.msg}
-                <UIButton action={() => login(model.user.name)} buttonName="LOGIN" />
+            return <div class="container">
+                <div class="section">
+                    <div class="hero is-large">
+                        <h1 class="app-title title is-bold">Welcome</h1>
+                    </div>
+                    <div class="hero">
+                        <input class="input" value={model.user.name} oninput={updateText("name")} />
+                        {state.status.msg}
+                        <UIButton action={() => login(model.user.name)} buttonName="LOGIN" />
+                    </div>
+                </div>
             </div>
         },
         onremove: () => reset()
