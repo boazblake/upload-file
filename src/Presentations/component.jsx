@@ -16,7 +16,7 @@ const createPresentationsPage = (navigator, update) => {
         toSlideSelection(id, name)
     }
 
-    const onSuccess = state => model => result => {
+    const onSuccess = state => result => {
         state.error = ""
         updatePresentations(update)(result)
         state.status = 'loaded'
@@ -31,7 +31,7 @@ const createPresentationsPage = (navigator, update) => {
 
 
     return {
-        oninit: ({ attrs: { model } }) => loadTask(model.gists).fork(onError(state), onSuccess(state)(model)),
+        oninit: ({ attrs: { model } }) => loadTask(model.gists).fork(onError(state), onSuccess(state)),
         view: ({ attrs: { model } }) => {
             if (state.status == 'loaded') {
                 return model.presentations.map((p, idx) =>

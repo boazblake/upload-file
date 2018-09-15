@@ -1,4 +1,4 @@
-import { compose, filter, prop, propEq } from 'ramda'
+import { flatten, filter, prop, propEq } from 'ramda'
 import O from 'patchinko/constant'
 import { log } from '../utils/index.js'
 
@@ -9,4 +9,5 @@ export const toggleSelection = s => {
   return s
 }
 
-export const toEditCard = nav => slideId => nav.navigateTo('Editor', { slideId })
+export const toEditCard = nav => ({ slideId, presentationId, name }) =>
+  nav.navigateTo('Editor', { slideId, presentationId, name })

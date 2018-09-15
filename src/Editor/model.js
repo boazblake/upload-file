@@ -6,7 +6,9 @@ import { log } from '../utils/index'
 
 export const fromSlides = model => filter(propEq('id', model.currentPresentationId), model.presentations)[0]
 
-const fromSlide = id => slides => filter(propEq('id', id), slides)[0]
+const fromSlide = id => slides =>
+    filter(propEq('id', id), slides)[0]
+
 
 export const currentSlide = id =>
     compose(fromSlide(id), prop('slides'), fromSlides)
@@ -24,10 +26,9 @@ const updateContents = updates => slide =>
     merge(slide, updates)
 
 const getSlide = id => updates =>
-    compose(log('?'), map(updateContents(updates)), filter(bySlideId(id)))
+    compose(map(updateContents(updates)), filter(bySlideId(id)))
 
 export const updateSlide = update => attrs => {
-    console.log(update, attrs)
     let id = getId(update())
     let title = attrs.title
     let contents = attrs.contents()

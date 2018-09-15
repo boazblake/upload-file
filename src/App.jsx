@@ -102,8 +102,8 @@ const routes = update => navigator => [
   { pageId: "LoginView", component: createLoginView(navigator, update), route: "/login" },
   { pageId: "presentations", component: createPresentationsView(navigator, update), route: "/presentations/:name" },
   { pageId: "slidesSelection", component: createSlidesView(navigator, update), route: "/presentations/:name/:presentationId" },
+  { pageId: 'Editor', component: createEditorView(navigator, update), route: "/editor/:name/:presentationId/:slideId" },
   { pageId: "SlideShow", component: createSlideShowView(navigator, update), route: "/slideshow/:name/:presentationId" },
-  { pageId: 'Editor', component: createEditorView(navigator, update), route: "/editor/:slideId" }
 ]
 
 const createApp = update => {

@@ -6,23 +6,22 @@ import { log } from './../utils/index.js'
 var Stream = require('mithril/stream');
 import { map, compose, toLower, filter, prop, path, test, toPairs, addIndex } from 'ramda';
 
-const mapIndexed = addIndex(map)
 
 const baseUrl =
   'https://api.github.com';
 
 const SlidesVm = tagged('id', 'title', 'contents', 'isSelected')
 
-const toSlidesVm = ({ id, title, contents }) => ({ id, title, contents, isSelected: false })
+const toSlidesVm = ({ title, contents, id }) => ({ id, title, contents, isSelected: false })
 
-const toPresentationViewModel = (pair, id) => {
+const toPresentationViewModel = pair => {
   const presentation = JSON.parse(pair[1].content)
   const title = presentation.Title
   const slides = presentation.slides.map(toSlidesVm)
-  return { id, title, slides }
+  return { title, slides }
 }
 
-const toPresentationVM = compose(mapIndexed(toPresentationViewModel), toPairs)
+const toPresentationVM = compose(map(toPresentationViewModel), toPairs)
 
 const toPresentation =
   compose(toPresentationVM, prop('files'))
