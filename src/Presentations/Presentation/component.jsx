@@ -1,9 +1,15 @@
 import m from 'mithril'
+import { getFirstSlide } from './model.js'
 
 const Presentation = ({ attrs }) => {
+    const state = { content: '' }
+    const model = attrs.model
+    const id = attrs.id
     return {
-        view: () =>
-            <div class="thumb-card card">
+        oninit: () => state.content = getFirstSlide(id)(model),
+        view: () => {
+            console.log('state', state)
+            return < div class="thumb-card card" onmouseover={() => model.contents(state.content)}>
                 <div class="slide-fields">
                     <div class="title slide-field">
                         {attrs.title}
@@ -12,7 +18,8 @@ const Presentation = ({ attrs }) => {
                         {attrs.icon}
                     </div>
                 </div>
-            </div>
+            </div >
+        }
     }
 }
 

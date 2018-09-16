@@ -4,6 +4,8 @@ import NavBar from './components/NavBar.jsx';
 
 import Model from './models/index.js';
 
+import Actor from './services/Actor.js'
+
 import { createNavigator } from './services/navigator.js'
 
 import createNavBarComponent from './components/NavBar.jsx'
@@ -15,11 +17,20 @@ import createEditorPage from './Editor/component.jsx'
 // import MainStage from './components/layout/MainStage.js';
 import StageBanner from './components/ui/StageBanner.jsx';
 import CardContainer from './components/layout/CardContainer.jsx';
+import Thumbnail from './components/Thumbnail/component.jsx'
 // import SlideShowContainer from './components/layout/SlideShowContainer.js';
 // import LoginPage from './components/cards/LoginPage.js';
 // import SelectSlideContainer from './components/layout/SelectSlideContainer.js';
 // import PresentationSelectContainer from './components/layout/PresentationSelectContainer.js';
 // import SlideEditor from './components/SlideEditor.js';
+
+// import db from "./services/indexedDb.js"
+
+// console.log('ther db', db)
+
+// db.open(x => console.log(x))
+
+
 
 //LOGIN 
 const createLoginView = (navigator, update) => {
@@ -42,7 +53,14 @@ const createPresentationsView = (navigator, update) => {
       [
         <StageBanner action={_ => m.route.set('/login')} title="Presentations" />,
         <CardContainer>
-          <PresentationsPage model={model} />
+          <div class="columns">
+            <div class="column is-half">
+              <PresentationsPage model={model} />
+            </div>
+            <div class="column is-half">
+              <Thumbnail contents={model.contents} />
+            </div>
+          </div>
         </CardContainer>
       ]
   }
@@ -55,7 +73,15 @@ const createSlidesView = (navigator, update) => {
       [
         <StageBanner action={_ => m.route.set('/login')} title="Slides" />,
         <CardContainer>
-          <SlidesPage model={model} />
+          <div class="columns">
+            <div class="column is-half">
+              <SlidesPage model={model} />
+            </div>
+            <div class="column is-half">
+              <Thumbnail contents={model.contents} />
+            </div>
+          </div>
+
         </CardContainer>
       ]
   }

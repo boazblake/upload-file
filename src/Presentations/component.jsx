@@ -35,7 +35,7 @@ const createPresentationsPage = (navigator, update) => {
         view: ({ attrs: { model } }) => {
             if (state.status == 'loaded') {
                 return model.presentations.map((p, idx) =>
-                    <Presentation title={p.title} select={onSelect} id={idx} name={model.user.name} icon={< i class="fas fa-check-circle" />} />
+                    <Presentation title={p.title} model={model} select={onSelect} id={idx} name={model.user.name} icon={< i class="fas fa-check-circle" />} />
                 )
             } else {
                 "loading ..."
