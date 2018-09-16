@@ -2,9 +2,10 @@ const m = require('mithril');
 
 import AltButton from './AltButton.jsx';
 import StageTitle from './StageTitle.jsx';
+import UIButton from './UIButton.jsx';
 
 const StageBanner = {
-  view: ({attrs}) =>
+  view: ({ attrs }) =>
     <div class="stage-banner">
       <StageTitle title={attrs.title} />
       <AltButton action={attrs.action} />

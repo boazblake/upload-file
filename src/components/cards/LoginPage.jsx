@@ -1,17 +1,16 @@
 const m = require('mithril');
-
 import Task from 'data.task';
-import { compose, pluck, toLower, filter, prop, traverse } from 'ramda';
+import { pluck } from 'ramda';
 
 import Requests from '../../services/Requests.js';
 import UIButton from './../ui/UIButton.jsx';
 
-const getPresentationsTask = gists => {
-  let presentations = [];
-  let ids = pluck('id', gists);
-  ids.map(id => Requests.getPresentations(id).then(p => presentations.push(p)));
-  return Task.of(presentations);
-};
+const getPresentationsTask = id => {
+  const req =
+    new Task((rej, res) => Requests.getPresentations(id).then(res, rej))
+
+  return req
+}
 
 const loginTask = user =>
   new Task((rej, res) => Requests.getGists(user.getName()).then(res, rej));
@@ -20,27 +19,34 @@ const updateName = user => e => user.setName(e.target.value);
 
 const onError = error => console.error(error);
 
-const onSuccess = user => data => {
-  user.setPrezentations(data);
-  m.route.set('/prezentations');
-};
+const onSuccess = model => data => {
+  model.presentations(data)
+  m.route.set('/presentations')
+}
 
-const login = user =>
-  loginTask(user)
+
+
+const login = model =>
+  loginTask(model)
+    .map(pluck('id'))
     .chain(getPresentationsTask)
-    .fork(onError, onSuccess(user));
+    .fork(onError, onSuccess(model));
 
-const LoginPage = {
-  view: vnode => (
-    <div class="login container">
-      <h1 class="app-title title">PREZENTER</h1>
-      <h2 class="app-description sub-title">
-        Save Your prezentations as gists.
+const LoginPage = vnode => {
+  const model = vnode.attrs.model
+
+  return {
+    view: () => (
+      <div class="login container">
+        <h1 class="app-title title">Mithril presenter</h1>
+        <h2 class="app-description sub-title">
+          Save Your presentations as gists.
       </h2>
-      <input class="input" onchange={updateName(vnode.attrs.user)} />
-      <UIButton action={() => login(vnode.attrs.user)} buttonName="LOGIN" />
-    </div>
-  )
+        <input class="input" onchange={updateName(model)} />
+        <UIButton action={() => login(model)} buttonName="LOGIN" />
+      </div>
+    )
+  }
 };
 
 export default LoginPage;

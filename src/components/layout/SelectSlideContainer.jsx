@@ -1,38 +1,41 @@
 const m = require("mithril");
-import Stream from "mithril/stream";
-
-import { contains, without, not, lensProp, over, compose } from "ramda";
+import Stream from 'mithril/stream';
+import { log } from '../../utils/index.js'
+import { contains, filter, not, lensProp, over, compose, propEq, tail } from "ramda";
 
 import SlideSelectCard from "./../cards/SlideSelectCard.jsx";
 import SlideSelectField from "./../cards/SlideSelectField.jsx";
-import User from "./../../services/user.js";
-import { viewModelMap } from "./../../models/index.js";
+import { viewModelMap } from "../../utils/index.js";
 
-const slidesModel = viewModelMap({
-  isSelected: Stream(false),
-  position: Stream(0)
-});
 
-const toggleSelection = slide => state => {
-  state.isSelected(!state.isSelected());
-  return User.toggleSelection(slide);
-};
+const SelectSlideContainer = vnode => {
+  let _ps = []
+  vnode.attrs.model.presentations.map(PS => PS.map(ps => _ps.push(ps)))
+  const id = parseInt(m.route.get().split('/')[2])//get the id from url
+  const presentation = filter(propEq('id', id), _ps)[0] //remove from array
 
-const SelectSlideContainer = {
-  oninit: vnode => {
-    User.setSlides(vnode.attrs.slide);
-    vnode.state = slidesModel;
-  },
-  view: vnode => {
-    const slides = vnode.attrs.slide.slides;
-    return slides.map(slide => (
-      <SlideSelectCard
-        slide={slide}
-        state={vnode.state}
-        edit={editCard}
-        toggle={toggleSelection}
-      />
-    ));
+
+  const slidesModel = viewModelMap({
+    isSelected: Stream(false),
+    position: Stream(0)
+  });
+
+  const toggleSelection = slide => state => {
+    state.isSelected(!state.isSelected());
+    return state
+  };
+
+  return {
+    view: () => {
+      return presentation.slides.map(slide => (
+        <SlideSelectCard
+          slide={slide}
+          state={slidesModel}
+          edit={editCard}
+          toggle={toggleSelection}
+        />
+      ));
+    }
   }
 };
 

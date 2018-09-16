@@ -1,8 +1,8 @@
 const m = require('mithril');
 
 const StageTitle = {
-  view: ({attrs}) =>
-    <div class="stage-title title">{attrs.title}</div>
+  view: ({ attrs }) =>
+    <div class="stage-title">{attrs.title}</div>
 };
 
 export default StageTitle;

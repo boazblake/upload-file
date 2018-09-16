@@ -1,42 +1,56 @@
 const m = require('mithril');
+import Task from 'data.task'
+
+import { tagged } from 'daggy'
+import { log } from './../utils/index.js'
 var Stream = require('mithril/stream');
-import { compose, toLower, filter, prop, path } from 'ramda';
-import Task from 'mithril';
+import { map, compose, toLower, filter, prop, path, test, toPairs, addIndex } from 'ramda';
 
-const baseUrl = 'https://api.github.com';
 
-const log = m => v => {
-  console.log(m, v);
-  return v;
-};
+const baseUrl =
+  'https://api.github.com';
 
-const byDescription = g =>
-  toLower(prop('description', g).split(' ')[0]) == 'prezentation';
+const SlidesVm = tagged('id', 'title', 'contents', 'isSelected')
 
-const _getGists = username =>
-  m.request({
-    method: 'GET',
-    url: `${baseUrl}/users/${username}/gists`,
-    withCredentials: false
-  });
+const toSlidesVm = ({ title, contents, id }) => ({ id, title, contents, isSelected: false })
 
-const _getPresentations = gist_id =>
-  m.request({
-    method: 'GET',
-    url: `${baseUrl}/gists/${gist_id}`,
-    withCredentials: false
-  });
+const toPresentationViewModel = pair => {
+  const presentation = JSON.parse(pair[1].content)
+  const title = presentation.Title
+  const slides = presentation.slides.map(toSlidesVm)
+  return { title, slides }
+}
 
-const filterForPresentations = gists => filter(byDescription, gists);
+const toPresentationVM = compose(map(toPresentationViewModel), toPairs)
 
-const toPresentation = dto =>
-  JSON.parse(
-    path(['files', 'object-oriented-prezentation.json', 'content'], dto)
-  );
+const toPresentation =
+  compose(toPresentationVM, prop('files'))
+
+const byDescription =
+  compose(test(/^mithril-prezentation/), toLower, prop('description'))
+
+const filterForPresentations = compose(filter(byDescription))
+
+const _getGistsTask = username =>
+  new Task((rej, res) =>
+    m.request({
+      method: 'GET',
+      url: `${baseUrl}/users/${username}/gists`,
+      withCredentials: false
+    }).then(res, rej))
+
+const _getPresentationsTask = gist_id =>
+  new Task((rej, res) =>
+    m.request({
+      method: 'GET',
+      url: `${baseUrl}/gists/${gist_id}`,
+      withCredentials: false
+    }).then(res, rej))
+
 
 const Requests = {
-  getGists: username => _getGists(username).then(filterForPresentations),
-  getPresentations: id => _getPresentations(id).then(toPresentation)
+  getGistsTask: username => _getGistsTask(username).map(filterForPresentations),
+  getPresentationsTask: id => _getPresentationsTask(id).map(toPresentation)
 };
 
 module.exports = Requests;

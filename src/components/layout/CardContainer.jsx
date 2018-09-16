@@ -2,7 +2,7 @@ const m = require('mithril');
 
 const CardContainer = {
   view: ({ children }) => (
-    <div id="cards-container" class="hero">
+    <div id="cards-container" class="section hero">
       {children}
     </div>
   )
