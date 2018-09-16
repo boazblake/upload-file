@@ -5,7 +5,7 @@ const Model = {
   currentPresentationId: null,
   gists: [],
   presentations: [],
-  contents: Stream('### is this working?'),
+  contents: Stream(''),
   user: { name: '' },
 };
 export default Model;

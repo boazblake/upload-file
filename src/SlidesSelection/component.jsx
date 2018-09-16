@@ -13,10 +13,19 @@ const createSlidesSelectionPage = (navigator, update) => {
     return {
 
         view: ({ attrs: { model } }) => {
-            slides = getCurrentSlides(model).slides.map((slide, idx) => {
-                console.log(slide)
-                return <Slide key={idx} title={slide.title} actions={actions} slide={slide} editDto={{ slideId: slide.id, presentationId: model.currentPresentationId, name: model.user.name }} />
-            })
+            slides = getCurrentSlides(model).slides.map((slide, idx) =>
+                <Slide key={idx}
+                    model={model}
+                    title={slide.title}
+                    actions={actions}
+                    slide={slide}
+                    editDto={{
+                        slideId: slide.id
+                        , presentationId: model.currentPresentationId
+                        , name: model.user.name
+                    }
+                    } />
+            )
 
             return (
                 <div class="hero" >
