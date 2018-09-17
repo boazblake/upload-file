@@ -147,11 +147,9 @@ html {
   padding-left: 30px;
 }
 
-#preview-title {
-}
-#preview-text {
+/* #preview-text {
   word-break: break-all;
-}
+} */
 
 #slide-form {
   display: flex;
@@ -170,8 +168,21 @@ html {
   font-size: 16px;
 }
 
-.fancy {animation:fade-in 1.5s;}
+.thumbnail {  
+  width: 100vw;
+  height: 100vh;
+}
+
+.fancyin {animation:fade-in 1.5s;}
+
+.fancyout {animation:fade-out 1.5s;}
+
 @keyframes fade-in {
     from {opacity:0;}
     to {opacity:1;}
+}
+
+@keyframes fade-out {
+    from {opacity:1;}
+    to {opacity:0;}
 }

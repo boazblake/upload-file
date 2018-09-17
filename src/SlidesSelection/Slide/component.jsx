@@ -3,7 +3,9 @@ import SlideSelectField from './SlideSelectField.jsx'
 
 const Slide = {
     oncreate: ({ dom }) =>
-        dom.classList.add('fancy'),
+        dom.classList.add('fancyIn'),
+    onbeforeremove: ({ dom }) =>
+        dom.classList.add('fancyOut'),
     view: ({ attrs }) =>
         < div class="thumb-card card" key={attrs.key} onmouseover={() => attrs.model.contents(attrs.slide.contents)}>
             <div class="level">

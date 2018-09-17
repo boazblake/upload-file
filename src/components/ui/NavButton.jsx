@@ -2,7 +2,9 @@ const m = require('mithril');
 
 const NavButton = {
   view: ({ attrs }) =>
-    <button class="nav-button" onclick={attrs.action}>{attrs.icon}</button>
+    <div class="button" onclick={attrs.action}>
+      {attrs.icon}
+    </div>
 };
 
 export default NavButton;

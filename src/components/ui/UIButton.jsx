@@ -1,6 +1,5 @@
 const m = require('mithril')
 
-
 const UIButton = {
   view: ({ attrs }) =>
     <div onclick={attrs.action} class="ui-button">

@@ -7,9 +7,8 @@ const Presentation = ({ attrs }) => {
     const id = attrs.id
     return {
         oninit: () => state.content = getFirstSlide(id)(model),
-        view: () => {
-            console.log('state', state)
-            return < div class="thumb-card card" onmouseover={() => model.contents(state.content)}>
+        view: () =>
+            < div class="thumb-card card" onmouseover={() => model.contents(state.content)}>
                 <div class="slide-fields">
                     <div class="title slide-field">
                         {attrs.title}
@@ -19,7 +18,6 @@ const Presentation = ({ attrs }) => {
                     </div>
                 </div>
             </div >
-        }
     }
 }
 

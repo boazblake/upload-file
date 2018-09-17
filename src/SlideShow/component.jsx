@@ -20,7 +20,6 @@ const SlideShow = (navigator, update) => {
             (allSelectedSlides = setSlides(model))
             currentSlide = idx => allSelectedSlides[idx]
         },
-        onupdate: () => console.log('idx', idx),
         view: ({ attrs: { model } }) => {
             return (< div class="container hero" >
                 <Preview text={() => currentSlide(idx).contents} />
@@ -29,7 +28,6 @@ const SlideShow = (navigator, update) => {
             </div >)
         }
     }
-
 }
 
 

@@ -1,16 +1,22 @@
 const m = require('mithril');
 
-import AltButton from './AltButton.jsx';
 import StageTitle from './StageTitle.jsx';
-import UIButton from './UIButton.jsx';
+import NavButton from './NavButton.jsx';
 
-const StageBanner = {
-  view: ({ attrs }) =>
-    <div class="stage-banner">
-      <StageTitle title={attrs.title} />
-      <AltButton action={attrs.action} />
-    </div>
-};
+
+const StageBanner = (vnode) => {
+  return {
+    view: ({ attrs }) =>
+      <div class="stage-banner">
+        <div className="nav-bar">
+          {attrs.title == 'Login' ? '' : <NavButton action={() => console.log(window.history)} icon={<i class="fa fa-arrow-left"></i>} />}
+          <StageTitle title={attrs.title} />
+          <NavButton action={attrs.action} icon={<i class="fas fa-hand-peace"></i>} />
+        </div>
+      </div>
+  }
+}
+
 
 
 export default StageBanner;
