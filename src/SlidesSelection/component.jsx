@@ -3,6 +3,7 @@ import { getCurrentSlides, setSlides, toggleSelection, toEditCard } from './mode
 import Slide from './Slide/component.jsx'
 import UIButton from '../components/ui/UIButton.jsx';
 import { log } from '../utils/index'
+import Sortable from 'sortablejs'
 
 
 const createSlidesSelectionPage = (navigator, update) => {
@@ -11,7 +12,7 @@ const createSlidesSelectionPage = (navigator, update) => {
     const toSlideShow = (id, name) => navigator.navigateTo('SlideShow', { name: name, presentationId: id })
 
     return {
-
+        oncreate: ({ dom }) => Sortable.create(dom, { sort: true }),
         view: ({ attrs: { model } }) => {
             slides = getCurrentSlides(model).slides.map((slide, idx) =>
                 <Slide key={idx}
@@ -28,7 +29,7 @@ const createSlidesSelectionPage = (navigator, update) => {
             )
 
             return (
-                <div class="hero" >
+                <div class="hero" id="slide-container" >
                     {slides}
                     < UIButton action={() => toSlideShow(model.currentPresentationId, model.user.name)} name="Start Presentation" />
                 </div >

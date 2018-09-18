@@ -9,9 +9,8 @@ const SlideShow = (navigator, update) => {
     let idx = 0
 
     const nextSlide = next => {
-        console.log(allSelectedSlides.length)
+        console.log(allSelectedSlides)
         let nextIdx = idx + next
-        console.log('idx', idx, 'nextIdx', nextIdx)
         return idx = nextIdx > allSelectedSlides.length ? allSelectedSlides.length : nextIdx < 0 ? 0 : nextIdx
     }
 

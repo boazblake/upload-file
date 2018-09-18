@@ -14,7 +14,6 @@ const createEditorPage = (navigator, update) => {
     return {
         view: ({ attrs: { model } }) => {
             const slideId = m.route.param('slideId')
-            console.log('params object', m.route.param(), 'slideId from params obj', slideId)
             const slide = currentSlide(slideId)(model)
             const _slide = clone(slide)
             _slide.contents = stream(_slide.contents)

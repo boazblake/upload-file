@@ -20,6 +20,12 @@ import Thumbnail from './components/Thumbnail/component.jsx'
 // import SlideEditor from './components/SlideEditor.js';
 
 
+const createNotFound = nav => update => {
+  return {
+    view: () => '404 NOT FOUND'
+  }
+}
+
 //LOGIN 
 const createLoginView = (navigator, update) => {
   const LoginPage = createLoginPage(navigator, update)
@@ -113,7 +119,7 @@ const routes = update => navigator => [
 
 const createApp = update => {
   const navigator = createNavigator(update)
-  navigator.register(routes(update)(navigator))
+  navigator.register(routes(update)(navigator), createNotFound(navigator)(update))
   return {
     model: () => Model,
     navigator,

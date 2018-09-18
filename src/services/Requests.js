@@ -1,16 +1,12 @@
 const m = require('mithril');
 import Task from 'data.task'
 
-import { tagged } from 'daggy'
-import { log } from './../utils/index.js'
-var Stream = require('mithril/stream');
 import { map, compose, toLower, filter, prop, path, test, toPairs, addIndex } from 'ramda';
 
 
 const baseUrl =
   'https://api.github.com';
 
-const SlidesVm = tagged('id', 'title', 'contents', 'isSelected')
 
 const toSlidesVm = ({ title, contents, id }) => ({ id, title, contents, isSelected: false })
 

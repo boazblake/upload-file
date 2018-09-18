@@ -6,7 +6,6 @@ import createApp from './App.jsx'
 //styles
 import "bulma/css/bulma.css";
 import "./index.css";
-import "polythene-css/dist/polythene-typography.css"
 
 
 //MEIOSIS PATTERN SETUP

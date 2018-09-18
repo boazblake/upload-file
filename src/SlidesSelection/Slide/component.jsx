@@ -1,13 +1,14 @@
 import m from 'mithril'
 import SlideSelectField from './SlideSelectField.jsx'
 
+
 const Slide = {
     oncreate: ({ dom }) =>
         dom.classList.add('fancyIn'),
     onbeforeremove: ({ dom }) =>
         dom.classList.add('fancyOut'),
-    view: ({ attrs }) =>
-        < div class="thumb-card card" key={attrs.key} onmouseover={() => attrs.model.contents(attrs.slide.contents)}>
+    view: ({ attrs }) => {
+        return < div class="thumb-card card " key={attrs.key} onmouseover={() => attrs.model.contents(attrs.slide.contents)}>
             <div class="level">
                 <div class="level-left">
                     <SlideSelectField fieldValue={attrs.title} class="slide-field title" />
@@ -29,6 +30,7 @@ const Slide = {
                 </div>
             </div>
         </div >
+    }
 }
 
 
