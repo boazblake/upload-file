@@ -43,10 +43,20 @@ const _getPresentationsTask = gist_id =>
       withCredentials: false
     }).then(res, rej))
 
+const _addNewPresentationTask = dto =>
+  new Task((rej, res) =>
+    m.request({
+      method: 'POST',
+      url: `${baseUrl}/gists`,
+      data: dto,
+      withCredentials: false
+    }).then(res, rej))
+
 
 const Requests = {
   getGistsTask: username => _getGistsTask(username).map(filterForPresentations),
-  getPresentationsTask: id => _getPresentationsTask(id).map(toPresentation)
+  getPresentationsTask: id => _getPresentationsTask(id).map(toPresentation),
+  addNewPresentationTask: dto => _addNewPresentationTask(dto).map(toPresentation)
 };
 
 module.exports = Requests;

@@ -5,7 +5,6 @@ const Thumbnail = ({ attrs }) => {
     return {
         onupdate: ({ dom }) => {
             dom.animate({
-                width: ['80%', '100%'],
                 opacity: [0.5, 0.9, 1],
                 offset: [0, 0.8],
                 easing: ['ease-in', 'ease-out'],

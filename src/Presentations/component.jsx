@@ -1,12 +1,21 @@
 import m from 'mithril'
-import { loadTask, updatePresentations } from './model.js'
+import Stream from 'mithril-stream'
+import v1 from 'uuid'
+import { loadTask, updatePresentations, newPresentationTask } from './model.js'
 import { log } from '../utils/index'
 import Presentation from './Presentation/component.jsx'
+import UIButton from '../components/ui/UIButton.jsx';
+import Modal from '../components/Modal/component.jsx'
 
 const createPresentationsPage = (navigator, update) => {
     let state = {
-        status: 'loading', error: ''
+        presentation: { name: Stream('') },
+        status: 'loading',
+        error: '',
+        showModal: false
     }
+
+    const createPresentation = dto => newPresentationTask(dto).fork(onSuccess(state), onError(state))
 
     const updateId = id => update({ currentPresentationId: id })
     const toSlideSelection = (id, name) => navigator.navigateTo('slidesSelection', { name: name, presentationId: id })
@@ -32,23 +41,38 @@ const createPresentationsPage = (navigator, update) => {
 
     return {
         oninit: ({ attrs: { model } }) => loadTask(model.gists).fork(onError(state), onSuccess(state)),
-        view: ({ attrs: { model } }) => {
-            if (state.status == 'loaded') {
-                return model.presentations.map((p, idx) =>
-                    <Presentation
-                        title={p.title}
-                        model={model}
-                        select={onSelect}
-                        id={idx}
-                        name={model.user.name}
-                        icon={< i class="fas fa-check-circle" />} />
-                )
-            } else {
-                "loading ..."
-            }
-        }
+        view: ({ attrs: { model } }) =>
+
+
+            m('div', { class: 'container' },
+                state.status == 'loaded' ?
+                    model.presentations.map((p, idx) =>
+                        m(Presentation,
+                            {
+                                title: p.title,
+                                model: model,
+                                select: onSelect,
+                                id: idx,
+                                name: model.user.name,
+                                icon: < i class="fas fa-check-circle" />
+                            }
+                        ))
+                    : "loading ...",
+
+                < UIButton action={() => state.showModal = true} name="Add Presentation" />,
+                state.showModal ?
+                    m(Modal, {
+                        type: "addPresentation", content: {
+                            value: state.presentation.name, click: (e) => {
+                                console.log('stater', createPresentation(state.presentation.name))
+                                    ; return state.showModal = false
+                            }
+                        }
+                    }) : ""
+
+            )
+
     }
 }
-
 
 export default createPresentationsPage
