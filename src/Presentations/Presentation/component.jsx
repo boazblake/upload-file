@@ -1,18 +1,17 @@
 import m from 'mithril'
 import { getFirstSlide } from './model.js'
 
-const Presentation = ({ attrs }) => {
-    const model = attrs.model
-    const id = attrs.id
+const Presentation = ({ attrs: { model, select, id, name, preview, title, icon } }) => {
+    console.log()
     return {
         view: () =>
-            < div class="thumb-card card" onmouseover={() => model.contents(attrs.preview)}>
+            < div class="thumb-card card" onmouseover={() => model.contents(preview)}>
                 <div class="slide-fields">
                     <div class="title slide-field">
-                        {attrs.title}
+                        {title}
                     </div>
-                    <div className="button slide-field" onclick={() => attrs.select(attrs.id, attrs.name)}>
-                        {attrs.icon}
+                    <div className="button slide-field" onclick={() => select(model)(id, name)}>
+                        {icon}
                     </div>
                 </div>
             </div >

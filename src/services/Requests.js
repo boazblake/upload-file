@@ -43,7 +43,7 @@ const _getAllPresentationsTask = () =>
 const Requests = {
   getAllPresentationsTask: () => _getAllPresentationsTask().map(map(toPresentationViewModel)),
   getAPresentationTask: id => _getAPresentationTask(id).map(log(`this presention? ${id}`)),
-  addNewPresentationTask: name => _addNewPresentationTask(name).map(log('?')).map(toPresentationViewModel).map(log('??'))
+  addNewPresentationTask: name => _addNewPresentationTask(name).map(toPresentationViewModel)
 };
 
 module.exports = Requests;

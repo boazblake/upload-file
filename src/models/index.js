@@ -9,6 +9,6 @@ const Model = {
   user: { name: '' },
   setUser: update => field => e => update({ user: O({ [field]: e.target.value }) }),
   updatePresentations: update => xs => update({ presentations: xs }),
-  setId: id => update({ currentPresentationId: id })
+  setId: update => id => update({ currentPresentationId: id })
 };
 export default Model;
