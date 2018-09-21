@@ -10,10 +10,15 @@ import { map, lensPath, compose, toLower, filter, prop, test, view } from 'ramda
 const baseUrl =
   'https://api.github.com';
 
-const toMlab = `https://api.mlab.com/api/1/databases/mithril-presenter/collections/Slides?${apiKey}`
+const toMlab = id => `https://api.mlab.com/api/1/databases/mithril-presenter/collections/Slides/${id}?${apiKey}`
 
 const toSlidesVm = ({ title, contents, id }) => ({ id, title, contents, isSelected: false })
 
+const toSlidesViewModel = x => ({
+  title: prop('Title', x),
+  id: view(lensPath(['_id', '$oid']), x),
+  slides: prop('Slides', x)
+})
 
 const toPresentationViewModel = x => ({
   title: prop('Title', x),
@@ -27,7 +32,7 @@ const _addNewPresentationTask = name =>
   new Task((rej, res) =>
     m.request({
       method: 'POST',
-      url: toMlab,
+      url: toMlab(''),
       data: AddPresentationDto(name),
       withCredentials: false
     }).then(res, rej))
@@ -36,13 +41,21 @@ const _getAllPresentationsTask = () =>
   new Task((rej, res) =>
     m.request({
       method: 'GET',
-      url: toMlab,
+      url: toMlab(''),
+      withCredentials: false
+    }).then(res, rej))
+
+const _getSlidesTask = id =>
+  new Task((rej, res) =>
+    m.request({
+      method: 'GET',
+      url: toMlab(id),
       withCredentials: false
     }).then(res, rej))
 
 const Requests = {
   getAllPresentationsTask: () => _getAllPresentationsTask().map(map(toPresentationViewModel)),
-  getAPresentationTask: id => _getAPresentationTask(id).map(log(`this presention? ${id}`)),
+  getSlidesTask: id => _getSlidesTask(id).map(toSlidesViewModel),
   addNewPresentationTask: name => _addNewPresentationTask(name).map(toPresentationViewModel)
 };
 

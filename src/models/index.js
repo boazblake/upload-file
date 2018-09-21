@@ -3,12 +3,14 @@ import O from "patchinko/constant"
 
 
 const Model = {
-  currentPresentationId: null,
+  currentPresentation: { id: null, slides: [], title: '' },
+  setPresentationId: update => id => update({ currentPresentation: O({ id }) }),
   presentations: [],
+  updatePresentations: update => presentations => update({ presentations }),
+  updateSlides: update => slides => update({ currentPresentation: O({ slides }) }),
+  updateTitle: update => title => update({ currentPresentation: O({ title }) }),
   contents: Stream(''),
   user: { name: '' },
   setUser: update => field => e => update({ user: O({ [field]: e.target.value }) }),
-  updatePresentations: update => xs => update({ presentations: xs }),
-  setId: update => id => update({ currentPresentationId: id })
 };
 export default Model;

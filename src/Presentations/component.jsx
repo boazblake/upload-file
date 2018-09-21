@@ -12,7 +12,7 @@ const createPresentationsPage = (navigator, update) => {
     }
 
     const onselect = model => (id, name) => {
-        model.setId(update)(id)
+        model.setPresentationId(update)(id)
         toSlideSelection(id, name)
     }
 
