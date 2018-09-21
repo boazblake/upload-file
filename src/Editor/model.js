@@ -1,39 +1,29 @@
-import m from 'mithril'
-import O from 'patchinko/constant'
-const { assoc, compose, clone, filter, propEq, fromPairs, last, split, prop, merge, map } = require('ramda');
-const { v1 } = require('uuid');
-import { log } from '../utils/index'
-
-export const fromSlides = model => filter(propEq('id', model.currentPresentationId), model.presentations)[0]
-
-const fromSlide = id => slides =>
-    filter(propEq('id', id), slides)[0]
-
-
-export const currentSlide = id =>
-    compose(fromSlide(id), prop('slides'), fromSlides)
+const { compose, identical, not, last, split, prop } = require('ramda');
 
 
 export const updateText = state => text => state.contents(text)
 
 export const formatPreviewText = update => compose(updateText(update))
 
-const bySlideId = id => propEq('id', id);
-
 const getId = compose(last, split('/'), prop('url'))
 
-const updateContents = updates => slide =>
-    merge(slide, updates)
+export const dirty = state => ({ title, contents }) => {
+    let oldContents = JSON.stringify(state.slide.contents())
+    let newContents = JSON.stringify(contents())
+    let oldTitle = JSON.stringify(state.slide.title)
+    let newTitle = JSON.stringify(title)
 
-const getSlide = id => updates =>
-    compose(map(updateContents(updates)), filter(bySlideId(id)))
+    console.log('OLD>>>>', oldTitle, 'NEW>>>>>>', newTitle)
+    console.log('OLD>>>>>', oldContents, 'NEW>>>>>', newContents)
+    console.log('diff title', identical(oldTitle, newTitle))
+    console.log('diff Contents', identical(oldContents, newContents))
+    return identical(oldContents, newContents) || identical(oldTitle, newTitle)
+}
 
-export const updateSlide = update => attrs => {
+export const updateSlideTask = update => ({ title, contents }) => {
+    console.log()
     let id = getId(update())
-    let title = attrs.title
-    let contents = attrs.contents()
-    //filter(bySlideId(id))
-    return update({ slides: O(getSlide(id)({ title, contents })) })
+    saveSlideTask(id)({ id, title, contents })
 };
 
 

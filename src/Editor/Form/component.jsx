@@ -2,7 +2,8 @@ const m = require('mithril');
 
 import UIButton from '../../components/ui/UIButton.jsx';
 
-const Form = vnode => {
+const Form = ({ attrs }) => {
+  let { title, actions, contents, id, name } = attrs
   return {
     view: () =>
       <form name="slide-form" id="slide-form" class="form column is-half">
@@ -15,7 +16,7 @@ const Form = vnode => {
           name="title"
           type="text"
           autocomplete="false"
-          value={vnode.attrs.title}
+          value={title}
         />
 
         <label for="contents" class="label">
@@ -24,20 +25,20 @@ const Form = vnode => {
         <textarea
           id="contents"
           class="textarea"
-          onkeyup={m.withAttr('value', vnode.attrs.actions.previewText(vnode.attrs))}
+          onkeyup={m.withAttr('value', actions.previewText(attrs))}
           name="contents"
           autocomplete="false"
-          value={vnode.attrs.contents}
+          value={contents}
         />
         <UIButton
           action={() =>
-            vnode.attrs.actions.saveSlide(vnode.attrs)
+            actions.saveSlide(attrs)
           }
           name="Save"
         />
         <UIButton
           action={() =>
-            vnode.attrs.actions.cancelEditing(vnode.attrs.id, vnode.attrs.name)
+            actions.cancelEditing(id, name)
           }
           name="Cancel"
         />
