@@ -10,62 +10,53 @@ import Modal from '../components/Modal/component.jsx'
 const createPresentationsPage = (navigator, update) => {
     let state = {
         presentation: { name: Stream('') },
-        status: 'loading',
-        error: '',
         showModal: false
     }
 
-    const createPresentation = dto => newPresentationTask(dto).fork(onSuccess(state), onError(state))
-
-    const updateId = id => update({ currentPresentationId: id })
-    const toSlideSelection = (id, name) => navigator.navigateTo('slidesSelection', { name: name, presentationId: id })
-
-    const onSelect = (id, name) => {
-        updateId(id)
+    const onSelect = model => (id, name) => {
+        model.setId(id)
         toSlideSelection(id, name)
     }
 
-    const onSuccess = state => result => {
+    const onSuccess = state => model => result => {
         state.error = ""
-        updatePresentations(update)(result)
+        console.log('result', result)
+        updatePresentations(update)(model)(result)
         state.status = 'loaded'
     }
 
     const onError = state => error => {
-        console.log('error', error)
-        state.status = 'error'
-        state.error = 'error with fetching presentations'
+        console.log('state, error', state, error)
     }
 
+    const createPresentationTask = model => presentation => newPresentationTask(presentation).fork(onError(state), onSuccess(state)(model))
+    const toSlideSelection = (id, name) => navigator.navigateTo('slidesSelection', { name: name, presentationId: id })
 
 
     return {
-        oninit: ({ attrs: { model } }) => loadTask(model.gists).fork(onError(state), onSuccess(state)),
         view: ({ attrs: { model } }) =>
-
-
             m('div', { class: 'container' },
-                state.status == 'loaded' ?
-                    model.presentations.map((p, idx) =>
-                        m(Presentation,
-                            {
-                                title: p.title,
-                                model: model,
-                                select: onSelect,
-                                id: idx,
-                                name: model.user.name,
-                                icon: < i class="fas fa-check-circle" />
-                            }
-                        ))
-                    : "loading ...",
+                model.presentations.map(p =>
+                    m(Presentation, {
+                        key: p.id,
+                        title: p.title,
+                        preview: p.preview,
+                        model: model,
+                        select: onSelect,
+                        id: p.id,
+                        name: model.user.name,
+                        icon: < i class="fas fa-check-circle" />
+                    }
+                    )
+                ),
 
                 < UIButton action={() => state.showModal = true} name="Add Presentation" />,
                 state.showModal ?
                     m(Modal, {
                         type: "addPresentation", content: {
                             value: state.presentation.name, click: (e) => {
-                                console.log('stater', createPresentation(state.presentation.name))
-                                    ; return state.showModal = false
+                                createPresentationTask(model)(state.presentation.name);
+                                return state.showModal = false
                             }
                         }
                     }) : ""

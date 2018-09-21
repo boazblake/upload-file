@@ -1,11 +1,14 @@
 import Stream from "mithril-stream";
+import O from "patchinko/constant"
 
 
 const Model = {
   currentPresentationId: null,
-  gists: [],
   presentations: [],
   contents: Stream(''),
   user: { name: '' },
+  setUser: update => field => e => update({ user: O({ [field]: e.target.value }) }),
+  updatePresentations: update => xs => update({ presentations: xs }),
+  setId: id => update({ currentPresentationId: id })
 };
 export default Model;

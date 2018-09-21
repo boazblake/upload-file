@@ -2,26 +2,29 @@ import { log } from '../utils/index'
 import m from 'mithril'
 import { map } from 'ramda'
 import UIButton from '../components/ui/UIButton.jsx';
-import { setText, loginTask, updateGists } from './model.js'
+import { updatePresentations, setUser } from '../Models/index.js'
+import { getAllPresentationsTask } from '../services/Requests'
 
 
 const createLoginPage = (navigator, update) => {
     let state = {
         status: { error: false, msg: '' }
     }
-    const updateText = field => setText(update)(field)
+
+    const updateText = field => model => model.setUser(update)(field)
+
     const onError = state => e => {
         state.status.error = true
         state.status.msg = 'Error with logging in'
     }
 
-    const onSuccess = state => name => data => {
+    const onSuccess = state => model => data => {
         state.status.error = false
-        updateGists(update)(data)
-        navigator.navigateTo('presentations', { name })
+        model.updatePresentations(update)(data)
+        return navigator.navigateTo('presentations', { name: model.user.name })
     }
 
-    const login = name => loginTask(name).fork(onError(state), onSuccess(state)(name))
+    const login = model => getAllPresentationsTask(model).fork(onError(state), onSuccess(state)(model))
 
     const reset = state =>
         state = { error: false, msg: '' }
@@ -34,9 +37,9 @@ const createLoginPage = (navigator, update) => {
                         <h1 class="app-title title is-bold">Welcome</h1>
                     </div>
                     <div class="hero">
-                        <input class="input" value={model.user.name} oninput={updateText("name")} />
+                        <input class="input" value={model.user.name} oninput={updateText("name")(model)} />
                         {state.status.msg}
-                        <UIButton action={() => login(model.user.name)} name="LOGIN" />
+                        <UIButton action={() => login(model)} name="LOGIN" />
                     </div>
                 </div>
             </div>

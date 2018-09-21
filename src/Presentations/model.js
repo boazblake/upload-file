@@ -18,7 +18,9 @@ export const loadTask = compose(
     map(mapIndexed(toViewModel)), map(unnest), fetchPresentationsTask
 )
 
-export const updatePresentations = update => data => update({ presentations: O(data) })
+export const updatePresentations = update => model => presentation =>
+    model.updatePresentations(update)(model.presentations.concat(presentation))
+
 
 
 const toDtoTask = name => Task.of({
@@ -26,4 +28,4 @@ const toDtoTask = name => Task.of({
 })
 
 export const newPresentationTask = name =>
-    toDtoTask(name).chain(addNewPresentationTask).map(log('dto'))
+    addNewPresentationTask(name)

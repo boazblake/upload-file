@@ -2,13 +2,11 @@ import m from 'mithril'
 import { getFirstSlide } from './model.js'
 
 const Presentation = ({ attrs }) => {
-    const state = { content: '' }
     const model = attrs.model
     const id = attrs.id
     return {
-        oninit: () => state.content = getFirstSlide(id)(model),
         view: () =>
-            < div class="thumb-card card" onmouseover={() => model.contents(state.content)}>
+            < div class="thumb-card card" onmouseover={() => model.contents(attrs.preview)}>
                 <div class="slide-fields">
                     <div class="title slide-field">
                         {attrs.title}
