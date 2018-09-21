@@ -2,7 +2,6 @@ import m from 'mithril'
 import { getCurrentSlides, setSlides, toggleSelection, toEditCard } from './model.js'
 import Slide from './Slide/component.jsx'
 import UIButton from '../components/ui/UIButton.jsx';
-import { log } from '../utils/index'
 import Sortable from 'sortablejs'
 
 

@@ -1,6 +1,6 @@
 import m from 'mithril'
 
-import Model from './models/index.js';
+import Model from './Models/index.js';
 
 import { createNavigator } from './services/navigator.js'
 
@@ -12,12 +12,6 @@ import createEditorPage from './Editor/component.jsx'
 import StageBanner from './components/ui/StageBanner.jsx';
 import CardContainer from './components/layout/CardContainer.jsx';
 import Thumbnail from './components/Thumbnail/component.jsx'
-// import MainStage from './components/layout/MainStage.js';
-// import SlideShowContainer from './components/layout/SlideShowContainer.js';
-// import LoginPage from './components/cards/LoginPage.js';
-// import SelectSlideContainer from './components/layout/SelectSlideContainer.js';
-// import PresentationSelectContainer from './components/layout/PresentationSelectContainer.js';
-// import SlideEditor from './components/SlideEditor.js';
 
 
 const createNotFound = nav => update => {
@@ -75,7 +69,6 @@ const createSlidesView = (navigator, update) => {
               <Thumbnail contents={model.contents} />
             </div>
           </div>
-
         </CardContainer>
       ]
   }
