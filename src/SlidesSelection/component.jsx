@@ -12,7 +12,7 @@ const createSlidesSelectionPage = (navigator, update) => {
     }
     let slides = []
     const actions = { toggleSelection, editCard: toEditCard(navigator) }
-    const toSlideShow = (id, name) => navigator.navigateTo('SlideShow', { name: name, presentationId: id })
+    const toSlideShow = ({ id, name }) => navigator.navigateTo('SlideShow', { name: name, presentationId: id })
     const onError = _state => errors => { console.log('errros', errors); state.errors = errors }
     const onSuccess = _state => _model => _update => ({ title, slides }) => {
         _state.errors = [];
@@ -31,7 +31,7 @@ const createSlidesSelectionPage = (navigator, update) => {
                     slide={slide}
                     editDto={{
                         slideId: slide.id
-                        , presentationId: model.currentPresentationId
+                        , presentationId: model.currentPresentation.id
                         , name: model.user.name
                     }
                     } />

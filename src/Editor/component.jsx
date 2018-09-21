@@ -3,7 +3,7 @@ import stream from 'mithril-stream'
 import Form from './Form/component.jsx';
 import Preview from '../components/Preview/component.jsx'
 import { currentSlide, updateSlide, formatPreviewText } from './model.js'
-import { clone } from 'ramda'
+import { clone, propEq } from 'ramda'
 
 const createEditorPage = (navigator, update) => {
     const actions = {
@@ -13,13 +13,14 @@ const createEditorPage = (navigator, update) => {
     };
     return {
         view: ({ attrs: { model } }) => {
+            let _slide = {}
             const slideId = m.route.param('slideId')
-            const slide = currentSlide(slideId)(model)
-            const _slide = clone(slide)
+            const slide = model.currentPresentation.slides.filter(propEq('id', slideId))
+            slide.map(s => _slide = clone(s))
             _slide.contents = stream(_slide.contents)
             return (
                 <div class="columns">
-                    <Form title={_slide.title} contents={_slide.contents} actions={actions} id={model.currentPresentationId} name={model.user.name} />
+                    <Form title={_slide.title} contents={_slide.contents} actions={actions} id={model.currentPresentation.id} name={model.user.name} />
                     <Preview text={_slide.contents} />
                 </div>
             )
