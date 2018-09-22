@@ -10,7 +10,7 @@ import { map, lensPath, compose, toLower, filter, prop, test, view } from 'ramda
 const baseUrl =
   'https://api.github.com';
 
-const toMlab = id => `https://api.mlab.com/api/1/databases/mithril-presenter/collections/Slides/${id}?${apiKey}`
+const toMlab = id => `https://api.mlab.com/api/1/databases/mithril-presenter/collections/presentations/${id}?${apiKey}`
 
 const toSlidesVm = ({ title, contents, id }) => ({ id, title, contents, isSelected: false })
 
@@ -53,10 +53,21 @@ const _getSlidesTask = id =>
       withCredentials: false
     }).then(res, rej))
 
+const _updateSlide = id => dto =>
+  new Task((rej, res) =>
+    m.request({
+      method: 'PUT',
+      url: toMlab(id),
+      data: dto,
+      withCredentials: false
+    }).then(res, rej))
+
 const Requests = {
   getAllPresentationsTask: () => _getAllPresentationsTask().map(map(toPresentationViewModel)),
   getSlidesTask: id => _getSlidesTask(id).map(toSlidesViewModel),
-  addNewPresentationTask: name => _addNewPresentationTask(name).map(toPresentationViewModel)
+  addNewPresentationTask: name => _addNewPresentationTask(name).map(toPresentationViewModel),
+  saveSlidesTask: ({ id, title, slides }) => _updateSlide(id)({ Title: title, Slides: slides }).map(toPresentationViewModel)
+
 };
 
 module.exports = Requests;

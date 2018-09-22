@@ -2,7 +2,7 @@ import m from 'mithril'
 import stream from 'mithril-stream'
 import Form from './Form/component.jsx';
 import Preview from '../components/Preview/component.jsx'
-import { updateSlideTask, formatPreviewText, dirty } from './model.js'
+import { updateSlideTask, dirty, _updateText, toSlideSelection } from './model.js'
 import { clone, propEq } from 'ramda'
 
 const createEditorPage = (navigator, update) => {
@@ -15,19 +15,17 @@ const createEditorPage = (navigator, update) => {
         state.errors = errors
     }
 
-    const onSuccess = _navigator => data => {
-        console.log(data)
-    }
+    const onSuccess = ({ currentPresentation, user }) => _ => toSlideSelection(navigator, currentPresentation.id, user.name)
 
     const actions = {
-        saveSlide: data => {
-            console.log(dirty(state)(data))
+        saveSlide: model => (title, contents) => {
+            let data = { title, contents }
             return dirty(state)(data)
-                ? updateSlideTask(update)(data).fork(onError(state), onSuccess(navigator))
+                ? updateSlideTask(model)(update)(data).fork(onError(state), onSuccess(model))
                 : {}
         },
         cancelEditing: (id, name) => navigator.navigateTo('slidesSelection', { name: name, presentationId: id }),
-        previewText: formatPreviewText
+        updateText: _updateText,
     };
     return {
         view: ({ attrs: { model } }) => {
@@ -37,9 +35,15 @@ const createEditorPage = (navigator, update) => {
                 .map(s => state.slide = clone(s))
 
             state.slide.contents = stream(state.slide.contents)
+            state.slide.title = stream(state.slide.title)
             return (
                 <div class="columns">
-                    <Form title={state.slide.title} contents={state.slide.contents} actions={actions} id={model.currentPresentation.id} name={model.user.name} />
+                    <Form title={state.slide.title}
+                        contents={state.slide.contents}
+                        actions={actions}
+                        id={model.currentPresentation.id}
+                        name={model.user.name}
+                        model={model} />
                     <Preview text={state.slide.contents} />
                 </div>
             )

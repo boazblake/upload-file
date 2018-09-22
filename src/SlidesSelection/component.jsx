@@ -21,6 +21,7 @@ const createSlidesSelectionPage = (navigator, update) => {
     }
     return {
         oninit: ({ attrs: { model } }) => getSlidesTask(model.currentPresentation.id).fork(onError(state), onSuccess(state)(model)(update)),
+        //?? onupdate: ({ attrs: { model } }) => getSlidesTask(model.currentPresentation.id).fork(onError(state), onSuccess(state)(model)(update)),
         oncreate: ({ dom }) => Sortable.create(dom, { sort: true }),
         view: ({ attrs: { model } }) => {
             slides = model.currentPresentation.slides.map((slide, idx) =>

@@ -1,30 +1,32 @@
-const { compose, identical, not, last, split, prop } = require('ramda');
+import { saveSlidesTask } from '../services/Requests.js'
+import { compose, difference, isEmpty, last, split, prop, not, propEq, findIndex, remove, insert } from 'ramda'
+import { log } from '../utils/index'
+import { map } from 'rxjs/operator/map';
+import { SSL_OP_DONT_INSERT_EMPTY_FRAGMENTS } from 'constants';
 
+export const toSlideSelection = (navigator, id, name) => navigator.navigateTo('slidesSelection', { name: name, presentationId: id })
 
 export const updateText = state => text => state.contents(text)
 
-export const formatPreviewText = update => compose(updateText(update))
+export const _updateText = (field, attrs) => text => attrs[field](text)
 
 const getId = compose(last, split('/'), prop('url'))
 
 export const dirty = state => ({ title, contents }) => {
-    let oldContents = JSON.stringify(state.slide.contents())
-    let newContents = JSON.stringify(contents())
+    let oldContents = JSON.stringify(state.slide.contents)
+    let newContents = JSON.stringify(contents)
     let oldTitle = JSON.stringify(state.slide.title)
     let newTitle = JSON.stringify(title)
 
-    console.log('OLD>>>>', oldTitle, 'NEW>>>>>>', newTitle)
-    console.log('OLD>>>>>', oldContents, 'NEW>>>>>', newContents)
-    console.log('diff title', identical(oldTitle, newTitle))
-    console.log('diff Contents', identical(oldContents, newContents))
-    return identical(oldContents, newContents) || identical(oldTitle, newTitle)
+    return not(isEmpty(difference([oldContents], [newContents]))) || not(isEmpty(difference([oldTitle], [newTitle])))
 }
 
-export const updateSlideTask = update => ({ title, contents }) => {
-    console.log()
+export const updateSlideTask = model => update => ({ title, contents }) => {
     let id = getId(update())
-    saveSlideTask(id)({ id, title, contents })
-};
-
-
-
+    let slide = ({ id, title, contents })
+    let oldList = model.currentPresentation.slides
+    let idx = findIndex(propEq('id', id))(oldList)
+    let newList = remove(idx, 1, oldList)
+    model.updateSlides(update)(insert(idx, slide, newList))
+    return saveSlidesTask(model.currentPresentation)
+}

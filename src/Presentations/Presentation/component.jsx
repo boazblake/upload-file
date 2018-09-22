@@ -1,5 +1,4 @@
 import m from 'mithril'
-import { getFirstSlide } from './model.js'
 
 const Presentation = ({ attrs: { model, select, id, name, preview, title, icon } }) => {
     console.log()

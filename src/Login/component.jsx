@@ -7,6 +7,7 @@ import { getAllPresentationsTask } from '../services/Requests'
 
 
 const createLoginPage = (navigator, update) => {
+
     let state = {
         status: { error: false, msg: '' }
     }
