@@ -26,7 +26,7 @@ const createLoginView = (navigator, update) => {
   return {
     view: ({ attrs: { model } }) =>
       [
-        <StageBanner action={_ => m.route.set('/login')} title="Login" />,
+        <StageBanner title="Login" />,
         <CardContainer>
           <LoginPage model={model} />
         </CardContainer>

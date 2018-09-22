@@ -51,7 +51,7 @@ const createPresentationsPage = (navigator, update) => {
                             select: onselect,
                             id: p.id,
                             name: model.user.name,
-                            icon: < i class="fas fa-check-circle" />
+                            icon: m('i', { class: "fas fa-check-circle" })
                         }
                         )
                     ),
