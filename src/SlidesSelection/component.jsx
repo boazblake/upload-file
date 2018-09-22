@@ -21,7 +21,6 @@ const createSlidesSelectionPage = (navigator, update) => {
     }
     return {
         oninit: ({ attrs: { model } }) => getSlidesTask(model.currentPresentation.id).fork(onError(state), onSuccess(state)(model)(update)),
-        //?? onupdate: ({ attrs: { model } }) => getSlidesTask(model.currentPresentation.id).fork(onError(state), onSuccess(state)(model)(update)),
         oncreate: ({ dom }) => Sortable.create(dom, { sort: true }),
         view: ({ attrs: { model } }) => {
             slides = model.currentPresentation.slides.map((slide, idx) =>
@@ -40,8 +39,12 @@ const createSlidesSelectionPage = (navigator, update) => {
 
             return (
                 <div class="hero" id="slide-container" >
+                    < UIButton action={() => toEditCard(navigator)({
+                        slideId: '', presentationId: model.currentPresentation.id
+                        , name: model.user.name
+                    })} name="Add Slide" />
                     {slides}
-                    < UIButton action={() => toSlideShow(model.currentPresentationId, model.user.name)} name="Start Presentation" />
+                    < UIButton action={() => toSlideShow(model.currentPresentation.id, model.user.name)} name="Start Presentation" />
                 </div >
             )
         }

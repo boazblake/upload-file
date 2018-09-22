@@ -1,8 +1,5 @@
 import { saveSlidesTask } from '../services/Requests.js'
 import { compose, difference, isEmpty, last, split, prop, not, propEq, findIndex, remove, insert } from 'ramda'
-import { log } from '../utils/index'
-import { map } from 'rxjs/operator/map';
-import { SSL_OP_DONT_INSERT_EMPTY_FRAGMENTS } from 'constants';
 
 export const toSlideSelection = (navigator, id, name) => navigator.navigateTo('slidesSelection', { name: name, presentationId: id })
 

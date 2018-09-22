@@ -1,16 +1,17 @@
 import { log } from '../utils/index.js'
 const m = require('mithril');
 import Task from 'data.task'
+import { v1 } from 'uuid'
 
 import { apiKey } from './mlab.js'
 
 import { map, lensPath, compose, toLower, filter, prop, test, view } from 'ramda';
 
+const toMlab = id =>
+  id == null || id == undefined
+    ? null
+    : `https://api.mlab.com/api/1/databases/mithril-presenter/collections/presentations/${id}?${apiKey}`
 
-const baseUrl =
-  'https://api.github.com';
-
-const toMlab = id => `https://api.mlab.com/api/1/databases/mithril-presenter/collections/presentations/${id}?${apiKey}`
 
 const toSlidesVm = ({ title, contents, id }) => ({ id, title, contents, isSelected: false })
 
@@ -23,10 +24,10 @@ const toSlidesViewModel = x => ({
 const toPresentationViewModel = x => ({
   title: prop('Title', x),
   id: view(lensPath(['_id', '$oid']), x),
-  preview: view(lensPath(['Slides', 0, 'contents']), x) || 'Add A Slide.'
+  preview: view(lensPath(['Slides', 0, 'contents']), x)
 })
 
-const AddPresentationDto = name => ({ Title: name, Slides: [] })
+const AddPresentationDto = name => ({ Title: name, Slides: [{ title: 'Demo Slide', id: v1(), contents: 'Edit this slide' }] })
 
 const _addNewPresentationTask = name =>
   new Task((rej, res) =>
@@ -64,9 +65,9 @@ const _updateSlide = id => dto =>
 
 const Requests = {
   getAllPresentationsTask: () => _getAllPresentationsTask().map(map(toPresentationViewModel)),
-  getSlidesTask: id => _getSlidesTask(id).map(toSlidesViewModel),
-  addNewPresentationTask: name => _addNewPresentationTask(name).map(toPresentationViewModel),
-  saveSlidesTask: ({ id, title, slides }) => _updateSlide(id)({ Title: title, Slides: slides }).map(toPresentationViewModel)
+  getSlidesTask: id => id ? _getSlidesTask(id).map(toSlidesViewModel) : Task.rejected({ errors: ['Missing Id'] }),
+  addNewPresentationTask: name => name ? _addNewPresentationTask(name).map(toPresentationViewModel) : Task.rejected({ errors: ['Missing Name'] }),
+  saveSlidesTask: ({ id, title, slides }) => id && title && slides ? _updateSlide(id)({ Title: title, Slides: slides }).map(toPresentationViewModel) : Task.rejected({ errors: ['Missing Dto'] }),
 
 };
 

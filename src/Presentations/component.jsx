@@ -60,6 +60,7 @@ const createPresentationsPage = (navigator, update) => {
                     state.showModal ?
                         m(Modal, {
                             type: "addPresentation", content: {
+                                close: () => state.showModal = false,
                                 value: state.presentation.name, click: (e) => {
                                     createPresentationTask(model)(state.presentation.name);
                                     return state.showModal = false

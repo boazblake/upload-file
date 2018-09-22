@@ -1,7 +1,6 @@
 import m from 'mithril'
 
 const Presentation = ({ attrs: { model, select, id, name, preview, title, icon } }) => {
-    console.log()
     return {
         view: () =>
             < div class="thumb-card card" onmouseover={() => model.contents(preview)}>

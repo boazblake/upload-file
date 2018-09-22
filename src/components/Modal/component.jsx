@@ -1,16 +1,11 @@
 import m from 'mithril'
 
-const savePresentation = e => {
-
-    console.log('saving presentation in modal', e)
-}
-
-
-
-
 const Content = {
-    addPresentation: ({ value, click }) => {
+    addPresentation: ({ value, click, close }) => {
         return (<form class="form modal-content" onsubmit={(e) => { e.preventDefault(); click(value) }} >
+            <button class="button" type="button" onclick={() => close()} >
+                <i class="fas fa-times-circle"></i>
+            </button>
             <label for="title" class="label">
                 {"Add Presentation"}
             </label>
