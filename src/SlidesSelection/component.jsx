@@ -14,13 +14,13 @@ const createSlidesSelectionPage = (navigator, update) => {
     const actions = { toggleSelection, editCard: toEditCard(navigator) }
     const toSlideShow = ({ id, name }) => navigator.navigateTo('SlideShow', { name: name, presentationId: id })
     const onError = _state => errors => { console.log('errros', errors); state.errors = errors }
-    const onSuccess = _state => _model => _update => ({ title, slides }) => {
+    const onSuccess = _state => _model => ({ title, slides }) => {
         _state.errors = [];
-        _model.updateSlides(_update)(slides)
-        _model.updateTitle(_update)(title)
+        _model.updateSlides(update)(slides)
+        _model.updateTitle(update)(title)
     }
     return {
-        oninit: ({ attrs: { model } }) => getSlidesTask(model.currentPresentation.id).fork(onError(state), onSuccess(state)(model)(update)),
+        oninit: ({ attrs: { model } }) => getSlidesTask(model.currentPresentation.id).fork(onError(state), onSuccess(state)(model)),
         oncreate: ({ dom }) => Sortable.create(dom, { sort: true }),
         view: ({ attrs: { model } }) => {
             slides = model.currentPresentation.slides.map((slide, idx) =>
@@ -44,7 +44,7 @@ const createSlidesSelectionPage = (navigator, update) => {
                         , name: model.user.name
                     })} name="Add Slide" />
                     {slides}
-                    < UIButton action={() => toSlideShow(model.currentPresentation.id, model.user.name)} name="Start Presentation" />
+                    < UIButton action={() => toSlideShow({ id: model.currentPresentation.id, name: model.user.name })} name="Start Presentation" />
                 </div >
             )
         }

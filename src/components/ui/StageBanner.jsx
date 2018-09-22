@@ -8,6 +8,7 @@ const StageBanner = (vnode) => {
   return {
     view: ({ attrs }) =>
       <div class="stage-banner">
+        <NavButton icon={<i class="fa fa-arrow-left" />} action={attrs.action} />
         <StageTitle title={attrs.title} />
       </div>
   }

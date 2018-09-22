@@ -27,7 +27,7 @@ const toPresentationViewModel = x => ({
   preview: view(lensPath(['Slides', 0, 'contents']), x)
 })
 
-const AddPresentationDto = name => ({ Title: name, Slides: [{ title: 'Demo Slide', id: v1(), contents: 'Edit this slide' }] })
+const AddPresentationDto = name => ({ Title: name, Slides: [{ title: 'Demo Slide', id: v1(), contents: '![](https://aa1a5178aef33568e9c4-a77ea51e8d8892c1eb8348eb6b3663f6.ssl.cf5.rackcdn.com/p/full/e23e0406-e54c-4451-90e0-928f39f4b449.jpg)' }] })
 
 const _addNewPresentationTask = name =>
   new Task((rej, res) =>
