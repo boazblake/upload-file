@@ -2,6 +2,8 @@ import m from 'mithril'
 
 const Presentation = ({ attrs: { model, select, id, name, preview, title, icon } }) => {
     return {
+        onupdate: ({ dom }) => dom.classList.add('slidein'),
+        onbeforeremove: ({ dom }) => dom.classList.add('slidein'),
         view: () =>
             m('article', { class: 'media box', onmouseover: () => model.contents(preview) }, [
                 m('div', { class: 'media-content ' }, [

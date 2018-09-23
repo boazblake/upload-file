@@ -83,7 +83,6 @@ html {
 }
 
 .label {
-  padding: 1em 0;
   margin: 0.5em;
   color: #ee5f28;
   text-transform: uppercase;
@@ -97,7 +96,6 @@ html {
   justify-content: center;
   align-self: center;
   margin: 1em 0;
-  padding: 1em;
   width: 50%;
   font-weight: bold;
   background: #ee5f28;
@@ -141,19 +139,16 @@ html {
   align-content: space-between;
 }
 
+.slidein {animation: slide-in 1.5s;}
 
-.fancyin {animation:fade-in 1.5s;}
-
-.fancyout {animation:fade-out 1.5s;}
-
-@keyframes fade-in {
-    from {opacity:0;}
-    to {opacity:1;}
+@keyframes slide-in {
+    from {opacity:0; margin-left: 100%;}
+    to {opacity:1; margin-left:0;}
 }
 
-@keyframes fade-out {
-    from {opacity:1;}
-    to {opacity:0;}
+
+.modal-card-body {
+  max-height: 200px;
 }
 
 .modal {

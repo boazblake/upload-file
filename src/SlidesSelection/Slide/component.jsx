@@ -3,10 +3,8 @@ import SlideSelectField from './SlideSelectField.jsx'
 
 
 const Slide = {
-    oncreate: ({ dom }) =>
-        dom.classList.add('fancyIn'),
-    onbeforeremove: ({ dom }) =>
-        dom.classList.add('fancyOut'),
+    onupdate: ({ dom }) => dom.classList.add('slidein'),
+    onbeforeremove: ({ dom }) => dom.classList.add('slidein'),
     view: ({ attrs }) =>
         < article class="media box" key={attrs.key} onmouseover={() => attrs.model.contents(attrs.slide.contents)}>
             <div class="media-content">
