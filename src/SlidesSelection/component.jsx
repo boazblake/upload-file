@@ -24,29 +24,33 @@ const createSlidesSelectionPage = (navigator, update) => {
         oncreate: ({ dom }) => Sortable.create(dom, { sort: true }),
         view: ({ attrs: { model } }) => {
             slides = model.currentPresentation.slides.map((slide, idx) =>
-                <Slide key={idx}
-                    model={model}
-                    title={slide.title}
-                    actions={actions}
-                    slide={slide}
-                    editDto={{
-                        slideId: slide.id
-                        , presentationId: model.currentPresentation.id
-                        , name: model.user.name
-                    }
-                    } />
+                m('section', [
+
+                    <Slide key={idx}
+                        model={model}
+                        title={slide.title}
+                        actions={actions}
+                        slide={slide}
+                        editDto={{
+                            slideId: slide.id
+                            , presentationId: model.currentPresentation.id
+                            , name: model.user.name
+                        }
+                        } />
+                ])
             )
 
-            return (
-                <div class="hero" id="slide-container" >
-                    < UIButton action={() => toEditCard(navigator)({
+            return m('section', { class: 'hero' }, [
+                m(UIButton, {
+                    action: () => toEditCard(navigator)({
                         slideId: '', presentationId: model.currentPresentation.id
                         , name: model.user.name
-                    })} name="Add Slide" />
-                    {slides}
-                    < UIButton action={() => toSlideShow({ id: model.currentPresentation.id, name: model.user.name })} name="Start Presentation" />
-                </div >
-            )
+                    }), name: 'Add Slide'
+                }),
+                m('section', { class: 'selection-container' }, [slides]),
+                m(UIButton, { action: () => toSlideShow({ id: model.currentPresentation.id, name: model.user.name }), name: "Start Presentation" })
+            ])
+
         }
     }
 

@@ -35,7 +35,7 @@ const createLoginPage = (navigator, update) => {
             return <div class="container">
                 <div class="section">
                     <div class="hero is-large">
-                        <h1 class="app-title title is-bold">Welcome</h1>
+                        <h2 class="app-title title is-bold">Welcome</h2>
                     </div>
                     <div class="hero">
                         <input class="input" value={model.user.name} oninput={updateText("name")(model)} />

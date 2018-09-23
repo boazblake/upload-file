@@ -2,9 +2,9 @@ const m = require('mithril')
 
 const UIButton = {
   view: ({ attrs }) =>
-    <div onclick={attrs.action} class="ui-button">
+    <button onclick={attrs.action} class="button ui-button">
       <span>{attrs.name}</span>
-    </div>
+    </button>
 }
 
 

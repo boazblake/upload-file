@@ -41,7 +41,7 @@ const createPresentationsPage = (navigator, update) => {
                 "LOADING ..."
 
                 :
-                m('div', { class: 'container' },
+                m('section', { class: 'selection-container' },
                     model.presentations.map(p =>
                         m(Presentation, {
                             key: p.id,

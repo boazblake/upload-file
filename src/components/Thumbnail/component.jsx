@@ -12,7 +12,7 @@ const Thumbnail = ({ attrs }) => {
         },
         onbeforeremove: ({ dom }) => dom.classList.add('fancyout'),
         view: () =>
-            <div class="card section-padding-large">
+            <div class="card box thumbnail">
                 <Preview text={() => attrs.contents()} />
             </div>
     }

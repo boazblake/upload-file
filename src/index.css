@@ -1,3 +1,4 @@
+@import './normalize.css';
 
 body,
 html {
@@ -6,6 +7,7 @@ html {
   padding: 0;
   margin: 0;
 }
+
 
 #app {
   display: flex;
@@ -80,27 +82,6 @@ html {
   letter-spacing: 2px;
 }
 
-#cards-container {
-  flex: display;
-  flex-direction: column;
-  width: 100%;
-}
-
-.thumb-card {
-  width: 35%;
-  margin: 6px;
-}
-
-.slide-card {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 0.5em;
-  margin: 0.5em;
-  font-size: 100%;
-  background: white;
-}
-
 .label {
   padding: 1em 0;
   margin: 0.5em;
@@ -109,18 +90,6 @@ html {
   font-weight: bold;
   font-size: 110%;
   letter-spacing: 1.5px;
-}
-
-.slide-fields {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-
-.slide-field {
-  display: flex;
-  margin: 0.5em;
-  font-size: 100%;
 }
 
 .ui-button {
@@ -138,18 +107,11 @@ html {
   text-transform: uppercase;
 }
 
-#editor-preview {
-  overflow-y: scroll;
-  overflow-x: visible;
-  display: flex;
-  flex-direction: column;
-  background-color: white;
-  padding-left: 30px;
+.thumbnail {
+  max-height: 50vh;
+  overflow-y: hidden;
+  overflow-x: hidden;
 }
-
-/* #preview-text {
-  word-break: break-all;
-} */
 
 #slide-form {
   display: flex;
@@ -172,6 +134,13 @@ html {
   width: 100vw;
   height: 100vh;
 }
+
+.selection-container {
+  display: flex;
+  flex-flow: row wrap;
+  align-content: space-between;
+}
+
 
 .fancyin {animation:fade-in 1.5s;}
 

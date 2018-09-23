@@ -5,8 +5,8 @@ import UIButton from '../components/ui/UIButton.jsx'
 
 const SlideShow = (navigator, update) => {
     let allSelectedSlides = []
-    let currentSlide = {}
     let idx = 0
+    let currentSlide = idx => allSelectedSlides[idx]
 
     const nextSlide = next => {
         console.log(allSelectedSlides)
@@ -17,14 +17,17 @@ const SlideShow = (navigator, update) => {
     return {
         oninit: ({ attrs: { model } }) => {
             (allSelectedSlides = setSlides(model))
-            currentSlide = idx => allSelectedSlides[idx]
         },
         view: ({ attrs: { model } }) => {
-            return (< div class="container hero" >
-                <Preview text={() => currentSlide(idx).contents} />
-                < UIButton action={() => nextSlide(-1)} name="<< PREV" />
-                < UIButton action={() => nextSlide(+1)} name="NEXT >>" />
-            </div >)
+            return (
+                m('section', { class: 'container box slideshow' }, [
+                    m(Preview, { text: () => currentSlide(idx).contents }),
+                    m('section', { class: 'container actions' }, [
+                        m(UIButton, { action: () => nextSlide(-1), name: '<< PREV' }),
+                        m(UIButton, { action: () => nextSlide(+1), name: 'NEXT >>' }),
+                    ])
+                ])
+            )
         }
     }
 }

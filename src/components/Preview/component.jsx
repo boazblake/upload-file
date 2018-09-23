@@ -5,11 +5,9 @@ const Preview = ({ attrs }) => {
 
     return {
         view: () =>
-            <section id="editor-preview" class="hero">
-                <div id="preview-text">
-                    {m.trust(marked(attrs.text() || ''))}
-                </div>
-            </section>
+            m('section', { id: 'editor-preview', class: 'section' }, [
+                m('div', { class: 'editor-preview' }, m.trust(marked(attrs.text() || '')))
+            ])
     }
 }
 

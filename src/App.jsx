@@ -26,7 +26,7 @@ const createLoginView = (navigator, update) => {
   return {
     view: ({ attrs: { model } }) =>
       [
-        <StageBanner title="Login" />,
+        <StageBanner title="MithrilJS-Presenter" />,
         <CardContainer>
           <LoginPage model={model} />
         </CardContainer>
@@ -41,14 +41,14 @@ const createPresentationsView = (navigator, update) => {
       [
         <StageBanner action={_ => m.route.set('/login')} title="Presentations" />,
         <CardContainer>
-          <div class="columns">
-            <div class="column is-half">
+          <section class="columns">
+            <section class="column is-half">
               <PresentationsPage model={model} />
-            </div>
-            <div class="column is-half">
+            </section>
+            <section class="column is-half">
               <Thumbnail contents={model.contents} />
-            </div>
-          </div>
+            </section>
+          </section>
         </CardContainer>
       ]
   }
@@ -61,14 +61,14 @@ const createSlidesView = (navigator, update) => {
       [
         <StageBanner action={_ => m.route.set('/login')} title="Slides" />,
         <CardContainer>
-          <div class="columns">
-            <div class="column is-half">
+          <section class="columns">
+            <section class="column is-half">
               <SlidesPage model={model} />
-            </div>
-            <div class="column is-half">
+            </section>
+            <section class="column is-half">
               <Thumbnail contents={model.contents} />
-            </div>
-          </div>
+            </section>
+          </section>
         </CardContainer>
       ]
   }
@@ -119,11 +119,11 @@ const createApp = update => {
     view: ({ attrs: { model } }) => {
       const Component = navigator.getComponent(model.pageId)
       return (
-        <div class="App">
-          <div class="main-stage section">
+        <section class="App">
+          <section class="main-stage section">
             <Component model={model} />
-          </div>
-        </div>
+          </section>
+        </section>
       )
     }
   }
