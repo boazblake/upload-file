@@ -1,6 +1,6 @@
 import m from "mithril";
 
-import Model from "./Models/index.js";
+import Model from "./Model/index.js";
 
 import { createNavigator } from "./services/navigator.js";
 

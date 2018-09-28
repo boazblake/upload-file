@@ -24,7 +24,7 @@ const Routes = Object.keys(App.navigator.routes).reduce((result, route) => {
 }, {})
 
 const root = document.getElementById("app");
-m.route(root, '/login', Routes);
+m.route(root, '/', Routes);
 
 import meiosisTracer from 'meiosis-tracer'
 meiosisTracer({ streams: [models] })
