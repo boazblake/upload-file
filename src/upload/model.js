@@ -7,11 +7,7 @@ const createDict = model =>
   );
 
 export const toStruct = model => {
-  const table = compose(
-    unnest,
-    createDict,
-    log("table post unnest")
-  )(model);
+  const table = compose(log("table post unnest"))(model);
 
   return (model.table = table);
 };

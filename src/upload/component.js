@@ -1,8 +1,8 @@
 import m from "mithril";
 import { compose, dropLast, map, split, trim, unnest } from "ramda";
-import {toStruct} from './model.js'
+import { toStruct } from "./model.js";
 
-const createWelcomePage = (navigator, update) => {
+export const createUploadPage = (navigator, update) => {
   const clean = compose(map(dropLast(1)));
 
   const upload = model => e =>
@@ -10,11 +10,12 @@ const createWelcomePage = (navigator, update) => {
       model.data = clean(data);
       console.log(model);
       toStruct(model);
-      m.redraw()
+      m.redraw();
     });
 
   return {
-    view: ({ attrs: { model } }) =>
+    view: ({ attrs: { model } }) => {
+      console.log(model);
       m("div", { class: "container" }, [
         m("section", { class: "section" }, [
           m("div", { class: "hero is-large" }, [
@@ -23,10 +24,9 @@ const createWelcomePage = (navigator, update) => {
           m("div", { class: "hero" }, [
             m("input[type=file]", { class: "input", onchange: upload(model) }),
           ]),
-          m("span", m.trust(JSON.stringify(model.table,null,4))),
+          m("span", m.trust(JSON.stringify(model.table, null, 4))),
         ]),
-      ]),
+      ]);
+    },
   };
 };
-
-export default createWelcomePage;
