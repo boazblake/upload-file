@@ -1,14 +1,25 @@
 import m from "mithril";
-import { updatePassword, updateUserName, loginTask } from "./model.js";
+import { loginTask } from "../services/requests.js";
+import { updatePassword, updateUserName } from "./model.js";
 
 export const createLoginPage = (navigator, update) => {
+  const onSuccess = model => data => {
+    console.log("success", data["user-token"]);
+    console.log("update", update);
+    console.log("model", model);
+    model.User.Token = data["user-token"];
+    m.route.set("/presentations");
+  };
+
+  const onError = data => {
+    console.log("error", data);
+  };
+
   return {
     view: ({ attrs: { model } }) => {
-      console.log("new view", model);
-
       const loginToPasteBin = e => {
         e.preventDefault();
-        loginTask(model.User).fork(onSuccess, onError);
+        loginTask(model.User).fork(onError, onSuccess(model));
       };
 
       return m(

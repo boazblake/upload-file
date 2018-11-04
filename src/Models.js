@@ -5,6 +5,7 @@ import { create } from "microstates";
 const User = {
   name: "",
   password: "",
+  Token: "",
 };
 
 const Slide = {

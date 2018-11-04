@@ -1,16 +1,15 @@
-import m from "mithril";
+import tasks from "./Tasks.js";
 import Task from "data.task";
-import { log } from "./index.js";
-import { postTask, putTask, getTask } from "./Tasks.js";
 
-const baseUrl = "https://pastebin.com/api/";
+const toLoginDtoTask = ({ name, password }) =>
+  Task.of({
+    login: name,
+    password,
+  });
 
-const toPostTask = url => dto => {
-  log("url")(url);
-  log("dto")(dto);
-  return postTask(url)(dto);
-};
+const tologinTask = dto => tasks.postTask("users/login")(dto);
 
-const loginTask = url => data => toPostTask(url)(dto);
+export const loginTask = data => toLoginDtoTask(data).chain(tologinTask);
 
-export default { loginTask };
+export const findPresentationsTask = model =>
+  tasks.getTask("data/presentations");

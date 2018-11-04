@@ -4,8 +4,8 @@ import Models from "./Models.js";
 
 import { createNavigator } from "./services/navigator.js";
 
-import { createPresentationsPage } from "./presentations/component.js";
-import createLoginPage from "./login/component.js";
+import { createPresentationsPage } from "./Presentations/component.js";
+import { createLoginPage } from "./Login/component.js";
 
 const createNotFound = nav => update => {
   return {
@@ -28,7 +28,7 @@ const presentations_page = (nav, update) => {
   return {
     view: ({ attrs: { model } }) => [
       m(".hero is-large", [m("h2.app-title title is-bold", "Presentations")]),
-      m(".section hero", m(PresentationsPage, { model: model.Presentation })),
+      m(".section hero", m(PresentationsPage, { model: model })),
     ],
   };
 };
@@ -37,7 +37,7 @@ const routes = update => navigator => [
   {
     pageId: "login",
     component: login_page(navigator, update),
-    route: "/",
+    route: "/login",
   },
   {
     pageId: "presentations",
