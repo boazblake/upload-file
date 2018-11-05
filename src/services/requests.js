@@ -7,9 +7,12 @@ const toLoginDtoTask = ({ name, password }) =>
     password,
   });
 
-const tologinTask = dto => tasks.postTask("users/login")(dto);
+const tologinTask = dto => tasks.postTask("users/login")({ dto });
 
 export const loginTask = data => toLoginDtoTask(data).chain(tologinTask);
 
-export const findPresentationsTask = model =>
-  tasks.getTask("data/presentations");
+export const findPresentationsTask = token =>
+  tasks.getTask("data/presentations")(token);
+
+export const savePresentationTask = dto =>
+  tasks.postTask("data/presentations")(dto);

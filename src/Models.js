@@ -31,6 +31,7 @@ const Models = {
   Model,
   Presentation,
   Slide,
+  toggleModal: false,
   User,
 };
 

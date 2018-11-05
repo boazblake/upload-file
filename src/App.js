@@ -6,6 +6,7 @@ import { createNavigator } from "./services/navigator.js";
 
 import { createPresentationsPage } from "./Presentations/component.js";
 import { createLoginPage } from "./Login/component.js";
+import Toolbar from "./Toolbar/component.js";
 
 const createNotFound = nav => update => {
   return {
@@ -17,7 +18,7 @@ const login_page = (nav, update) => {
   const LoginPage = createLoginPage(nav, update);
   return {
     view: ({ attrs: { model } }) => [
-      m(".hero is-large", [m("h2.app-title title is-bold", "Presentations")]),
+      m(".hero is-large", [m("h2.app-title title is-bold", "Login")]),
       m(".section hero", m(LoginPage, { model })),
     ],
   };
@@ -59,7 +60,10 @@ const createApp = update => {
       const Component = navigator.getComponent(model.pageId);
       return m(
         "section.app",
-        m("section.main-stage section", m(Component, { model: model }))
+        m("section.main-stage section", [
+          m(Toolbar, { model }),
+          m(Component, { model: model }),
+        ])
       );
     },
   };

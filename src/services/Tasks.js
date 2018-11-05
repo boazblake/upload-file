@@ -5,46 +5,49 @@ import { backendlessKey, backendless } from "../../secrets.js";
 
 const baseUrl = `https://api.backendless.com/${backendless}/${backendlessKey}`;
 
-const postTask = url => data => {
-  console.log("url and data", url, data);
-
-  return new Task((rej, res) =>
+const postTask = url => ({ userToken, dto }) =>
+  new Task((rej, res) =>
     m
       .request({
         method: "POST",
         url: `${baseUrl}/${url}`,
-        data,
+        data: dto,
         withCredentials: false,
         headers: {
           "Content-Type": "application/json",
-          "user-token": data.userToken,
+          "user-token": userToken,
         },
       })
       .then(res, rej)
   );
-};
 
-const putTask = url => data =>
+const putTask = url => ({ userToken, dto }) =>
   new Task((rej, res) =>
     m
       .request({
         method: "PUT",
-        url: `{baseUrl}/${url}`,
-        data,
+        url: `${baseUrl}/${url}`,
+        data: dto,
         withCredentials: false,
-        headers: { "Access-Control-Allow-Origin": "*" },
+        headers: {
+          "Content-Type": "application/json",
+          "user-token": userToken,
+        },
       })
       .then(res, rej)
   );
 
-const getTask = url =>
+const getTask = url => userToken =>
   new Task((rej, res) =>
     m
       .request({
         method: "GET",
-        url: `{baseUrl}/${url}`,
+        url: `${baseUrl}/${url}`,
         withCredentials: false,
-        headers: { "Access-Control-Allow-Origin": "*" },
+        headers: {
+          "Content-Type": "application/json",
+          "user-token": userToken,
+        },
       })
       .then(res, rej)
   );

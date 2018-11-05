@@ -1,13 +1,11 @@
 import m from "mithril";
+import O from "patchinko/constant";
 import { loginTask } from "../services/requests.js";
 import { updatePassword, updateUserName } from "./model.js";
 
 export const createLoginPage = (navigator, update) => {
-  const onSuccess = model => data => {
-    console.log("success", data["user-token"]);
-    console.log("update", update);
-    console.log("model", model);
-    model.User.Token = data["user-token"];
+  const onSuccess = data => {
+    update({ User: O({ Token: data["user-token"] }) });
     m.route.set("/presentations");
   };
 
@@ -19,7 +17,7 @@ export const createLoginPage = (navigator, update) => {
     view: ({ attrs: { model } }) => {
       const loginToPasteBin = e => {
         e.preventDefault();
-        loginTask(model.User).fork(onError, onSuccess(model));
+        loginTask(model.User).fork(onError, onSuccess);
       };
 
       return m(
@@ -29,18 +27,18 @@ export const createLoginPage = (navigator, update) => {
           m("form.form", { onsubmit: loginToPasteBin }, [
             m("fieldset.fieldset", [
               m("legend.legend", "Login to PasteBin"),
+              m("label.label", "user name"),
               m("input.input", {
                 type: "text",
                 oninput: m.withAttr("value", updateUserName(model)),
                 value: model.User.name,
               }),
-              m("label.label", "user name"),
+              m("label.label", "password"),
               m("input.input", {
                 type: "text",
                 oninput: m.withAttr("value", updatePassword(model)),
                 value: model.User.password,
               }),
-              m("label.label", "password"),
             ]),
             m("button.button", { onclick: "submit" }, "LOGIN"),
           ]),
