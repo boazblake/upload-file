@@ -16,7 +16,6 @@ const models = stream.scan(O, App.model(), update);
 const Routes = Object.keys(App.navigator.routes).reduce((result, route) => {
   result[route] = {
     onmatch: (params, url) => {
-      console.log("onmatch", url, models(), isEmpty(models().User.Token));
       if (url !== "/login" && isEmpty(models().User.Token)) {
         return m.route.set("/login");
       }

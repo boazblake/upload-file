@@ -8,14 +8,12 @@ export const createUploadPage = (navigator, update) => {
   const upload = model => e =>
     model.upload(e).then(({ data }) => {
       model.data = clean(data);
-      console.log(model);
       toStruct(model);
       m.redraw();
     });
 
   return {
-    view: ({ attrs: { model } }) => {
-      console.log(model);
+    view: ({ attrs: { model } }) =>
       m("div", { class: "container" }, [
         m("section", { class: "section" }, [
           m("div", { class: "hero is-large" }, [
@@ -26,7 +24,6 @@ export const createUploadPage = (navigator, update) => {
           ]),
           m("span", m.trust(JSON.stringify(model.table, null, 4))),
         ]),
-      ]);
-    },
+      ]),
   };
 };

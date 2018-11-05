@@ -19,6 +19,7 @@ const login_page = (nav, update) => {
   return {
     view: ({ attrs: { model } }) => [
       m(".hero is-large", [m("h2.app-title title is-bold", "Login")]),
+      m(Toolbar, { model }),
       m(".section hero", m(LoginPage, { model })),
     ],
   };
@@ -29,7 +30,8 @@ const presentations_page = (nav, update) => {
   return {
     view: ({ attrs: { model } }) => [
       m(".hero is-large", [m("h2.app-title title is-bold", "Presentations")]),
-      m(".section hero", m(PresentationsPage, { model: model })),
+      m(Toolbar, { model }),
+      m(PresentationsPage, { model: model }),
     ],
   };
 };
@@ -60,10 +62,7 @@ const createApp = update => {
       const Component = navigator.getComponent(model.pageId);
       return m(
         "section.app",
-        m("section.main-stage section", [
-          m(Toolbar, { model }),
-          m(Component, { model: model }),
-        ])
+        m("section.main-stage section", [m(Component, { model: model })])
       );
     },
   };

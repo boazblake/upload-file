@@ -12,7 +12,7 @@ const tologinTask = dto => tasks.postTask("users/login")({ dto });
 export const loginTask = data => toLoginDtoTask(data).chain(tologinTask);
 
 export const findPresentationsTask = token =>
-  tasks.getTask("data/presentations")(token);
+  tasks.getTask("data/presentations?pageSize=100")(token);
 
 export const savePresentationTask = dto =>
   tasks.postTask("data/presentations")(dto);

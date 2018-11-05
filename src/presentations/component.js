@@ -8,7 +8,6 @@ import {
 import { log } from "../services/index.js";
 
 const PresentationModal = v => {
-  console.log("modal", v);
   const state = {
     errors: "",
     name: "",
@@ -18,7 +17,6 @@ const PresentationModal = v => {
     state.errors = errors;
   };
   const onSuccess = dto => {
-    console.log("modal success", v.attrs.presentations, dto);
     v.attrs.presentations.push(props(["Title", "objectId"], dto));
     v.attrs.toggleModal();
   };
@@ -52,7 +50,6 @@ const PresentationModal = v => {
         ]),
         m("button.modal-close is-large", {
           onclick: () => {
-            console.log("close modal", v.attrs);
             return v.attrs.toggleModal();
           },
           "aria-label": "close",
@@ -65,15 +62,12 @@ export const createPresentationsPage = (navigator, update) => {
   const onError = error => console.log("error", error);
 
   const onSuccess = model => dto => {
-    console.log("success", map(props(["Title", "objectId"]), dto));
     update({
       Model: O({ presentations: map(props(["Title", "objectId"]), dto) }),
     });
-    console.log(model);
   };
 
   const findPresentations = ({ attrs: { model } }) => {
-    console.log("findPresentations us running", model);
     return findPresentationsTask(model.User.Token).fork(
       onError,
       onSuccess(model)
@@ -82,21 +76,24 @@ export const createPresentationsPage = (navigator, update) => {
 
   return {
     oncreate: findPresentations,
-    view: ({ attrs: { model } }) => {
-      console.log("findPresentations", model);
-      return m(".container", [
-        m("section.section", [
-          model.toggleModal
-            ? m(PresentationModal, {
-                toggleModal: () => (model.toggleModal = !model.toggleModal),
-                token: model.User.Token,
-                presentations: model.Model.presentations,
-              })
-            : "",
-          m("section.section", []),
-          m("span", m.trust(JSON.stringify(model, null, 4))),
+    view: ({ attrs: { model } }) =>
+      m(".container", [
+        model.toggleModal
+          ? m(PresentationModal, {
+              toggleModal: () => (model.toggleModal = !model.toggleModal),
+              token: model.User.Token,
+              presentations: model.Model.presentations,
+            })
+          : "",
+        m("section.section columns is-multiline", [
+          m(".column is-6", { style: { overflow: "scroll", height: "65vh" } }, [
+            model.Model.presentations.map(
+              p => m("container.is-child box", p[0])
+              // presentation => m(Presentation, )
+            ),
+          ]),
         ]),
-      ]);
-    },
+        m("span", m.trust(JSON.stringify(model, null, 4))),
+      ]),
   };
 };

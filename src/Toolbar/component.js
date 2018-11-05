@@ -2,16 +2,11 @@ import m from "mithril";
 import { log } from "../services/index.js";
 
 const Toolbar = v => {
-  const state = {
-    pageId: "",
-  };
-
   return {
-    onupdate: v => (state.pageId = v.attrs.model.pageId),
-    view: () =>
+    view: v =>
       m(".level", [
         m(".level-left", [
-          state.pageId == "presentations"
+          v.attrs.model.pageId == "presentations"
             ? m(
                 "button.button",
                 {

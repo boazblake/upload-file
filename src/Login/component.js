@@ -6,7 +6,7 @@ import { updatePassword, updateUserName } from "./model.js";
 export const createLoginPage = (navigator, update) => {
   const onSuccess = data => {
     update({ User: O({ Token: data["user-token"] }) });
-    m.route.set("/presentations");
+    navigator.navigateTo("presentations");
   };
 
   const onError = data => {
@@ -25,8 +25,8 @@ export const createLoginPage = (navigator, update) => {
         m(
           "section.section",
           m("form.form", { onsubmit: loginToPasteBin }, [
-            m("fieldset.fieldset", [
-              m("legend.legend", "Login to PasteBin"),
+            m("fieldset.fieldset is-grouped", [
+              m("legend.legend"),
               m("label.label", "user name"),
               m("input.input", {
                 type: "text",
@@ -40,7 +40,7 @@ export const createLoginPage = (navigator, update) => {
                 value: model.User.password,
               }),
             ]),
-            m("button.button", { onclick: "submit" }, "LOGIN"),
+            m("button.button is-fullwidth", { onclick: "submit" }, "LOGIN"),
           ]),
           m("span", m.trust(JSON.stringify(model, null, 4)))
         )
