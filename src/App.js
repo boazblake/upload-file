@@ -5,6 +5,7 @@ import Models from "./Models.js";
 import { createNavigator } from "./services/navigator.js";
 
 import { createPresentationsPage } from "./Presentations/component.js";
+import { createSlidesPage } from "./Slides/component.js";
 import { createLoginPage } from "./Login/component.js";
 import Toolbar from "./Toolbar/component.js";
 
@@ -14,7 +15,7 @@ const createNotFound = nav => update => {
   };
 };
 
-const login_page = (nav, update) => {
+const loginPage = (nav, update) => {
   const LoginPage = createLoginPage(nav, update);
   return {
     view: ({ attrs: { model } }) => [
@@ -25,7 +26,7 @@ const login_page = (nav, update) => {
   };
 };
 
-const presentations_page = (nav, update) => {
+const presentationsPage = (nav, update) => {
   const PresentationsPage = createPresentationsPage(nav, update);
   return {
     view: ({ attrs: { model } }) => [
@@ -36,17 +37,38 @@ const presentations_page = (nav, update) => {
   };
 };
 
+const slidesPage = (nav, update) => {
+  const slidesPage = createSlidesPage(nav, update);
+  return {
+    view: ({ attrs: { model } }) => [
+      m(".hero is-large", [m("h2.app-title title is-bold", "SLIDES")]),
+      m(Toolbar, { model }),
+      m(slidesPage, { model: model }),
+    ],
+  };
+};
+
 const routes = update => navigator => [
   {
     pageId: "login",
-    component: login_page(navigator, update),
+    component: loginPage(navigator, update),
     route: "/login",
   },
   {
     pageId: "presentations",
-    component: presentations_page(navigator, update),
+    component: presentationsPage(navigator, update),
     route: "/presentations",
   },
+  {
+    pageId: "slides",
+    component: slidesPage(navigator, update),
+    route: "/presentation/:id/slides",
+  },
+  // {
+  //   pageId: "editor",
+  //   component: editorPage(navigator, update),
+  //   route: "/editor/slides/:id",
+  // },
 ];
 
 const createApp = update => {

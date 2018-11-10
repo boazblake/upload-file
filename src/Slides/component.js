@@ -1,29 +1,40 @@
 import m from "mithril";
 import O from "patchinko/constant";
 import { props, map } from "ramda";
-import { savePresentationTask } from "../services/requests.js";
-import { getPresentationsTask } from "./model.js";
+import { saveSlideTask } from "../services/requests.js";
+import { getSlidesTask } from "./model.js";
 import { log } from "../services/index.js";
 
-const PresentationModal = v => {
+const SlidesModal = v => {
   const state = {
     errors: "",
     title: "",
   };
+
   const onError = errors => {
     log("error")(errors);
     state.errors = errors;
   };
+
   const onSuccess = dto => {
-    v.attrs.presentations.push(props(["title", "objectId"], dto));
+    console.log("onsuccess", dto);
+    v.attrs.slides.push(
+      props(
+        ["title", "objectId", "contents", "presentationId", "isSelected"],
+        dto
+      )
+    );
     v.attrs.toggleModal();
   };
 
   const save = userToken => e => {
+    const ctx = {
+      dto: { title: state.title },
+      presentationId: v.attrs.presentationId,
+      userToken,
+    };
     e.preventDefault();
-    return toPresentationDtoTask(state.title)(userToken)
-      .chain(savePresentationTask)
-      .fork(onError, onSuccess);
+    return saveSlideTask(ctx).fork(onError, onSuccess);
   };
 
   return {
@@ -32,8 +43,8 @@ const PresentationModal = v => {
         m(".modal-background"),
         m(".modal-content", [
           m("fieldset.fieldset", [
-            m("legend.legend", "Add a Presentation"),
-            m("label.label", "Presentation Name"),
+            m("legend.legend", "Add a Slide"),
+            m("label.label", "Slide title"),
             m("input.input", {
               type: "text",
               onchange: m.withAttr("value", v => (state.title = v)),
@@ -55,39 +66,39 @@ const PresentationModal = v => {
   };
 };
 
-export const createPresentationsPage = (navigator, update) => {
-  const state = {
-    errors: "",
-  };
+export const createSlidesPage = (navigator, update) => {
+  let presentationId = "";
+  const onError = error => console.log("error", error);
 
-  const onError = error => {
-    console.log("error", error);
-    state.error = error;
-  };
-
-  const onSuccess = dto => {
+  const onSuccess = model => dto => {
     update({
-      Model: O({ Presentations: dto }),
+      Model: O({
+        Presentation: dto,
+      }),
     });
   };
 
-  const findPresentations = ({ attrs: { model } }) =>
-    getPresentationsTask().fork(onError, onSuccess);
+  const findSlides = ({ attrs: { model } }) => {
+    presentationId = m.route.param("id");
+    return getSlidesTask(presentationId).fork(onError, onSuccess(model));
+  };
 
   return {
-    oncreate: findPresentations,
+    oncreate: findSlides,
     view: ({ attrs: { model } }) =>
       m(".container", [
         model.toggleModal
-          ? m(PresentationModal, {
+          ? m(SlidesModal, {
               toggleModal: () => (model.toggleModal = !model.toggleModal),
               token: model.User.Token,
-              presentations: model.Model.presentations,
+              slides: model.Model.Presentation.slides,
+              presentationId,
             })
           : "",
+
         m("section.section columns is-multiline", [
           m(".column is-6", { style: { overflow: "scroll", height: "65vh" } }, [
-            model.Model.Presentations.map(({ id, title }) =>
+            model.Model.Presentation.slides.map(({ id, title }) =>
               m(
                 "container.is-child box button fadeIn",
                 {
@@ -117,7 +128,7 @@ export const createPresentationsPage = (navigator, update) => {
                       };
                     });
                   },
-                  onclick: () => m.route.set(`/presentation/${id}/slides`),
+                  onclick: () => console.log("slide cliked", id, title),
                   key: id,
                 },
                 title

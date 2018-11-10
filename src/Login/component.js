@@ -1,9 +1,11 @@
 import m from "mithril";
 import O from "patchinko/constant";
 import { loginTask } from "../services/requests.js";
-import { updatePassword, updateUserName } from "./model.js";
 
 export const createLoginPage = (navigator, update) => {
+  const updatePassword = model => password => (model.User.password = password);
+  const updateUserEmail = model => email => (model.User.email = email);
+
   const onSuccess = data => {
     update({ User: O({ Token: data["user-token"] }) });
     navigator.navigateTo("presentations");
@@ -27,11 +29,11 @@ export const createLoginPage = (navigator, update) => {
           m("form.form", { onsubmit: loginToPasteBin }, [
             m("fieldset.fieldset is-grouped", [
               m("legend.legend"),
-              m("label.label", "user name"),
+              m("label.label", "user email"),
               m("input.input", {
                 type: "text",
-                oninput: m.withAttr("value", updateUserName(model)),
-                value: model.User.name,
+                oninput: m.withAttr("value", updateUserEmail(model)),
+                value: model.User.email,
               }),
               m("label.label", "password"),
               m("input.input", {

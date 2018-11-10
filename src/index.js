@@ -16,9 +16,9 @@ const models = stream.scan(O, App.model(), update);
 const Routes = Object.keys(App.navigator.routes).reduce((result, route) => {
   result[route] = {
     onmatch: (params, url) => {
-      if (url !== "/login" && isEmpty(models().User.Token)) {
-        return m.route.set("/login");
-      }
+      // if (url !== "/login" && isEmpty(models().User.Token)) {
+      // return m.route.set("/login");
+      // }
       return App.navigator.onnavigate(App.navigator.routes[route], params, url);
     },
     render: () => m(App, { model: models() }),
@@ -27,8 +27,9 @@ const Routes = Object.keys(App.navigator.routes).reduce((result, route) => {
 }, {});
 
 const root = document.getElementById("app");
-m.route(root, "/", Routes);
+m.route(root, "/presentations", Routes);
 
+//----------------DEV------------------
 import meiosisTracer from "meiosis-tracer";
 meiosisTracer({ streams: [models] });
 
@@ -40,3 +41,4 @@ models.map(model => {
 });
 
 models.map(() => m.redraw());
+//----------------DEV------------------

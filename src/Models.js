@@ -18,21 +18,18 @@ const Slide = {
 const Presentation = {
   name: "",
   id: "",
-  slides: "",
+  title: "",
+  slides: [],
 };
 
 const Model = {
-  presentations: [],
-  currentPresentationId: "",
-  currentSlideId: "",
+  Presentations: [],
+  Presentation,
 };
 
 const Models = {
   Model,
-  Presentation,
-  Slide,
   toggleModal: false,
-  User,
 };
 
 export default Models;

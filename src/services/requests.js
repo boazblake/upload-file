@@ -1,18 +1,33 @@
-import tasks from "./Tasks.js";
+import httpTasks from "./Tasks.js";
 import Task from "data.task";
+import { log } from "../services/index.js";
+import { compose } from "ramda";
 
-const toLoginDtoTask = ({ name, password }) =>
+const toLoginDtoTask = ({ email, password }) =>
   Task.of({
-    login: name,
+    email,
     password,
+    returnSecureToken: true,
   });
 
-const tologinTask = dto => tasks.postTask("users/login")({ dto });
+const tologinTask = dto => httpTasks.postTask("verifyPassword.json")({ dto });
 
 export const loginTask = data => toLoginDtoTask(data).chain(tologinTask);
 
-export const findPresentationsTask = token =>
-  tasks.getTask("data/presentations?pageSize=100")(token);
+export const saveSlideTask = ({
+  dto: { title },
+  presentationId,
+  userToken,
+}) => {
+  console.log("tosave", title, userToken, presentationId);
+  return httpTasks
+    .postTask(`data/slides`)({ dto: { title }, userToken })
+    .map(log("slide"));
+};
+
+export const findSlidesTask = id => httpTasks.getTask(`presentations/${id}`);
+
+export const findPresentationsTask = () => httpTasks.getTask("presentations");
 
 export const savePresentationTask = dto =>
-  tasks.postTask("data/presentations")(dto);
+  httpTasks.postTask(`${presentationUrl}`)(dto);

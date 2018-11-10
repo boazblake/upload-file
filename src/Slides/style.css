@@ -8,11 +8,3 @@
   font-size: 200%;
   letter-spacing: 2px;
 }
-
-
-
-.fadeIn {animation:fade-in 0.5s;}
-@keyframes fade-in {
-    from {opacity:0;}
-    to {opacity:1;}
-}

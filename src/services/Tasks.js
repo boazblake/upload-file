@@ -1,53 +1,42 @@
 import m from "mithril";
 import Task from "data.task";
+import { baseUrl, _headers } from "./apiConfig.js";
+import { webApiKey } from "../../secrets.js";
 
-import { backendlessKey, backendless } from "../../secrets.js";
-
-const baseUrl = `https://api.backendless.com/${backendless}/${backendlessKey}`;
-
-const postTask = url => ({ userToken, dto }) =>
+const postTask = url => ({ dto }) =>
   new Task((rej, res) =>
     m
       .request({
         method: "POST",
-        url: `${baseUrl}/${url}`,
+        url: `${baseUrl}${url}?key=${webApiKey}`,
         data: dto,
         withCredentials: false,
-        headers: {
-          "Content-Type": "application/json",
-          "user-token": userToken,
-        },
+        headers: _headers,
       })
       .then(res, rej)
   );
 
-const putTask = url => ({ userToken, dto }) =>
+const putTask = url => ({ dto }) =>
   new Task((rej, res) =>
     m
       .request({
         method: "PUT",
-        url: `${baseUrl}/${url}`,
+        url: `${baseUrl}/${url}.json`,
         data: dto,
         withCredentials: false,
-        headers: {
-          "Content-Type": "application/json",
-          "user-token": userToken,
-        },
+        headers: _headers,
       })
       .then(res, rej)
   );
 
-const getTask = url => userToken =>
+const getTask = url =>
   new Task((rej, res) =>
     m
       .request({
         method: "GET",
         url: `${baseUrl}/${url}`,
         withCredentials: false,
-        headers: {
-          "Content-Type": "application/json",
-          "user-token": userToken,
-        },
+        headers: _headers,
       })
       .then(res, rej)
   );
