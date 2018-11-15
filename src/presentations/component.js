@@ -5,6 +5,7 @@ import { clone } from "ramda";
 import { animateEntrance, animateExit } from "../services/animations.js";
 import { getPresentationsTask } from "./model.js";
 import PresentationModal from "./presentationModal.js";
+import Presentation from "./Presentation/component.js";
 
 export const createPresentationsPage = (navigator, update) => {
   const state = {
@@ -38,17 +39,16 @@ export const createPresentationsPage = (navigator, update) => {
           : "",
         m("section.section columns is-multiline", [
           m(".column is-6", { style: { overflow: "scroll", height: "65vh" } }, [
-            model.Model.Presentations.map(({ id, title }) =>
-              m(
-                "container.is-child box button fadeIn",
-                {
-                  oncreate: ({ dom }) => animateEntrance(dom),
-                  onbeforeremove: ({ dom }) => animateExit(dom),
-                  onclick: () => m.route.set(`/presentation/${id}/slides`),
-                  key: id,
-                },
-                title
-              )
+            model.Model.Presentations.map(({ title, id }) =>
+              m(Presentation, {
+                key: id,
+                id,
+                title,
+                model,
+                findPresentations,
+                oncreate: ({ dom }) => animateEntrance(dom),
+                onremove: ({ dom }) => animateExit(dom),
+              })
             ),
           ]),
         ]),

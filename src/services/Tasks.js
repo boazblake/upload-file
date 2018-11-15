@@ -41,4 +41,16 @@ const getTask = url =>
       .then(res, rej)
   );
 
-export default { postTask, putTask, getTask };
+const deleteTask = url => id =>
+  new Task((rej, res) =>
+    m
+      .request({
+        method: "DELETE",
+        url: `${baseUrl}/${url}/${id}`,
+        withCredentials: false,
+        headers: { "Content-Type": "application/json" },
+      })
+      .then(res, rej)
+  );
+
+export default { postTask, putTask, getTask, deleteTask };

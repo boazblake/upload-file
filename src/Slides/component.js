@@ -3,15 +3,16 @@ import O from "patchinko/constant";
 import { clone } from "ramda";
 import { animateEntrance, animateExit } from "../services/animations.js";
 import SlidesModal from "./slidesModal.js";
+import Slide from "./Slide/component.js";
 import { loadSlides } from "./model.js";
-
-import { log } from "../services/index.js";
 
 export const createSlidesPage = (navigator, update) => {
   let presentationId = "";
   const onError = error => console.log("error", error);
 
   const onSuccess = dto => {
+    console.log("getslides", dto);
+
     update({
       Model: O({
         CurrentPresentation: dto,
@@ -25,7 +26,7 @@ export const createSlidesPage = (navigator, update) => {
   };
 
   return {
-    oninit: getSlides,
+    oncreate: getSlides,
     view: ({ attrs: { model } }) =>
       m(".container", [
         model.toggleModal
@@ -40,16 +41,14 @@ export const createSlidesPage = (navigator, update) => {
         m("section.section columns is-multiline", [
           m(".column is-6", { style: { overflow: "scroll", height: "65vh" } }, [
             model.Model.CurrentPresentation.slides.map(s =>
-              m(
-                "container.is-child box button fadeIn",
-                {
-                  oncreate: ({ dom }) => animateEntrance(dom),
-                  onremove: ({ dom }) => animateExit(dom),
-                  onclick: () => console.log("slide cliked", s),
-                  key: s.id,
-                },
-                s.title
-              )
+              m(Slide, {
+                oncreate: ({ dom }) => animateEntrance(dom),
+                onremove: ({ dom }) => animateExit(dom),
+                key: s.id,
+                model,
+                getSlides,
+                s,
+              })
             ),
           ]),
         ]),
