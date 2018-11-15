@@ -1,0 +1,5 @@
+{
+  "/presentations": "/presentations",
+  "/presentations/:id": "/presentations/:id",
+  "/presentations/:id/slides": "/presentations/:id/slides"
+}

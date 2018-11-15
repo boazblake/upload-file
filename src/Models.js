@@ -1,6 +1,6 @@
+import m from "mithril";
 import Stream from "mithril-stream";
 import O from "patchinko/constant";
-import { create } from "microstates";
 
 const User = {
   name: "",
@@ -8,23 +8,27 @@ const User = {
   Token: "",
 };
 
-const Slide = {
+const SlideModel = {
   title: "",
   contents: "",
   id: "",
   isSelected: false,
+  presentationId: "",
 };
 
-const Presentation = {
-  name: "",
+const PresentationModel = {
   id: "",
   title: "",
-  slides: [],
 };
 
+const Presentations = [];
+const CurrentPresentation = { title: "", id: "", slides: [] };
+
 const Model = {
-  Presentations: [],
-  Presentation,
+  Presentations,
+  CurrentPresentation,
+  PresentationModel,
+  SlideModel,
 };
 
 const Models = {

@@ -1,43 +1,18 @@
 import { findPresentationsTask } from "../services/requests.js";
+import { savePresentationTask } from "../services/requests.js";
+import { assoc, map, pick } from "ramda";
 
-import {
-  compose,
-  path,
-  prop,
-  props,
-  map,
-  lensIndex,
-  view,
-  split,
-  last,
-} from "ramda";
+const toModalVM = dto => {
+  console.log(dto);
+  return dto;
+};
 
-const headLensIndex = lensIndex(0);
-const secondLensIndex = lensIndex(1);
-
-const PresentationId = compose(
-  last,
-  split("/"),
-  view(headLensIndex)
-);
-
-const presentationTitleLens = path(["Title", "stringValue"]);
-
-const PresentationTitle = compose(
-  presentationTitleLens,
-  view(secondLensIndex)
-);
-
-const toPresentationModel = dto => ({
-  id: PresentationId(dto),
-  title: PresentationTitle(dto),
-});
-
-const parsePresentations = compose(
-  map(toPresentationModel),
-  map(props(["name", "fields"])),
-  prop("documents")
-);
+const toViewModel = pick(["title", "id"]);
 
 export const getPresentationsTask = () =>
-  findPresentationsTask().map(parsePresentations);
+  findPresentationsTask().map(map(toViewModel));
+
+export const toPresentationDtoTask = title => model => {
+  let p = assoc("title", title, model);
+  return savePresentationTask(p).map(toModalVM);
+};

@@ -1,17 +1,17 @@
 import m from "mithril";
 import Task from "data.task";
-import { baseUrl, _headers } from "./apiConfig.js";
-import { webApiKey } from "../../secrets.js";
+
+const baseUrl = "http://localhost:3000";
 
 const postTask = url => ({ dto }) =>
   new Task((rej, res) =>
     m
       .request({
         method: "POST",
-        url: `${baseUrl}${url}?key=${webApiKey}`,
+        url: `${baseUrl}/${url}`,
         data: dto,
         withCredentials: false,
-        headers: _headers,
+        headers: { "Content-Type": "application/json" },
       })
       .then(res, rej)
   );
@@ -21,10 +21,10 @@ const putTask = url => ({ dto }) =>
     m
       .request({
         method: "PUT",
-        url: `${baseUrl}/${url}.json`,
+        url: `${baseUrl}/${url}`,
         data: dto,
         withCredentials: false,
-        headers: _headers,
+        headers: { "Content-Type": "application/json" },
       })
       .then(res, rej)
   );
@@ -36,7 +36,7 @@ const getTask = url =>
         method: "GET",
         url: `${baseUrl}/${url}`,
         withCredentials: false,
-        headers: _headers,
+        headers: { "Content-Type": "application/json" },
       })
       .then(res, rej)
   );

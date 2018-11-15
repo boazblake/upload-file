@@ -1,0 +1,32 @@
+{
+  "presentations": [
+    {
+      "title": "boaz",
+      "id": 1
+    },
+    {
+      "title": "megan",
+      "id": 2
+    },
+    {
+      "title": "rome",
+      "id": 3
+    }
+  ],
+  "slides": [
+    {
+      "title": "sdfgfsd",
+      "contents": "",
+      "id": 1,
+      "isSelected": false,
+      "presentationId": 1
+    },
+    {
+      "title": "hdgfh",
+      "contents": "",
+      "id": 2,
+      "isSelected": false,
+      "presentationId": 1
+    }
+  ]
+}
