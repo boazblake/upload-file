@@ -8,6 +8,7 @@ import { createPresentationsPage } from "./Presentations/component.js";
 import { createSlidesPage } from "./Slides/component.js";
 import { createEditorPage } from "./Editor/component.js";
 import { createLoginPage } from "./Login/component.js";
+import { createSlideShowPage } from "./SlideShow/component.js";
 import Toolbar from "./Toolbar/component.js";
 
 const createNotFound = nav => update => {
@@ -62,6 +63,16 @@ const editorPage = (nav, update) => {
   };
 };
 
+const slideShowPage = (nav, update) => {
+  const _SlideShowPage = createSlideShowPage(nav, update);
+  return {
+    view: ({ attrs: { model } }) => [
+      m(".hero is-large", [m("h2.app-title title is-bold", "SLIDE SHOW")]),
+      m(_SlideShowPage, { model: model }),
+    ],
+  };
+};
+
 const routes = update => navigator => [
   {
     pageId: "login",
@@ -82,6 +93,11 @@ const routes = update => navigator => [
     pageId: "editor",
     component: editorPage(navigator, update),
     route: "/edit/slide/:id",
+  },
+  {
+    pageId: "slideshow",
+    component: slideShowPage(navigator, update),
+    route: "/slideshow/:id",
   },
 ];
 
