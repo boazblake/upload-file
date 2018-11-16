@@ -44,7 +44,6 @@ export const createSlidesPage = (navigator, update) => {
               model.Model.CurrentPresentation.slides.map(s =>
                 m(Slide, {
                   oncreate: ({ dom }) => animateEntrance(dom),
-                  onremove: ({ dom }) => animateExit(dom),
                   key: s.id,
                   model,
                   getSlides,
@@ -55,5 +54,6 @@ export const createSlidesPage = (navigator, update) => {
           ),
         ]),
       ]),
+    onremove: ({ dom }) => animateExit(dom),
   };
 };

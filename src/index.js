@@ -4,6 +4,7 @@ import O from "patchinko/constant";
 import { isEmpty } from "ramda";
 import createApp from "./App.js";
 //styles
+import "../node_modules/construct-ui/lib/index.css";
 import "bulma/css/bulma.css";
 import "./index.css";
 
@@ -15,19 +16,15 @@ const models = stream.scan(O, App.model(), update);
 
 const Routes = Object.keys(App.navigator.routes).reduce((result, route) => {
   result[route] = {
-    onmatch: (params, url) => {
-      // if (url !== "/login" && isEmpty(models().User.Token)) {
-      // return m.route.set("/login");
-      // }
-      return App.navigator.onnavigate(App.navigator.routes[route], params, url);
-    },
+    onmatch: (params, url) =>
+      App.navigator.onnavigate(App.navigator.routes[route], params, url),
     render: () => m(App, { model: models() }),
   };
   return result;
 }, {});
 
 const root = document.getElementById("app");
-m.route(root, "/", Routes);
+m.route(root, "/presentations", Routes);
 
 //----------------DEV------------------
 import meiosisTracer from "meiosis-tracer";

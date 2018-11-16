@@ -1,5 +1,5 @@
 import m from "mithril";
-import { contains } from "ramda";
+import { contains, filter, propEq } from "ramda";
 import { log } from "../services/index.js";
 
 const Toolbar = v => {
@@ -17,20 +17,29 @@ const Toolbar = v => {
                   },
                   "Presentations"
                 ),
-                m(
-                  "button.button",
-                  {
-                    onclick: () =>
-                      m.route.set(
-                        `/slideshow/${
-                          v.attrs.model.Model.CurrentPresentation.id
-                        }`
-                      ),
-                  },
-                  "Slide Show"
-                ),
               ]
             : "",
+
+          contains(v.attrs.model.pageId, ["slides", "editor"])
+            ? m(
+                "button.button",
+                {
+                  disabled:
+                    filter(
+                      propEq("isSelected", true),
+                      v.attrs.model.Model.CurrentPresentation.slides
+                    ).length == 0
+                      ? true
+                      : false,
+                  onclick: () =>
+                    m.route.set(
+                      `/slideshow/${v.attrs.model.Model.CurrentPresentation.id}`
+                    ),
+                },
+                "Slide Show"
+              )
+            : "",
+
           contains(v.attrs.model.pageId, ["editor"])
             ? m(
                 "button.button",

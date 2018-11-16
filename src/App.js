@@ -64,12 +64,10 @@ const editorPage = (nav, update) => {
 };
 
 const slideShowPage = (nav, update) => {
+  console.log("slideshow app.js");
   const _SlideShowPage = createSlideShowPage(nav, update);
   return {
-    view: ({ attrs: { model } }) => [
-      m(".hero is-large", [m("h2.app-title title is-bold", "SLIDE SHOW")]),
-      m(_SlideShowPage, { model: model }),
-    ],
+    view: ({ attrs: { model } }) => [m(_SlideShowPage, { model: model })],
   };
 };
 
