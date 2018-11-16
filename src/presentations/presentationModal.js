@@ -1,7 +1,6 @@
 import m from "mithril";
 import { toPresentationDtoTask } from "./model.js";
 import { log } from "../services/index.js";
-import { props } from "ramda";
 
 const PresentationModal = ({ attrs }) => {
   const state = {

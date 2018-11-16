@@ -5,7 +5,7 @@ export const animateEntrance = dom =>
       { transform: "none", opacity: 1 },
     ],
     {
-      duration: 1000,
+      duration: 850,
     }
   );
 
@@ -15,7 +15,7 @@ export const animateExit = dom => {
     { transform: "translate3d(25%,100%,0)", opacity: 0 },
   ];
   let waapi = dom.animate(anim, {
-    duration: 1000,
+    duration: 850,
   });
 
   return new Promise(resolve => {

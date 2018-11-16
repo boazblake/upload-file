@@ -20,3 +20,4 @@ export const updateSlideTask = id => dto =>
   httpTasks.putTask(`slides/${id}`)({ dto });
 
 export const deleteSlideTask = id => httpTasks.deleteTask("slides")(id);
+export const loadSlideTask = id => httpTasks.getTask(`slides/${id}`);

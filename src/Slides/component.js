@@ -11,8 +11,6 @@ export const createSlidesPage = (navigator, update) => {
   const onError = error => console.log("error", error);
 
   const onSuccess = dto => {
-    console.log("getslides", dto);
-
     update({
       Model: O({
         CurrentPresentation: dto,
@@ -28,7 +26,7 @@ export const createSlidesPage = (navigator, update) => {
   return {
     oncreate: getSlides,
     view: ({ attrs: { model } }) =>
-      m(".container", [
+      m(".article", [
         model.toggleModal
           ? m(SlidesModal, {
               toggleModal: () => (model.toggleModal = !model.toggleModal),
@@ -39,20 +37,23 @@ export const createSlidesPage = (navigator, update) => {
           : "",
 
         m("section.section columns is-multiline", [
-          m(".column is-6", { style: { overflow: "scroll", height: "65vh" } }, [
-            model.Model.CurrentPresentation.slides.map(s =>
-              m(Slide, {
-                oncreate: ({ dom }) => animateEntrance(dom),
-                onremove: ({ dom }) => animateExit(dom),
-                key: s.id,
-                model,
-                getSlides,
-                s,
-              })
-            ),
-          ]),
+          m(
+            ".column is-6 is-multiline",
+            { style: { overflow: "scroll", height: "65vh" } },
+            [
+              model.Model.CurrentPresentation.slides.map(s =>
+                m(Slide, {
+                  oncreate: ({ dom }) => animateEntrance(dom),
+                  onremove: ({ dom }) => animateExit(dom),
+                  key: s.id,
+                  model,
+                  getSlides,
+                  s,
+                })
+              ),
+            ]
+          ),
         ]),
-        m("span", m.trust(JSON.stringify(model, null, 4))),
       ]),
   };
 };

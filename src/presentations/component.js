@@ -27,9 +27,9 @@ export const createPresentationsPage = (navigator, update) => {
     getPresentationsTask().fork(onError, onSuccess);
 
   return {
-    oninit: findPresentations,
+    oncreate: findPresentations,
     view: ({ attrs: { model } }) =>
-      m(".container", [
+      m(".article", [
         model.toggleModal
           ? m(PresentationModal, {
               toggleModal: () => (model.toggleModal = !model.toggleModal),
@@ -47,12 +47,11 @@ export const createPresentationsPage = (navigator, update) => {
                 model,
                 findPresentations,
                 oncreate: ({ dom }) => animateEntrance(dom),
-                onremove: ({ dom }) => animateExit(dom),
+                onBeforeRemove: ({ dom }) => animateExit(dom),
               })
             ),
           ]),
         ]),
-        m("span", m.trust(JSON.stringify(model, null, 4))),
       ]),
   };
 };

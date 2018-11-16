@@ -6,6 +6,7 @@ import { createNavigator } from "./services/navigator.js";
 
 import { createPresentationsPage } from "./Presentations/component.js";
 import { createSlidesPage } from "./Slides/component.js";
+import { createEditorPage } from "./Editor/component.js";
 import { createLoginPage } from "./Login/component.js";
 import Toolbar from "./Toolbar/component.js";
 
@@ -27,23 +28,36 @@ const loginPage = (nav, update) => {
 };
 
 const presentationsPage = (nav, update) => {
-  const PresentationsPage = createPresentationsPage(nav, update);
+  const _PresentationsPage = createPresentationsPage(nav, update);
   return {
     view: ({ attrs: { model } }) => [
       m(".hero is-large", [m("h2.app-title title is-bold", "Presentations")]),
       m(Toolbar, { model }),
-      m(PresentationsPage, { model: model }),
+      m(_PresentationsPage, { model: model }),
     ],
   };
 };
 
 const slidesPage = (nav, update) => {
-  const slidesPage = createSlidesPage(nav, update);
+  const _SlidesPage = createSlidesPage(nav, update);
   return {
     view: ({ attrs: { model } }) => [
-      m(".hero is-large", [m("h2.app-title title is-bold", "SLIDES")]),
+      m(".hero is-large", [
+        m("h2.app-title title is-bold", model.Model.CurrentPresentation.title),
+      ]),
       m(Toolbar, { model }),
-      m(slidesPage, { model: model }),
+      m(_SlidesPage, { model: model }),
+    ],
+  };
+};
+
+const editorPage = (nav, update) => {
+  const _EditorPage = createEditorPage(nav, update);
+  return {
+    view: ({ attrs: { model } }) => [
+      m(".hero is-large", [m("h2.app-title title is-bold", "Editor")]),
+      m(Toolbar, { model }),
+      m(_EditorPage, { model: model }),
     ],
   };
 };
@@ -64,11 +78,11 @@ const routes = update => navigator => [
     component: slidesPage(navigator, update),
     route: "/presentation/:id/slides",
   },
-  // {
-  //   pageId: "editor",
-  //   component: editorPage(navigator, update),
-  //   route: "/editor/slides/:id",
-  // },
+  {
+    pageId: "editor",
+    component: editorPage(navigator, update),
+    route: "/edit/slide/:id",
+  },
 ];
 
 const createApp = update => {

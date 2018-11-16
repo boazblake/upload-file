@@ -21,7 +21,7 @@ const Slide = ({ attrs: { getSlides, model, s } }) => {
           m(
             "button.button",
             {
-              onclick: () => m.route.set(`/edit/${s.id}`),
+              onclick: () => m.route.set(`/edit/slide/${s.id}`),
             },
             s.title
           ),
